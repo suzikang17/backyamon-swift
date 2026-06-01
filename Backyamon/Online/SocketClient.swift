@@ -239,7 +239,7 @@ final class SocketClient {
     // Generic event listeners. Key = event name. Value = handlers.
     private var listeners: [String: [UUID: ([Any]) -> Void]] = [:]
 
-    init(serverURL: URL = URL(string: "http://localhost:3001")!) {
+    init(serverURL: URL = URL(string: "https://api.backyamon.com")!) {
         self.serverURL = serverURL
         self.manager = SocketManager(
             socketURL: serverURL,
