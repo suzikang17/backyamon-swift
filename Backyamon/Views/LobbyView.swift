@@ -415,7 +415,6 @@ struct LobbyView: View {
 
     private var mainLobbyContent: some View {
         VStack(spacing: 16) {
-            // Quick match
             Button {
                 vm.quickMatch()
             } label: {
@@ -424,13 +423,24 @@ struct LobbyView: View {
                     .tracking(4)
                     .foregroundStyle(bg)
                     .frame(maxWidth: .infinity)
-                    .frame(height: 54)
-                    .background(gold)
-                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                    .frame(height: 56)
+                    .background(
+                        LinearGradient(
+                            colors: vm.connected
+                                ? [Color(red: 0.98, green: 0.85, blue: 0.52),
+                                   Color(red: 0.82, green: 0.65, blue: 0.32)]
+                                : [Color.gray.opacity(0.3), Color.gray.opacity(0.2)],
+                            startPoint: .top, endPoint: .bottom)
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.white.opacity(vm.connected ? 0.25 : 0), lineWidth: 0.8)
+                    )
+                    .shadow(color: gold.opacity(vm.connected ? 0.4 : 0), radius: 12, y: 4)
             }
             .disabled(!vm.connected)
 
-            // Create room
             VStack(spacing: 8) {
                 Button {
                     Task { await vm.createRoom(name: customRoomName) }
@@ -440,9 +450,21 @@ struct LobbyView: View {
                         .tracking(3)
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
-                        .frame(height: 48)
-                        .background(Color(red: 0.0, green: 0.42, blue: 0.25))
-                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                        .frame(height: 50)
+                        .background(
+                            LinearGradient(
+                                colors: vm.connected
+                                    ? [Color(red: 0.0, green: 0.55, blue: 0.32),
+                                       Color(red: 0.0, green: 0.38, blue: 0.22)]
+                                    : [Color.gray.opacity(0.25), Color.gray.opacity(0.15)],
+                                startPoint: .top, endPoint: .bottom)
+                        )
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.white.opacity(vm.connected ? 0.18 : 0), lineWidth: 0.8)
+                        )
+                        .shadow(color: Color(red: 0.0, green: 0.5, blue: 0.3).opacity(vm.connected ? 0.4 : 0), radius: 10, y: 3)
                 }
                 .disabled(!vm.connected)
 
