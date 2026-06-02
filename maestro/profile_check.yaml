@@ -1,0 +1,15 @@
+appId: com.backyamon.app
+---
+- launchApp
+- tapOn: "PLAY ONLINE"
+- waitForAnimationToEnd
+- assertVisible: "Connected"
+- tapOn:
+    point: "30%,18%"
+- waitForAnimationToEnd
+- inputText: "testuser1"
+- tapOn: "CLAIM"
+- waitForAnimationToEnd
+- tapOn: "MY PROFILE"
+- waitForAnimationToEnd
+- takeScreenshot: profile

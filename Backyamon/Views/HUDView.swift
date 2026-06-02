@@ -77,6 +77,8 @@ struct PlayerScore: View {
     let color: Color
     let isActive: Bool
 
+    @State private var pulse = false
+
     var body: some View {
         VStack(spacing: 4) {
             HStack(spacing: 5) {
@@ -87,15 +89,23 @@ struct PlayerScore: View {
                         Circle()
                             .stroke(Color.white.opacity(0.25), lineWidth: 0.5)
                     )
+                    .scaleEffect(isActive && pulse ? 1.35 : 1.0)
+                    .shadow(color: color.opacity(isActive ? 0.65 : 0),
+                            radius: pulse ? 6 : 2)
                 Text(label)
                     .font(.system(size: 10, weight: .bold))
-                    .foregroundStyle(Color.white.opacity(isActive ? 0.85 : 0.45))
+                    .foregroundStyle(Color.white.opacity(isActive ? 0.92 : 0.4))
                     .tracking(2)
             }
             Text("\(score)")
                 .font(.custom("Georgia-Bold", size: 28))
                 .foregroundStyle(color)
                 .shadow(color: color.opacity(isActive ? 0.4 : 0), radius: 6)
+        }
+        .onAppear {
+            withAnimation(.easeInOut(duration: 1.1).repeatForever(autoreverses: true)) {
+                pulse = true
+            }
         }
     }
 }

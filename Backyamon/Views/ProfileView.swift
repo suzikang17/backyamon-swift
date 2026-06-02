@@ -21,7 +21,16 @@ struct ProfileView: View {
 
     var body: some View {
         ZStack {
-            bg.ignoresSafeArea()
+            RadialGradient(
+                colors: [
+                    Color(red: 0.14, green: 0.22, blue: 0.15),
+                    Color(red: 0.05, green: 0.09, blue: 0.06)
+                ],
+                center: .top,
+                startRadius: 80,
+                endRadius: 600
+            )
+            .ignoresSafeArea()
 
             ScrollView {
                 VStack(spacing: 24) {
@@ -57,15 +66,31 @@ struct ProfileView: View {
     // MARK: - Subviews
 
     private var headerView: some View {
-        VStack(spacing: 4) {
-            Text(vm.profile?.username ?? vm.username)
-                .font(.custom("Georgia-Bold", size: 32))
-                .foregroundStyle(gold)
-                .tracking(2)
-            if let prof = vm.profile {
-                Text("\(prof.wins)-\(prof.losses)")
-                    .font(.custom("Georgia", size: 16))
-                    .foregroundStyle(Color.white.opacity(0.6))
+        VStack(spacing: 12) {
+            ZStack {
+                Circle()
+                    .fill(LinearGradient(
+                        colors: [gold.opacity(0.3), gold.opacity(0.08)],
+                        startPoint: .top, endPoint: .bottom))
+                    .frame(width: 72, height: 72)
+                    .overlay(Circle().stroke(gold.opacity(0.55), lineWidth: 1.5))
+                    .shadow(color: gold.opacity(0.35), radius: 12)
+                Text(String((vm.profile?.username ?? vm.username).prefix(1)).uppercased())
+                    .font(.custom("Georgia-Bold", size: 32))
+                    .foregroundStyle(gold)
+            }
+
+            VStack(spacing: 4) {
+                Text(vm.profile?.username ?? vm.username)
+                    .font(.custom("Georgia-Bold", size: 26))
+                    .foregroundStyle(.white)
+                    .tracking(2)
+                if let prof = vm.profile {
+                    Text("\(prof.wins) – \(prof.losses)")
+                        .font(.custom("Georgia", size: 14))
+                        .foregroundStyle(Color.white.opacity(0.55))
+                        .tracking(2)
+                }
             }
         }
         .padding(.top, 12)
@@ -86,17 +111,26 @@ struct ProfileView: View {
     private func statCard(label: String, value: String, color: Color) -> some View {
         VStack(spacing: 6) {
             Text(value)
-                .font(.custom("Georgia-Bold", size: 24))
+                .font(.custom("Georgia-Bold", size: 26))
                 .foregroundStyle(color)
+                .shadow(color: color.opacity(0.3), radius: 6)
             Text(label)
                 .font(.custom("Georgia-Bold", size: 10))
                 .tracking(2)
-                .foregroundStyle(Color.white.opacity(0.5))
+                .foregroundStyle(Color.white.opacity(0.55))
         }
         .frame(maxWidth: .infinity)
-        .frame(height: 70)
-        .background(Color.white.opacity(0.05))
-        .clipShape(RoundedRectangle(cornerRadius: 6))
+        .frame(height: 74)
+        .background(
+            ZStack {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(LinearGradient(
+                        colors: [Color.white.opacity(0.07), Color.white.opacity(0.02)],
+                        startPoint: .top, endPoint: .bottom))
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.white.opacity(0.08), lineWidth: 1)
+            }
+        )
     }
 
     private func winTypeBreakdown(profile: PlayerProfile) -> some View {
