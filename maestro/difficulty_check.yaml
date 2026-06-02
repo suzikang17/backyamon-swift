@@ -1,0 +1,12 @@
+appId: com.backyamon.app
+---
+- launchApp
+- tapOn: "PLAY"
+- waitForAnimationToEnd
+- takeScreenshot: difficulty_unselected
+- tapOn: "Beach Bum"
+- waitForAnimationToEnd
+- takeScreenshot: difficulty_beachbum
+- tapOn: "King Tubby"
+- waitForAnimationToEnd
+- takeScreenshot: difficulty_kingtubby

@@ -20,15 +20,33 @@ struct DifficultyView: View {
 
     var body: some View {
         ZStack {
-            Color(red: 0.08, green: 0.12, blue: 0.08)
-                .ignoresSafeArea()
+            RadialGradient(
+                colors: [
+                    Color(red: 0.14, green: 0.22, blue: 0.15),
+                    Color(red: 0.05, green: 0.09, blue: 0.06)
+                ],
+                center: .top,
+                startRadius: 80,
+                endRadius: 600
+            )
+            .ignoresSafeArea()
 
             ScrollView {
-                VStack(spacing: 32) {
-                    Text("CHOOSE YOUR OPPONENT")
-                        .font(.custom("Georgia-Bold", size: 22))
-                        .foregroundStyle(.white)
-                        .tracking(3)
+                VStack(spacing: 28) {
+                    VStack(spacing: 8) {
+                        Text("CHOOSE YOUR OPPONENT")
+                            .font(.custom("Georgia-Bold", size: 18))
+                            .foregroundStyle(.white)
+                            .tracking(4)
+                            .shadow(color: Color(red: 0.92, green: 0.78, blue: 0.45).opacity(0.3), radius: 10)
+                        Rectangle()
+                            .fill(LinearGradient(
+                                colors: [.clear, Color(red: 0.92, green: 0.78, blue: 0.45).opacity(0.6), .clear],
+                                startPoint: .leading,
+                                endPoint: .trailing))
+                            .frame(width: 120, height: 1)
+                    }
+                    .padding(.top, 8)
 
                     VStack(spacing: 16) {
                         DifficultyCard(
@@ -75,15 +93,29 @@ struct DifficultyView: View {
                     } label: {
                         Text("LET'S PLAY")
                             .font(.custom("Georgia-Bold", size: 18))
-                            .tracking(3)
+                            .tracking(4)
                             .foregroundStyle(Color(red: 0.08, green: 0.12, blue: 0.08))
-                            .frame(width: 200, height: 50)
-                            .background(selectedDifficulty != nil
-                                ? Color(red: 0.85, green: 0.72, blue: 0.45)
-                                : Color.gray.opacity(0.4))
-                            .clipShape(RoundedRectangle(cornerRadius: 4))
+                            .frame(width: 220, height: 54)
+                            .background(
+                                selectedDifficulty != nil
+                                    ? AnyShapeStyle(LinearGradient(
+                                        colors: [
+                                            Color(red: 0.98, green: 0.85, blue: 0.52),
+                                            Color(red: 0.82, green: 0.65, blue: 0.32)
+                                        ],
+                                        startPoint: .top, endPoint: .bottom))
+                                    : AnyShapeStyle(Color.gray.opacity(0.3))
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.white.opacity(selectedDifficulty != nil ? 0.25 : 0), lineWidth: 0.8)
+                            )
+                            .shadow(color: Color(red: 0.92, green: 0.78, blue: 0.45).opacity(selectedDifficulty != nil ? 0.45 : 0),
+                                    radius: 12, y: 4)
                     }
                     .disabled(selectedDifficulty == nil)
+                    .animation(.easeInOut(duration: 0.25), value: selectedDifficulty)
                     .navigationDestination(isPresented: $navigateToGame) {
                         GameView(difficulty: selectedDifficulty ?? .beachBum, matchLength: matchLength)
                     }
@@ -143,41 +175,73 @@ struct DifficultyCard: View {
 
     var isSelected: Bool { selected == difficulty }
 
+    private var accent: Color {
+        switch difficulty {
+        case .beachBum:  return Color(red: 0.40, green: 0.78, blue: 0.85)
+        case .selector:  return Color(red: 0.92, green: 0.78, blue: 0.45)
+        case .kingTubby: return Color(red: 0.85, green: 0.22, blue: 0.30)
+        }
+    }
+
+    private var icon: String {
+        switch difficulty {
+        case .beachBum:  return "beach.umbrella.fill"
+        case .selector:  return "music.note"
+        case .kingTubby: return "crown.fill"
+        }
+    }
+
     var body: some View {
         Button {
             selected = difficulty
         } label: {
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
+            HStack(spacing: 14) {
+                ZStack {
+                    Circle()
+                        .fill(accent.opacity(isSelected ? 0.25 : 0.12))
+                        .frame(width: 46, height: 46)
+                        .overlay(
+                            Circle().stroke(accent.opacity(isSelected ? 0.6 : 0.25), lineWidth: 1)
+                        )
+                    Image(systemName: icon)
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(accent)
+                }
+
+                VStack(alignment: .leading, spacing: 3) {
                     Text(name)
                         .font(.custom("Georgia-Bold", size: 18))
                         .foregroundStyle(.white)
                     Text(description)
-                        .font(.custom("Georgia", size: 14))
-                        .foregroundStyle(Color.white.opacity(0.6))
+                        .font(.custom("Georgia", size: 13))
+                        .foregroundStyle(Color.white.opacity(0.55))
                         .multilineTextAlignment(.leading)
                 }
-                Spacer()
+                Spacer(minLength: 8)
                 if isSelected {
                     Image(systemName: "checkmark.circle.fill")
-                        .foregroundStyle(Color(red: 0.85, green: 0.72, blue: 0.45))
-                        .font(.title2)
+                        .foregroundStyle(accent)
+                        .font(.title3)
                 }
             }
-            .padding()
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
             .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(isSelected
-                        ? Color.white.opacity(0.12)
-                        : Color.white.opacity(0.05))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(isSelected
-                                ? Color(red: 0.85, green: 0.72, blue: 0.45).opacity(0.6)
-                                : Color.clear, lineWidth: 1)
-                    )
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(LinearGradient(
+                            colors: isSelected
+                                ? [Color.white.opacity(0.14), Color.white.opacity(0.06)]
+                                : [Color.white.opacity(0.05), Color.white.opacity(0.02)],
+                            startPoint: .top,
+                            endPoint: .bottom))
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(isSelected ? accent.opacity(0.7) : Color.white.opacity(0.08), lineWidth: 1)
+                }
             )
+            .shadow(color: isSelected ? accent.opacity(0.35) : .clear, radius: 12, y: 4)
         }
+        .animation(.spring(response: 0.35, dampingFraction: 0.7), value: isSelected)
     }
 }
 
