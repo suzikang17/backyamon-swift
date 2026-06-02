@@ -5,7 +5,7 @@ import SwiftUI
 private struct BLayout {
     let size: CGSize
 
-    var pad: CGFloat { 6 }
+    var pad: CGFloat { 10 }
     var boardW: CGFloat { size.width - 2 * pad }
     var boardH: CGFloat { size.height - 2 * pad }
 
@@ -64,6 +64,8 @@ struct BoardView: View {
         GeometryReader { geo in
             let lay = BLayout(size: geo.size)
             Canvas { ctx, _ in
+                let boardRect = CGRect(x: lay.pad, y: lay.pad, width: lay.boardW, height: lay.boardH)
+                ctx.clip(to: Path(roundedRect: boardRect, cornerRadius: 6))
                 drawBackground(ctx: ctx, lay: lay)
                 drawPoints(ctx: ctx, lay: lay)
                 drawHighlights(ctx: ctx, lay: lay)
@@ -150,7 +152,7 @@ struct BoardView: View {
             guard let pt = state.points[i] else { continue }
             let cx = lay.pointCX(i)
             let count = pt.count
-            let r = min(lay.pw * 0.42, lay.halfH / CGFloat(max(count, 5) + 1))
+            let r = min(lay.pw * 0.42, lay.halfH / (2.0 + CGFloat(max(count, 1) - 1) * 1.9))
             let isTop = i < 12
             for j in 0..<count {
                 let offset = CGFloat(j) * r * 1.9

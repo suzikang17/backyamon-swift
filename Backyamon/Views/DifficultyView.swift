@@ -9,6 +9,7 @@ struct MatchSelection: Hashable {
 struct DifficultyView: View {
     @State private var selectedDifficulty: Difficulty? = nil
     @State private var matchLength: Int = 1
+    @State private var navigateToGame = false
 
     private let matchOptions: [(length: Int, label: String, sub: String)] = [
         (1, "1", "Single"),
@@ -69,11 +70,9 @@ struct DifficultyView: View {
                         }
                     }
 
-                    let selection: MatchSelection? = selectedDifficulty.map {
-                        MatchSelection(difficulty: $0, matchLength: matchLength)
-                    }
-
-                    NavigationLink(value: selection) {
+                    Button {
+                        navigateToGame = true
+                    } label: {
                         Text("LET'S PLAY")
                             .font(.custom("Georgia-Bold", size: 18))
                             .tracking(3)
@@ -85,12 +84,12 @@ struct DifficultyView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 4))
                     }
                     .disabled(selectedDifficulty == nil)
+                    .navigationDestination(isPresented: $navigateToGame) {
+                        GameView(difficulty: selectedDifficulty ?? .beachBum, matchLength: matchLength)
+                    }
                 }
                 .padding()
             }
-        }
-        .navigationDestination(for: MatchSelection.self) { sel in
-            GameView(difficulty: sel.difficulty, matchLength: sel.matchLength)
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbarColorScheme(.dark, for: .navigationBar)

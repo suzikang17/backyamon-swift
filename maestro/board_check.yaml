@@ -1,0 +1,11 @@
+appId: com.backyamon.app
+---
+- launchApp
+- takeScreenshot: home
+- tapOn: "PLAY"
+- takeScreenshot: difficulty
+- tapOn: "Beach Bum"
+- tapOn: "LET'S PLAY"
+- waitForAnimationToEnd
+- assertVisible: "YOU"
+- takeScreenshot: board

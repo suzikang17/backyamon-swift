@@ -50,7 +50,7 @@ struct ControlBarView<Game: GameControlling>: View {
                         .font(.custom("Georgia-Bold", size: 18))
                         .tracking(4)
                         .foregroundStyle(Color(red: 0.08, green: 0.12, blue: 0.08))
-                        .frame(width: 140, height: 46)
+                        .frame(width: 120, height: 46)
                         .background(Color(red: 0.85, green: 0.72, blue: 0.45))
                         .clipShape(RoundedRectangle(cornerRadius: 4))
                 }
@@ -88,7 +88,7 @@ struct ControlBarView<Game: GameControlling>: View {
                     .frame(width: 72, height: 32)
             }
         }
-        .padding(.horizontal, 24)
+        .padding(.horizontal, 16)
         .padding(.vertical, 12)
         .background(Color.black.opacity(0.3))
     }
