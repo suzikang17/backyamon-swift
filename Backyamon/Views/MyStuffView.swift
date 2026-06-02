@@ -19,7 +19,16 @@ struct MyStuffView: View {
 
     var body: some View {
         ZStack {
-            bg.ignoresSafeArea()
+            RadialGradient(
+                colors: [
+                    Color(red: 0.14, green: 0.22, blue: 0.15),
+                    Color(red: 0.05, green: 0.09, blue: 0.06)
+                ],
+                center: .top,
+                startRadius: 80,
+                endRadius: 600
+            )
+            .ignoresSafeArea()
 
             VStack(spacing: 0) {
                 header
@@ -80,14 +89,20 @@ struct MyStuffView: View {
     // MARK: - Subviews
 
     private var header: some View {
-        VStack(spacing: 4) {
+        VStack(spacing: 8) {
             Text("MY STUFF")
                 .font(.custom("Georgia-Bold", size: 28))
                 .tracking(4)
                 .foregroundStyle(gold)
+                .shadow(color: gold.opacity(0.3), radius: 10)
+            Rectangle()
+                .fill(LinearGradient(
+                    colors: [.clear, gold.opacity(0.55), .clear],
+                    startPoint: .leading, endPoint: .trailing))
+                .frame(width: 100, height: 1)
             Text("your personal collection")
-                .font(.custom("Georgia", size: 13))
-                .foregroundStyle(Color.white.opacity(0.5))
+                .font(.custom("Georgia-Italic", size: 13))
+                .foregroundStyle(Color.white.opacity(0.55))
         }
         .padding(.top, 16)
         .padding(.bottom, 12)
@@ -110,26 +125,44 @@ struct MyStuffView: View {
     }
 
     private var filterPicker: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: 8) {
             ForEach(MyStuffViewModel.Filter.allCases, id: \.self) { f in
                 Button {
-                    vm.filter = f
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                        vm.filter = f
+                    }
                 } label: {
                     Text(f.label)
                         .font(.custom("Georgia-Bold", size: 11))
-                        .tracking(1.5)
-                        .foregroundStyle(vm.filter == f ? bg : Color.white.opacity(0.7))
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
+                        .tracking(2)
+                        .foregroundStyle(vm.filter == f ? bg : Color.white.opacity(0.65))
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 7)
                         .background(
-                            RoundedRectangle(cornerRadius: 4)
-                                .fill(vm.filter == f ? gold : Color.white.opacity(0.06))
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(vm.filter == f
+                                    ? AnyShapeStyle(LinearGradient(
+                                        colors: [
+                                            Color(red: 0.98, green: 0.85, blue: 0.52),
+                                            Color(red: 0.82, green: 0.65, blue: 0.32)
+                                        ],
+                                        startPoint: .top, endPoint: .bottom))
+                                    : AnyShapeStyle(Color.white.opacity(0.05)))
                         )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(vm.filter == f
+                                    ? Color.white.opacity(0.25)
+                                    : Color.white.opacity(0.1),
+                                    lineWidth: 0.8)
+                        )
+                        .shadow(color: vm.filter == f ? gold.opacity(0.4) : .clear,
+                                radius: 8, y: 3)
                 }
             }
         }
         .padding(.horizontal, 16)
-        .padding(.bottom, 10)
+        .padding(.bottom, 12)
     }
 
     private func errorView(_ message: String) -> some View {
