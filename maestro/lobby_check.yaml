@@ -1,0 +1,13 @@
+appId: com.backyamon.app
+---
+- launchApp
+- takeScreenshot: home
+- tapOn: "PLAY ONLINE"
+- waitForAnimationToEnd
+- takeScreenshot: lobby
+- tapOn:
+    point: "50%,95%"
+- waitForAnimationToEnd
+- tapOn: "CUSTOMIZE"
+- waitForAnimationToEnd
+- takeScreenshot: customize

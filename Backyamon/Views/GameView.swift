@@ -68,7 +68,7 @@ struct GameView: View {
                 )
             }
         }
-        .navigationBarHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
         .onAppear {
             game.newGame(difficulty: difficulty, matchLength: matchLength)
         }
@@ -144,7 +144,7 @@ struct OnlineGameView: View {
                 )
             }
         }
-        .navigationBarHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
         .onDisappear {
             game.leave()
         }

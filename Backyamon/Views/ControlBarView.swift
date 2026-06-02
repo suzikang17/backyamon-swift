@@ -70,11 +70,11 @@ struct ControlBarView<Game: GameControlling>: View {
                 Button {
                     game.offerDouble()
                 } label: {
-                    Text("DOUBLE")
-                        .font(.custom("Georgia-Bold", size: 12))
-                        .tracking(2)
+                    Text("2×")
+                        .font(.custom("Georgia-Bold", size: 14))
+                        .tracking(1)
                         .foregroundStyle(Color(red: 0.85, green: 0.72, blue: 0.45))
-                        .frame(width: 72, height: 32)
+                        .frame(width: 48, height: 32)
                         .overlay(
                             RoundedRectangle(cornerRadius: 4)
                                 .stroke(Color(red: 0.85, green: 0.72, blue: 0.45), lineWidth: 1)
@@ -85,7 +85,7 @@ struct ControlBarView<Game: GameControlling>: View {
                 Text("×\(game.state.doublingCube.value)")
                     .font(.custom("Georgia", size: 12))
                     .foregroundStyle(Color.white.opacity(0.5))
-                    .frame(width: 72, height: 32)
+                    .frame(width: 48, height: 32)
             }
         }
         .padding(.horizontal, 16)

@@ -7,70 +7,55 @@ struct HomeView: View {
     @State private var showCustomize = false
 
     private let bg = Color(red: 0.08, green: 0.12, blue: 0.08)
-    private let gold = Color(red: 0.85, green: 0.72, blue: 0.45)
+    private let gold = Color(red: 0.92, green: 0.78, blue: 0.45)
 
     var body: some View {
         NavigationStack {
             ZStack {
-                bg.ignoresSafeArea()
+                // Atmospheric radial gradient — warm glow up top fading to deep green
+                RadialGradient(
+                    colors: [
+                        Color(red: 0.16, green: 0.24, blue: 0.16),
+                        Color(red: 0.05, green: 0.09, blue: 0.06)
+                    ],
+                    center: .top,
+                    startRadius: 80,
+                    endRadius: 600
+                )
+                .ignoresSafeArea()
 
-                VStack(spacing: 48) {
-                    VStack(spacing: 8) {
+                VStack(spacing: 56) {
+                    VStack(spacing: 12) {
                         Text("BACKYAMON")
-                            .font(.custom("Georgia-Bold", size: 42))
+                            .font(.custom("Georgia-Bold", size: 44))
                             .foregroundStyle(.white)
-                            .tracking(6)
+                            .tracking(7)
+                            .shadow(color: gold.opacity(0.35), radius: 18, y: 0)
+                            .shadow(color: Color.black.opacity(0.6), radius: 2, y: 2)
+
+                        // Hairline divider with gold accent
+                        Rectangle()
+                            .fill(LinearGradient(
+                                colors: [.clear, gold.opacity(0.7), .clear],
+                                startPoint: .leading,
+                                endPoint: .trailing))
+                            .frame(width: 140, height: 1)
 
                         Text("backgammon on the beach")
-                            .font(.custom("Georgia", size: 16))
-                            .foregroundStyle(Color.white.opacity(0.5))
+                            .font(.custom("Georgia-Italic", size: 14))
+                            .foregroundStyle(Color.white.opacity(0.55))
                             .tracking(2)
                     }
 
-                    VStack(spacing: 16) {
-                        Button {
-                            showDifficulty = true
-                        } label: {
-                            Text("PLAY")
-                                .font(.custom("Georgia-Bold", size: 20))
-                                .tracking(4)
-                                .foregroundStyle(bg)
-                                .frame(width: 220, height: 52)
-                                .background(gold)
-                                .clipShape(RoundedRectangle(cornerRadius: 4))
-                        }
-
-                        Button {
-                            showLobby = true
-                        } label: {
-                            Text("PLAY ONLINE")
-                                .font(.custom("Georgia-Bold", size: 18))
-                                .tracking(4)
-                                .foregroundStyle(.white)
-                                .frame(width: 220, height: 52)
-                                .background(Color(red: 0.0, green: 0.42, blue: 0.25))
-                                .clipShape(RoundedRectangle(cornerRadius: 4))
-                        }
-
-                        Button {
-                            showCustomize = true
-                        } label: {
-                            Text("CUSTOMIZE")
-                                .font(.custom("Georgia-Bold", size: 16))
-                                .tracking(4)
-                                .foregroundStyle(gold)
-                                .frame(width: 220, height: 44)
-                                .background(Color.white.opacity(0.06))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 4)
-                                        .stroke(gold.opacity(0.45), lineWidth: 1)
-                                )
-                                .clipShape(RoundedRectangle(cornerRadius: 4))
-                        }
+                    VStack(spacing: 14) {
+                        PrimaryButton(title: "PLAY", action: { showDifficulty = true })
+                        SecondaryButton(title: "PLAY ONLINE",
+                                        color: Color(red: 0.0, green: 0.50, blue: 0.30),
+                                        action: { showLobby = true })
+                        GhostButton(title: "CUSTOMIZE", action: { showCustomize = true })
                     }
                 }
 
-                // Profile icon in the top-right corner.
                 VStack {
                     HStack {
                         Spacer()
@@ -78,11 +63,15 @@ struct HomeView: View {
                             showProfile = true
                         } label: {
                             Image(systemName: "person.fill")
-                                .font(.system(size: 18, weight: .semibold))
+                                .font(.system(size: 17, weight: .semibold))
                                 .foregroundStyle(gold)
-                                .frame(width: 40, height: 40)
-                                .background(Color.white.opacity(0.08))
-                                .clipShape(Circle())
+                                .frame(width: 42, height: 42)
+                                .background(
+                                    Circle()
+                                        .fill(Color.white.opacity(0.06))
+                                        .overlay(Circle().stroke(gold.opacity(0.3), lineWidth: 1))
+                                )
+                                .shadow(color: Color.black.opacity(0.4), radius: 4, y: 2)
                         }
                         .padding(.trailing, 20)
                         .padding(.top, 12)
@@ -201,5 +190,93 @@ final class MyProfileLoader: ObservableObject {
 
     func tearDown() {
         client.disconnect()
+    }
+}
+
+// MARK: - Home buttons
+
+private let homeBg = Color(red: 0.08, green: 0.12, blue: 0.08)
+private let homeGold = Color(red: 0.92, green: 0.78, blue: 0.45)
+
+struct PrimaryButton: View {
+    let title: String
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Text(title)
+                .font(.custom("Georgia-Bold", size: 20))
+                .tracking(5)
+                .foregroundStyle(homeBg)
+                .frame(width: 240, height: 56)
+                .background(
+                    LinearGradient(
+                        colors: [
+                            Color(red: 0.98, green: 0.85, blue: 0.52),
+                            Color(red: 0.82, green: 0.65, blue: 0.32)
+                        ],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.white.opacity(0.25), lineWidth: 0.8)
+                )
+                .shadow(color: homeGold.opacity(0.45), radius: 14, y: 4)
+                .shadow(color: Color.black.opacity(0.45), radius: 3, y: 2)
+        }
+    }
+}
+
+struct SecondaryButton: View {
+    let title: String
+    let color: Color
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Text(title)
+                .font(.custom("Georgia-Bold", size: 18))
+                .tracking(4)
+                .foregroundStyle(.white)
+                .frame(width: 240, height: 52)
+                .background(
+                    LinearGradient(
+                        colors: [color.opacity(1.0), color.opacity(0.78)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.white.opacity(0.18), lineWidth: 0.8)
+                )
+                .shadow(color: color.opacity(0.4), radius: 12, y: 4)
+                .shadow(color: Color.black.opacity(0.45), radius: 3, y: 2)
+        }
+    }
+}
+
+struct GhostButton: View {
+    let title: String
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Text(title)
+                .font(.custom("Georgia-Bold", size: 15))
+                .tracking(4)
+                .foregroundStyle(homeGold)
+                .frame(width: 240, height: 46)
+                .background(Color.white.opacity(0.04))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(homeGold.opacity(0.35), lineWidth: 1)
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+        }
     }
 }

@@ -2,10 +2,26 @@ appId: com.backyamon.app
 ---
 - launchApp
 - takeScreenshot: home
+
+# Navigate to game
 - tapOn: "PLAY"
 - takeScreenshot: difficulty
 - tapOn: "Beach Bum"
 - tapOn: "LET'S PLAY"
 - waitForAnimationToEnd
 - assertVisible: "YOU"
-- takeScreenshot: board
+- takeScreenshot: board_initial
+
+# Roll dice
+- tapOn: "ROLL"
+- waitForAnimationToEnd
+- takeScreenshot: board_after_roll
+
+# Wait for AI turn if needed, then roll
+- runFlow:
+    when:
+      visible: "ROLL"
+    commands:
+      - tapOn: "ROLL"
+      - waitForAnimationToEnd
+      - takeScreenshot: board_human_roll

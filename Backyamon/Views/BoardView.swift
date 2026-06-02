@@ -84,44 +84,83 @@ struct BoardView: View {
 
     private func drawBackground(ctx: GraphicsContext, lay: BLayout) {
         let board = CGRect(x: lay.pad, y: lay.pad, width: lay.boardW, height: lay.boardH)
-        ctx.fill(Path(roundedRect: board, cornerRadius: 6),
-                 with: .color(Color(red: 0.12, green: 0.22, blue: 0.14)))
+        // Felt-style gradient (richer green, subtle vertical depth)
+        ctx.fill(Path(roundedRect: board, cornerRadius: 8),
+                 with: .linearGradient(
+                    Gradient(colors: [
+                        Color(red: 0.13, green: 0.27, blue: 0.18),
+                        Color(red: 0.09, green: 0.20, blue: 0.13)
+                    ]),
+                    startPoint: CGPoint(x: 0, y: lay.pad),
+                    endPoint: CGPoint(x: 0, y: lay.pad + lay.boardH)))
+
+        // Inner border (warm gold trim, evokes wood frame)
+        let trim = Path(roundedRect: board.insetBy(dx: 1, dy: 1), cornerRadius: 7)
+        ctx.stroke(trim, with: .color(Color(red: 0.72, green: 0.55, blue: 0.28).opacity(0.4)), lineWidth: 1)
+
+        // Recessed bar with side-shaded gradient
         let bar = CGRect(x: lay.barX, y: lay.pad, width: lay.barW, height: lay.boardH)
-        ctx.fill(Path(bar), with: .color(Color(red: 0.09, green: 0.17, blue: 0.11)))
+        ctx.fill(Path(bar), with: .linearGradient(
+            Gradient(stops: [
+                .init(color: Color(red: 0.04, green: 0.09, blue: 0.06), location: 0),
+                .init(color: Color(red: 0.09, green: 0.18, blue: 0.12), location: 0.5),
+                .init(color: Color(red: 0.04, green: 0.09, blue: 0.06), location: 1)
+            ]),
+            startPoint: CGPoint(x: lay.barX, y: 0),
+            endPoint: CGPoint(x: lay.barX + lay.barW, y: 0)))
+
+        // Center separator
         var line = Path()
         line.move(to: CGPoint(x: lay.playX, y: lay.pad + lay.halfH))
         line.addLine(to: CGPoint(x: lay.zionX, y: lay.pad + lay.halfH))
-        ctx.stroke(line, with: .color(Color.black.opacity(0.3)), lineWidth: 1)
+        ctx.stroke(line, with: .color(Color.black.opacity(0.45)), lineWidth: 1)
     }
 
     private func drawPoints(ctx: GraphicsContext, lay: BLayout) {
         for i in 0..<24 {
             let dark = i % 2 == 0
-            let fill = dark
-                ? Color(red: 0.6, green: 0.12, blue: 0.12)
-                : Color(red: 0.82, green: 0.72, blue: 0.52)
+            let baseFill = dark
+                ? Color(red: 0.78, green: 0.20, blue: 0.18)
+                : Color(red: 0.92, green: 0.82, blue: 0.60)
+            let tipFill = dark
+                ? Color(red: 0.42, green: 0.06, blue: 0.06)
+                : Color(red: 0.58, green: 0.46, blue: 0.30)
             let cx = lay.pointCX(i)
             var tri = Path()
             tri.move(to: CGPoint(x: cx - lay.pw * 0.45, y: lay.baseY(i)))
             tri.addLine(to: CGPoint(x: cx + lay.pw * 0.45, y: lay.baseY(i)))
             tri.addLine(to: CGPoint(x: cx, y: lay.tipY(i)))
             tri.closeSubpath()
-            ctx.fill(tri, with: .color(fill.opacity(0.85)))
+            // Base→tip gradient gives each point a satin sheen
+            ctx.fill(tri, with: .linearGradient(
+                Gradient(colors: [baseFill, tipFill]),
+                startPoint: CGPoint(x: cx, y: lay.baseY(i)),
+                endPoint: CGPoint(x: cx, y: lay.tipY(i))))
+            // Hairline edge for crispness
+            ctx.stroke(tri, with: .color(Color.black.opacity(0.25)), lineWidth: 0.5)
         }
     }
 
     private func drawHighlights(ctx: GraphicsContext, lay: BLayout) {
+        let selColor = Color(red: 1.0, green: 0.85, blue: 0.35)
+        let destColor = Color(red: 0.35, green: 0.95, blue: 0.55)
+
         if let from = selectedFrom {
             switch from {
             case .bar:
                 let r = CGRect(x: lay.barX, y: lay.pad, width: lay.barW, height: lay.boardH)
-                ctx.fill(Path(r), with: .color(Color.yellow.opacity(0.25)))
+                ctx.fill(Path(r), with: .color(selColor.opacity(0.22)))
             case .point(let idx):
                 let cx = lay.pointCX(idx)
+                let isTop = idx < 12
                 let r = CGRect(x: cx - lay.pw / 2,
-                               y: idx < 12 ? lay.pad : lay.pad + lay.halfH,
+                               y: isTop ? lay.pad : lay.pad + lay.halfH,
                                width: lay.pw, height: lay.halfH)
-                ctx.fill(Path(r), with: .color(Color.yellow.opacity(0.2)))
+                // Soft fade toward center
+                ctx.fill(Path(r), with: .linearGradient(
+                    Gradient(colors: [selColor.opacity(0.35), selColor.opacity(0.05)]),
+                    startPoint: CGPoint(x: cx, y: isTop ? lay.pad : lay.pad + lay.boardH),
+                    endPoint: CGPoint(x: cx, y: lay.pad + lay.halfH)))
             }
         }
 
@@ -136,13 +175,24 @@ struct BoardView: View {
             switch dest {
             case .off:
                 let r = CGRect(x: lay.zionX, y: lay.pad, width: lay.zionW, height: lay.boardH)
-                ctx.fill(Path(r), with: .color(Color.green.opacity(0.3)))
+                ctx.fill(Path(r), with: .color(destColor.opacity(0.32)))
             case .point(let idx):
                 let cx = lay.pointCX(idx)
+                let isTop = idx < 12
                 let r = CGRect(x: cx - lay.pw / 2,
-                               y: idx < 12 ? lay.pad : lay.pad + lay.halfH,
+                               y: isTop ? lay.pad : lay.pad + lay.halfH,
                                width: lay.pw, height: lay.halfH)
-                ctx.fill(Path(r), with: .color(Color.green.opacity(0.2)))
+                ctx.fill(Path(r), with: .linearGradient(
+                    Gradient(colors: [destColor.opacity(0.38), destColor.opacity(0.05)]),
+                    startPoint: CGPoint(x: cx, y: isTop ? lay.pad : lay.pad + lay.boardH),
+                    endPoint: CGPoint(x: cx, y: lay.pad + lay.halfH)))
+                // Outline the target triangle
+                var tri = Path()
+                tri.move(to: CGPoint(x: cx - lay.pw * 0.45, y: lay.baseY(idx)))
+                tri.addLine(to: CGPoint(x: cx + lay.pw * 0.45, y: lay.baseY(idx)))
+                tri.addLine(to: CGPoint(x: cx, y: lay.tipY(idx)))
+                tri.closeSubpath()
+                ctx.stroke(tri, with: .color(destColor.opacity(0.85)), lineWidth: 1.5)
             }
         }
     }
@@ -178,34 +228,76 @@ struct BoardView: View {
 
     private func drawChecker(ctx: GraphicsContext, cx: CGFloat, cy: CGFloat, r: CGFloat, player: Player) {
         let rect = CGRect(x: cx - r, y: cy - r, width: r * 2, height: r * 2)
-        // When the user has equipped a custom piece, swap in a distinct
-        // reggae-green / bright-red fill so they can tell it's active. Full
-        // SVG-to-Canvas rendering is non-trivial in SwiftUI; this is a clear
-        // visual signal that the customisation took effect.
-        let fill: Color
+
+        let centerColor: Color
+        let edgeColor: Color
         let stroke: Color
         if customPieceEquipped {
-            fill = player == .gold
-                ? Color(red: 0.0, green: 0.68, blue: 0.32)
-                : Color(red: 0.92, green: 0.32, blue: 0.18)
+            centerColor = player == .gold
+                ? Color(red: 0.20, green: 0.92, blue: 0.50)
+                : Color(red: 1.0, green: 0.48, blue: 0.30)
+            edgeColor = player == .gold
+                ? Color(red: 0.0, green: 0.48, blue: 0.22)
+                : Color(red: 0.62, green: 0.15, blue: 0.06)
             stroke = player == .gold
-                ? Color(red: 0.0, green: 0.4, blue: 0.18)
-                : Color(red: 0.55, green: 0.1, blue: 0.05)
+                ? Color(red: 0.0, green: 0.30, blue: 0.12)
+                : Color(red: 0.38, green: 0.06, blue: 0.02)
         } else {
-            fill = player == .gold
-                ? Color(red: 0.88, green: 0.76, blue: 0.48)
-                : Color(red: 0.62, green: 0.12, blue: 0.12)
+            centerColor = player == .gold
+                ? Color(red: 0.98, green: 0.88, blue: 0.62)
+                : Color(red: 0.85, green: 0.22, blue: 0.20)
+            edgeColor = player == .gold
+                ? Color(red: 0.68, green: 0.54, blue: 0.28)
+                : Color(red: 0.42, green: 0.06, blue: 0.06)
             stroke = player == .gold
-                ? Color(red: 0.6, green: 0.48, blue: 0.25)
-                : Color(red: 0.35, green: 0.05, blue: 0.05)
+                ? Color(red: 0.42, green: 0.32, blue: 0.14)
+                : Color(red: 0.22, green: 0.03, blue: 0.03)
         }
-        ctx.fill(Path(ellipseIn: rect), with: .color(fill))
-        ctx.stroke(Path(ellipseIn: rect), with: .color(stroke), lineWidth: 1.5)
+
+        // Drop shadow — small offset so stacked pieces still read cleanly
+        let shadowOffset = r * 0.12
+        let shadowRect = rect.offsetBy(dx: 0, dy: shadowOffset)
+        ctx.fill(Path(ellipseIn: shadowRect), with: .color(Color.black.opacity(0.35)))
+
+        // Main body with off-center radial gradient (light from upper-left)
+        ctx.fill(Path(ellipseIn: rect), with: .radialGradient(
+            Gradient(colors: [centerColor, edgeColor]),
+            center: CGPoint(x: cx - r * 0.22, y: cy - r * 0.22),
+            startRadius: 0,
+            endRadius: r * 1.25))
+
+        // Outline
+        ctx.stroke(Path(ellipseIn: rect), with: .color(stroke), lineWidth: 1.0)
+
+        // Inset bevel ring — gives a "stone" or "puck" feel
+        let innerR = r * 0.62
+        let innerRect = CGRect(x: cx - innerR, y: cy - innerR, width: innerR * 2, height: innerR * 2)
+        ctx.stroke(Path(ellipseIn: innerRect), with: .color(stroke.opacity(0.45)), lineWidth: 0.6)
+
+        // Specular highlight (only for radius >= 6 to avoid noise on tiny stacks)
+        if r >= 6 {
+            let hw = r * 0.7
+            let hh = r * 0.45
+            let highlightRect = CGRect(x: cx - r * 0.3 - hw / 2,
+                                       y: cy - r * 0.45 - hh / 2,
+                                       width: hw,
+                                       height: hh)
+            ctx.fill(Path(ellipseIn: highlightRect),
+                     with: .color(Color.white.opacity(0.28)))
+        }
     }
 
     private func drawBearOffTray(ctx: GraphicsContext, lay: BLayout) {
         let tray = CGRect(x: lay.zionX, y: lay.pad, width: lay.zionW, height: lay.boardH)
-        ctx.fill(Path(tray), with: .color(Color(red: 0.09, green: 0.17, blue: 0.11)))
+        // Recessed look — darker on the edges, slightly lighter mid
+        ctx.fill(Path(tray), with: .linearGradient(
+            Gradient(stops: [
+                .init(color: Color(red: 0.04, green: 0.08, blue: 0.06), location: 0),
+                .init(color: Color(red: 0.08, green: 0.15, blue: 0.10), location: 0.5),
+                .init(color: Color(red: 0.04, green: 0.08, blue: 0.06), location: 1)
+            ]),
+            startPoint: CGPoint(x: lay.zionX, y: 0),
+            endPoint: CGPoint(x: lay.zionX + lay.zionW, y: 0)))
 
         let cx = lay.zionX + lay.zionW / 2
         let r = min(lay.zionW * 0.38, 12.0)
