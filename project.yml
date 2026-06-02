@@ -23,6 +23,8 @@ targets:
       - path: Backyamon
     dependencies:
       - package: SocketIO
+    scheme:
+      testTargets: []
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.backyamon.app
@@ -41,7 +43,7 @@ targets:
           NSAllowsArbitraryLoads: true
           NSAllowsLocalNetworking: true
         UILaunchScreen:
-          UIColorName: ""
+          UIColorName: "LaunchBackground"
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
           - UIInterfaceOrientationLandscapeLeft

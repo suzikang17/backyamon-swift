@@ -252,6 +252,7 @@ class GameController: ObservableObject {
         s.phase = .moving
         state = s
         SoundManager.shared.play(.diceRoll)
+        HapticManager.shared.medium()
         updateLegalMoves()
         message = "Rolled \(dice.values.0) and \(dice.values.1)"
         canUndo = !undoStack.isEmpty
@@ -286,13 +287,15 @@ class GameController: ObservableObject {
         }
     }
 
-    /// Pick an SFX based on what happened during a move.
-    /// - bear-off (to == .off) -> bearOff
-    /// - opponent's bar count increased -> pieceHit (also play pieceMove for the move itself)
-    /// - otherwise -> pieceMove
+    /// Pick an SFX + haptic based on what happened during a move.
+    /// - bear-off (to == .off) -> bearOff + success haptic
+    /// - opponent's bar count increased -> pieceHit + heavy haptic
+    /// - otherwise -> pieceMove + light haptic
     private func playSoundFor(move: Move, prev: GameState, next: GameState) {
+        let isHuman = prev.currentPlayer == humanPlayer
         if move.to == .off {
             SoundManager.shared.play(.bearOff)
+            if isHuman { HapticManager.shared.success() }
             return
         }
         let opp = opponent(of: prev.currentPlayer)
@@ -300,8 +303,10 @@ class GameController: ObservableObject {
         let nextOppBar = next.bar[opp] ?? 0
         if nextOppBar > prevOppBar {
             SoundManager.shared.play(.pieceHit)
+            HapticManager.shared.heavy()
         } else {
             SoundManager.shared.play(.pieceMove)
+            if isHuman { HapticManager.shared.light() }
         }
     }
 
@@ -405,8 +410,10 @@ class GameController: ObservableObject {
         legalMoves = []
         if winner == humanPlayer {
             SoundManager.shared.play(.victory)
+            HapticManager.shared.success()
         } else {
             SoundManager.shared.play(.defeat)
+            HapticManager.shared.error()
         }
         MusicEngine.shared.stop()
         switch winType {
