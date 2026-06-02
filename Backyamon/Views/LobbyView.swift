@@ -233,18 +233,33 @@ struct LobbyView: View {
     var body: some View {
         NavigationStack(path: $navigationPath) {
             ZStack {
-                bg.ignoresSafeArea()
+                RadialGradient(
+                    colors: [
+                        Color(red: 0.14, green: 0.22, blue: 0.15),
+                        Color(red: 0.05, green: 0.09, blue: 0.06)
+                    ],
+                    center: .top,
+                    startRadius: 80,
+                    endRadius: 600
+                )
+                .ignoresSafeArea()
 
                 ScrollView {
                     VStack(spacing: 24) {
-                        // Title
-                        VStack(spacing: 6) {
+                        VStack(spacing: 8) {
                             Text("BACKYAMON")
                                 .font(.custom("Georgia-Bold", size: 32))
                                 .foregroundStyle(.white)
                                 .tracking(5)
+                                .shadow(color: gold.opacity(0.3), radius: 12)
+                            Rectangle()
+                                .fill(LinearGradient(
+                                    colors: [.clear, gold.opacity(0.6), .clear],
+                                    startPoint: .leading,
+                                    endPoint: .trailing))
+                                .frame(width: 100, height: 1)
                             Text("ONLINE")
-                                .font(.custom("Georgia-Bold", size: 12))
+                                .font(.custom("Georgia-Bold", size: 11))
                                 .foregroundStyle(gold)
                                 .tracking(6)
                         }
@@ -295,7 +310,7 @@ struct LobbyView: View {
                     .padding(.bottom, 8)
                 }
             }
-            .navigationBarHidden(true)
+            .toolbar(.hidden, for: .navigationBar)
             .navigationDestination(for: OnlineRoomDestination.self) { dest in
                 OnlineGameView(socket: vm.client, roomId: dest.roomId)
             }

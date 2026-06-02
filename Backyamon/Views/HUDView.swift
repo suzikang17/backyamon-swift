@@ -104,6 +104,9 @@ struct DieView: View {
     let value: Int
     let used: Bool
 
+    @State private var rotation: Double = 0
+    @State private var scale: CGFloat = 1.0
+
     private let pipPositions: [Int: [(Double, Double)]] = [
         1: [(0.5, 0.5)],
         2: [(0.25, 0.25), (0.75, 0.75)],
@@ -137,6 +140,16 @@ struct DieView: View {
                     .shadow(color: Color.white.opacity(used ? 0 : 0.4), radius: 0.5, x: 0, y: -0.4)
                     .offset(x: (pos.0 - 0.5) * size * 0.7,
                             y: (pos.1 - 0.5) * size * 0.7)
+            }
+        }
+        .rotation3DEffect(.degrees(rotation), axis: (x: 1, y: 1, z: 0))
+        .scaleEffect(scale)
+        .onChange(of: value) { _, _ in
+            rotation = 0
+            scale = 0.6
+            withAnimation(.spring(response: 0.45, dampingFraction: 0.55)) {
+                rotation = 360
+                scale = 1.0
             }
         }
     }
