@@ -1,0 +1,8 @@
+appId: com.backyamon.app
+---
+- launchApp
+- tapOn: "CUSTOMIZE"
+- waitForAnimationToEnd
+- tapOn: "BROWSE GALLERY"
+- waitForAnimationToEnd
+- takeScreenshot: gallery
