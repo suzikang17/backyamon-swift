@@ -6,6 +6,7 @@ struct GameView: View {
     private let matchLength: Int
     @StateObject private var game: GameController
     @State private var selectedFrom: MoveFrom? = nil
+    @State private var showQuitConfirm = false
     @Environment(\.dismiss) private var dismiss
 
     init(difficulty: Difficulty, matchLength: Int = 1) {
@@ -17,7 +18,7 @@ struct GameView: View {
 
     var body: some View {
         ZStack {
-            Color(red: 0.08, green: 0.12, blue: 0.08)
+            Theme.bg
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
@@ -68,10 +69,44 @@ struct GameView: View {
                 )
             }
         }
-        .toolbar(.hidden, for: .navigationBar)
+        .navigationBarBackButtonHidden(true)
+        .toolbarBackground(.hidden, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                QuitGameButton { showQuitConfirm = true }
+            }
+        }
+        .confirmationDialog("Leave this game?",
+                            isPresented: $showQuitConfirm,
+                            titleVisibility: .visible) {
+            Button("Leave Game", role: .destructive) { dismiss() }
+            Button("Keep Playing", role: .cancel) { }
+        } message: {
+            Text("Your current game will be lost.")
+        }
         .onAppear {
             game.newGame(difficulty: difficulty, matchLength: matchLength)
         }
+    }
+}
+
+/// Compact themed quit affordance for game screens — the nav bar background
+/// is hidden, so this is the only chrome over the felt.
+struct QuitGameButton: View {
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: "xmark")
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(Theme.gold)
+                .frame(width: 34, height: 34)
+                .background(Circle().fill(Color.black.opacity(0.35)))
+                .overlay(Circle().stroke(Theme.gold.opacity(0.3), lineWidth: 1))
+                .frame(width: 44, height: 44)
+                .contentShape(Rectangle())
+        }
+        .accessibilityLabel("Leave game")
     }
 }
 
@@ -80,6 +115,7 @@ struct GameView: View {
 struct OnlineGameView: View {
     @StateObject private var game: OnlineGameController
     @State private var selectedFrom: MoveFrom? = nil
+    @State private var showQuitConfirm = false
     @Environment(\.dismiss) private var dismiss
 
     init(socket: SocketClient, roomId: String) {
@@ -88,7 +124,7 @@ struct OnlineGameView: View {
 
     var body: some View {
         ZStack {
-            Color(red: 0.08, green: 0.12, blue: 0.08)
+            Theme.bg
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
@@ -97,9 +133,9 @@ struct OnlineGameView: View {
                 if game.isOpponentDisconnected {
                     HStack {
                         Image(systemName: "exclamationmark.triangle.fill")
-                            .foregroundStyle(Color(red: 0.85, green: 0.72, blue: 0.45))
+                            .foregroundStyle(Theme.gold)
                         Text("Opponent disconnected — waiting for reconnect")
-                            .font(.custom("Georgia", size: 12))
+                            .font(Theme.serif(12))
                             .foregroundStyle(.white)
                     }
                     .padding(.vertical, 6)
@@ -129,7 +165,7 @@ struct OnlineGameView: View {
 
             if game.aiDoubleOffered && game.state.winner == nil {
                 DoubleOfferOverlay(
-                    proposedValue: game.state.doublingCube.value,
+                    proposedValue: min(game.state.doublingCube.value * 2, 64),
                     onAccept: { game.acceptDouble(by: game.humanPlayer) },
                     onReject: { game.rejectDouble(by: game.humanPlayer) }
                 )
@@ -144,7 +180,21 @@ struct OnlineGameView: View {
                 )
             }
         }
-        .toolbar(.hidden, for: .navigationBar)
+        .navigationBarBackButtonHidden(true)
+        .toolbarBackground(.hidden, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                QuitGameButton { showQuitConfirm = true }
+            }
+        }
+        .confirmationDialog("Leave this match?",
+                            isPresented: $showQuitConfirm,
+                            titleVisibility: .visible) {
+            Button("Leave Match", role: .destructive) { dismiss() }
+            Button("Keep Playing", role: .cancel) { }
+        } message: {
+            Text("Leaving forfeits the match to your opponent.")
+        }
         .onDisappear {
             game.leave()
         }
@@ -164,11 +214,11 @@ private struct DoubleOfferOverlay: View {
             VStack(spacing: 24) {
                 VStack(spacing: 8) {
                     Text("OPPONENT DOUBLES")
-                        .font(.custom("Georgia-Bold", size: 18))
+                        .font(Theme.serifBold(18))
                         .tracking(3)
-                        .foregroundStyle(Color(red: 0.7, green: 0.2, blue: 0.2))
+                        .foregroundStyle(Theme.red)
                     Text("Stakes go to \(proposedValue)")
-                        .font(.custom("Georgia", size: 16))
+                        .font(Theme.serif(16))
                         .italic()
                         .foregroundStyle(.white)
                 }
@@ -176,7 +226,7 @@ private struct DoubleOfferOverlay: View {
                 HStack(spacing: 16) {
                     Button(action: onReject) {
                         Text("DROP")
-                            .font(.custom("Georgia-Bold", size: 14))
+                            .font(Theme.serifBold(14))
                             .tracking(3)
                             .foregroundStyle(.white)
                             .frame(width: 130, height: 44)
@@ -189,11 +239,11 @@ private struct DoubleOfferOverlay: View {
                     }
                     Button(action: onAccept) {
                         Text("TAKE")
-                            .font(.custom("Georgia-Bold", size: 14))
+                            .font(Theme.serifBold(14))
                             .tracking(3)
-                            .foregroundStyle(Color(red: 0.08, green: 0.12, blue: 0.08))
+                            .foregroundStyle(Theme.bg)
                             .frame(width: 130, height: 44)
-                            .background(Color(red: 0.85, green: 0.72, blue: 0.45))
+                            .background(Theme.gold)
                             .clipShape(RoundedRectangle(cornerRadius: 4))
                     }
                 }
@@ -201,10 +251,10 @@ private struct DoubleOfferOverlay: View {
             .padding(32)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(Color(red: 0.08, green: 0.12, blue: 0.08))
+                    .fill(Theme.bg)
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color(red: 0.85, green: 0.72, blue: 0.45).opacity(0.5), lineWidth: 1)
+                            .stroke(Theme.gold.opacity(0.5), lineWidth: 1)
                     )
             )
         }

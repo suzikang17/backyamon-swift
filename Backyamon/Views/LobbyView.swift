@@ -1,10 +1,5 @@
 import SwiftUI
 
-/// Navigation target representing an active online room.
-struct OnlineRoomDestination: Hashable {
-    let roomId: String
-}
-
 /// Online lobby: connect, register, claim username, quick match, create/join rooms.
 @MainActor
 final class LobbyViewModel: ObservableObject {
@@ -217,6 +212,11 @@ final class LobbyViewModel: ObservableObject {
     }
 }
 
+/// Navigation target representing an active online room.
+struct OnlineRoomDestination: Hashable {
+    let roomId: String
+}
+
 struct LobbyView: View {
     @StateObject private var vm = LobbyViewModel()
     @State private var usernameInput = ""
@@ -225,18 +225,24 @@ struct LobbyView: View {
     @State private var navigationPath = NavigationPath()
     @Environment(\.dismiss) private var dismiss
 
-    private let bg = Color(red: 0.08, green: 0.12, blue: 0.08)
-    private let gold = Color(red: 0.85, green: 0.72, blue: 0.45)
-    private let red = Color(red: 0.7, green: 0.2, blue: 0.2)
-    private let cream = Color(red: 0.96, green: 0.94, blue: 0.88)
+    private let bg = Theme.bg
+    private let gold = Theme.gold
+    private let red = Theme.red
+    private let cream = Theme.cream
 
     var body: some View {
+        // NOTE: the inner NavigationStack is deliberate. This view is itself
+        // a navigationDestination of HomeView, and attaching the game/profile
+        // navigationDestination modifiers to a pushed view's root sends
+        // SwiftUI (iOS 18) into an infinite view-update loop that freezes the
+        // main thread. The nested stack keeps destination registration on a
+        // stack root, which is the configuration that works.
         NavigationStack(path: $navigationPath) {
-            ZStack {
+        ZStack {
                 RadialGradient(
                     colors: [
-                        Color(red: 0.14, green: 0.22, blue: 0.15),
-                        Color(red: 0.05, green: 0.09, blue: 0.06)
+                        Theme.bgGlow,
+                        Theme.bgDeep
                     ],
                     center: .top,
                     startRadius: 80,
@@ -248,7 +254,7 @@ struct LobbyView: View {
                     VStack(spacing: 24) {
                         VStack(spacing: 8) {
                             Text("BACKYAMON")
-                                .font(.custom("Georgia-Bold", size: 32))
+                                .font(Theme.serifBold(32))
                                 .foregroundStyle(.white)
                                 .tracking(5)
                                 .shadow(color: gold.opacity(0.3), radius: 12)
@@ -259,7 +265,7 @@ struct LobbyView: View {
                                     endPoint: .trailing))
                                 .frame(width: 100, height: 1)
                             Text("ONLINE")
-                                .font(.custom("Georgia-Bold", size: 11))
+                                .font(Theme.serifBold(11))
                                 .foregroundStyle(gold)
                                 .tracking(6)
                         }
@@ -297,38 +303,42 @@ struct LobbyView: View {
                     .padding(.horizontal, 20)
                 }
 
-                VStack {
-                    Spacer()
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("← BACK TO MENU")
-                            .font(.custom("Georgia-Bold", size: 12))
-                            .tracking(3)
-                            .foregroundStyle(Color.white.opacity(0.5))
-                    }
-                    .padding(.bottom, 8)
+            VStack {
+                Spacer()
+                Button {
+                    dismiss()
+                } label: {
+                    Text("← BACK TO MENU")
+                        .font(Theme.serifBold(12))
+                        .tracking(3)
+                        .foregroundStyle(Theme.textTertiary)
+                        .frame(minHeight: 44)
+                        .contentShape(Rectangle())
                 }
+                .padding(.bottom, 4)
             }
-            .toolbar(.hidden, for: .navigationBar)
-            .navigationDestination(for: OnlineRoomDestination.self) { dest in
-                OnlineGameView(socket: vm.client, roomId: dest.roomId)
+        }
+        .toolbar(.hidden, for: .navigationBar)
+        .navigationDestination(for: OnlineRoomDestination.self) { dest in
+            OnlineGameView(socket: vm.client, roomId: dest.roomId)
+        }
+        .navigationDestination(for: PlayerProfileDestination.self) { dest in
+            ProfileView(username: dest.username, client: vm.client)
+        }
+        .onChange(of: vm.activeRoomId) { _, newValue in
+            if let id = newValue {
+                navigationPath.append(OnlineRoomDestination(roomId: id))
+                vm.activeRoomId = nil
             }
-            .navigationDestination(for: PlayerProfileDestination.self) { dest in
-                ProfileView(username: dest.username, client: vm.client)
-            }
-            .onChange(of: vm.activeRoomId) { _, newValue in
-                if let id = newValue {
-                    navigationPath.append(OnlineRoomDestination(roomId: id))
-                    vm.activeRoomId = nil
-                }
-            }
-            .task {
-                await vm.start()
-            }
-            .onDisappear {
-                vm.tearDown()
-            }
+        }
+        .task {
+            await vm.start()
+        }
+        .onDisappear {
+            // Fires only when the lobby itself pops back to Home (game and
+            // profile pushes happen on the inner stack, so this view stays).
+            vm.tearDown()
+        }
         }
     }
 
@@ -342,14 +352,14 @@ struct LobbyView: View {
             Text(vm.connecting
                  ? "Connecting..."
                  : (vm.connected ? "Connected" : "Disconnected"))
-                .font(.custom("Georgia", size: 13))
-                .foregroundStyle(Color.white.opacity(0.7))
+                .font(Theme.serif(13))
+                .foregroundStyle(Theme.textSecondary)
             if !vm.displayName.isEmpty {
                 Text("as")
-                    .font(.custom("Georgia", size: 13))
-                    .foregroundStyle(Color.white.opacity(0.4))
+                    .font(Theme.serif(13))
+                    .foregroundStyle(Theme.textTertiary)
                 Text(vm.displayName)
-                    .font(.custom("Georgia-Bold", size: 13))
+                    .font(Theme.serifBold(13))
                     .foregroundStyle(gold)
             }
             Spacer(minLength: 8)
@@ -359,7 +369,7 @@ struct LobbyView: View {
                         Image(systemName: "person.fill")
                             .font(.system(size: 10, weight: .semibold))
                         Text("MY PROFILE")
-                            .font(.custom("Georgia-Bold", size: 10))
+                            .font(Theme.serifBold(10))
                             .tracking(2)
                     }
                     .foregroundStyle(bg)
@@ -377,9 +387,9 @@ struct LobbyView: View {
             if vm.connected, vm.username == nil {
                 VStack(spacing: 8) {
                     Text("PICK A USERNAME")
-                        .font(.custom("Georgia-Bold", size: 10))
+                        .font(Theme.serifBold(10))
                         .tracking(3)
-                        .foregroundStyle(Color.white.opacity(0.5))
+                        .foregroundStyle(Theme.textTertiary)
                     HStack(spacing: 8) {
                         TextField("username", text: $usernameInput)
                             .textInputAutocapitalization(.never)
@@ -389,8 +399,9 @@ struct LobbyView: View {
                             .background(Color.white.opacity(0.08))
                             .clipShape(RoundedRectangle(cornerRadius: 4))
                             .foregroundStyle(.white)
-                            .font(.custom("Georgia", size: 14))
+                            .font(Theme.serif(14))
                             .frame(width: 180)
+                        let canClaim = !usernameInput.trimmingCharacters(in: .whitespaces).isEmpty
                         Button {
                             Task {
                                 await vm.claimUsername(usernameInput)
@@ -398,15 +409,15 @@ struct LobbyView: View {
                             }
                         } label: {
                             Text("CLAIM")
-                                .font(.custom("Georgia-Bold", size: 12))
+                                .font(Theme.serifBold(12))
                                 .tracking(2)
-                                .foregroundStyle(bg)
+                                .foregroundStyle(canClaim ? bg : Color.white.opacity(0.35))
                                 .padding(.horizontal, 14)
-                                .padding(.vertical, 8)
-                                .background(gold)
+                                .frame(height: 44)
+                                .background(canClaim ? AnyShapeStyle(gold) : AnyShapeStyle(Color.white.opacity(0.1)))
                                 .clipShape(RoundedRectangle(cornerRadius: 4))
                         }
-                        .disabled(usernameInput.trimmingCharacters(in: .whitespaces).isEmpty)
+                        .disabled(!canClaim)
                     }
                 }
             }
@@ -419,7 +430,7 @@ struct LobbyView: View {
                 vm.quickMatch()
             } label: {
                 Text("QUICK MATCH")
-                    .font(.custom("Georgia-Bold", size: 18))
+                    .font(Theme.serifBold(18))
                     .tracking(4)
                     .foregroundStyle(bg)
                     .frame(maxWidth: .infinity)
@@ -427,8 +438,8 @@ struct LobbyView: View {
                     .background(
                         LinearGradient(
                             colors: vm.connected
-                                ? [Color(red: 0.98, green: 0.85, blue: 0.52),
-                                   Color(red: 0.82, green: 0.65, blue: 0.32)]
+                                ? [Theme.goldBright,
+                                   Theme.goldDeep]
                                 : [Color.gray.opacity(0.3), Color.gray.opacity(0.2)],
                             startPoint: .top, endPoint: .bottom)
                     )
@@ -446,7 +457,7 @@ struct LobbyView: View {
                     Task { await vm.createRoom(name: customRoomName) }
                 } label: {
                     Text("CREATE ROOM")
-                        .font(.custom("Georgia-Bold", size: 16))
+                        .font(Theme.serifBold(16))
                         .tracking(3)
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
@@ -454,7 +465,7 @@ struct LobbyView: View {
                         .background(
                             LinearGradient(
                                 colors: vm.connected
-                                    ? [Color(red: 0.0, green: 0.55, blue: 0.32),
+                                    ? [Theme.green,
                                        Color(red: 0.0, green: 0.38, blue: 0.22)]
                                     : [Color.gray.opacity(0.25), Color.gray.opacity(0.15)],
                                 startPoint: .top, endPoint: .bottom)
@@ -464,7 +475,7 @@ struct LobbyView: View {
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color.white.opacity(vm.connected ? 0.18 : 0), lineWidth: 0.8)
                         )
-                        .shadow(color: Color(red: 0.0, green: 0.5, blue: 0.3).opacity(vm.connected ? 0.4 : 0), radius: 10, y: 3)
+                        .shadow(color: Theme.green.opacity(vm.connected ? 0.4 : 0), radius: 10, y: 3)
                 }
                 .disabled(!vm.connected)
 
@@ -475,17 +486,17 @@ struct LobbyView: View {
                     .padding(.vertical, 6)
                     .background(Color.white.opacity(0.06))
                     .clipShape(RoundedRectangle(cornerRadius: 4))
-                    .foregroundStyle(Color.white.opacity(0.85))
-                    .font(.custom("Georgia", size: 12))
+                    .foregroundStyle(Theme.textPrimary)
+                    .font(Theme.serif(12))
                     .multilineTextAlignment(.center)
             }
 
             // Join room
             VStack(spacing: 8) {
                 Text("JOIN ROOM")
-                    .font(.custom("Georgia-Bold", size: 10))
+                    .font(Theme.serifBold(10))
                     .tracking(3)
-                    .foregroundStyle(Color.white.opacity(0.5))
+                    .foregroundStyle(Theme.textTertiary)
                 HStack(spacing: 8) {
                     TextField("room code", text: $roomJoinInput)
                         .textInputAutocapitalization(.characters)
@@ -495,7 +506,8 @@ struct LobbyView: View {
                         .background(Color.white.opacity(0.06))
                         .clipShape(RoundedRectangle(cornerRadius: 4))
                         .foregroundStyle(.white)
-                        .font(.custom("Georgia", size: 14))
+                        .font(Theme.serif(14))
+                    let canJoin = vm.connected && !roomJoinInput.trimmingCharacters(in: .whitespaces).isEmpty
                     Button {
                         Task {
                             let id = roomJoinInput
@@ -504,15 +516,15 @@ struct LobbyView: View {
                         }
                     } label: {
                         Text("JOIN")
-                            .font(.custom("Georgia-Bold", size: 12))
+                            .font(Theme.serifBold(12))
                             .tracking(2)
-                            .foregroundStyle(bg)
+                            .foregroundStyle(canJoin ? bg : Color.white.opacity(0.35))
                             .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
-                            .background(gold)
+                            .frame(height: 44)
+                            .background(canJoin ? AnyShapeStyle(gold) : AnyShapeStyle(Color.white.opacity(0.1)))
                             .clipShape(RoundedRectangle(cornerRadius: 4))
                     }
-                    .disabled(!vm.connected || roomJoinInput.trimmingCharacters(in: .whitespaces).isEmpty)
+                    .disabled(!canJoin)
                 }
             }
 
@@ -520,9 +532,9 @@ struct LobbyView: View {
             if !vm.rooms.isEmpty {
                 VStack(alignment: .leading, spacing: 6) {
                     Text("OPEN ROOMS")
-                        .font(.custom("Georgia-Bold", size: 10))
+                        .font(Theme.serifBold(10))
                         .tracking(3)
-                        .foregroundStyle(Color.white.opacity(0.5))
+                        .foregroundStyle(Theme.textTertiary)
                     ForEach(vm.rooms) { room in
                         Button {
                             Task { await vm.joinRoom(room.id) }
@@ -530,17 +542,17 @@ struct LobbyView: View {
                             HStack {
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text(room.id)
-                                        .font(.custom("Georgia-Bold", size: 14))
+                                        .font(Theme.serifBold(14))
                                         .foregroundStyle(gold)
                                     Text(room.hostName)
-                                        .font(.custom("Georgia", size: 11))
-                                        .foregroundStyle(Color.white.opacity(0.4))
+                                        .font(Theme.serif(11))
+                                        .foregroundStyle(Theme.textTertiary)
                                 }
                                 Spacer()
                                 Text("JOIN →")
-                                    .font(.custom("Georgia-Bold", size: 11))
+                                    .font(Theme.serifBold(11))
                                     .tracking(2)
-                                    .foregroundStyle(Color(red: 0.0, green: 0.55, blue: 0.32))
+                                    .foregroundStyle(Theme.greenBright)
                             }
                             .padding(.horizontal, 12)
                             .padding(.vertical, 10)
@@ -555,21 +567,17 @@ struct LobbyView: View {
 
     private var searchingView: some View {
         VStack(spacing: 16) {
-            HStack(spacing: 6) {
-                Circle().fill(Color(red: 0.0, green: 0.55, blue: 0.32)).frame(width: 10, height: 10)
-                Circle().fill(gold).frame(width: 10, height: 10)
-                Circle().fill(red).frame(width: 10, height: 10)
-            }
+            SearchingDots()
             Text("Searching for opponent...")
-                .font(.custom("Georgia", size: 16))
+                .font(Theme.serif(16))
                 .foregroundStyle(.white)
             Button {
                 vm.cancelQuickMatch()
             } label: {
                 Text("CANCEL")
-                    .font(.custom("Georgia-Bold", size: 12))
+                    .font(Theme.serifBold(12))
                     .tracking(3)
-                    .foregroundStyle(Color.white.opacity(0.7))
+                    .foregroundStyle(Theme.textSecondary)
                     .padding(.horizontal, 24)
                     .padding(.vertical, 10)
                     .background(Color.white.opacity(0.08))
@@ -582,11 +590,11 @@ struct LobbyView: View {
     private func waitingForOpponentView(code: String) -> some View {
         VStack(spacing: 12) {
             Text("YOUR ROOM CODE")
-                .font(.custom("Georgia-Bold", size: 10))
+                .font(Theme.serifBold(10))
                 .tracking(3)
-                .foregroundStyle(Color.white.opacity(0.5))
+                .foregroundStyle(Theme.textTertiary)
             Text(code)
-                .font(.custom("Georgia-Bold", size: 36))
+                .font(Theme.serifBold(36))
                 .foregroundStyle(gold)
                 .tracking(6)
                 .padding(.horizontal, 30)
@@ -596,15 +604,15 @@ struct LobbyView: View {
                         .stroke(gold, lineWidth: 2)
                 )
             Text("Waiting for opponent...")
-                .font(.custom("Georgia", size: 14))
-                .foregroundStyle(Color.white.opacity(0.6))
+                .font(Theme.serif(14))
+                .foregroundStyle(Theme.textSecondary)
             Button {
                 vm.cancelRoom()
             } label: {
                 Text("CANCEL")
-                    .font(.custom("Georgia-Bold", size: 12))
+                    .font(Theme.serifBold(12))
                     .tracking(3)
-                    .foregroundStyle(Color.white.opacity(0.7))
+                    .foregroundStyle(Theme.textSecondary)
                     .padding(.horizontal, 24)
                     .padding(.vertical, 10)
                     .background(Color.white.opacity(0.08))
@@ -619,26 +627,26 @@ struct LobbyView: View {
             if !vm.players.isEmpty {
                 VStack(alignment: .leading, spacing: 6) {
                     Text("LEADERBOARD")
-                        .font(.custom("Georgia-Bold", size: 10))
+                        .font(Theme.serifBold(10))
                         .tracking(3)
-                        .foregroundStyle(Color.white.opacity(0.5))
+                        .foregroundStyle(Theme.textTertiary)
                     ForEach(Array(vm.players.prefix(10).enumerated()), id: \.element.username) { idx, p in
                         NavigationLink(value: PlayerProfileDestination(username: p.username)) {
                             HStack {
                                 Text("\(idx + 1)")
-                                    .font(.custom("Georgia-Bold", size: 12))
+                                    .font(Theme.serifBold(12))
                                     .foregroundStyle(rankColor(idx))
                                     .frame(width: 24, alignment: .leading)
                                 Text(p.username)
-                                    .font(.custom("Georgia", size: 13))
+                                    .font(Theme.serif(13))
                                     .foregroundStyle(gold)
                                 Spacer()
                                 Text("\(p.points) pts")
-                                    .font(.custom("Georgia-Bold", size: 12))
-                                    .foregroundStyle(Color.white.opacity(0.7))
+                                    .font(Theme.serifBold(12))
+                                    .foregroundStyle(Theme.textSecondary)
                                 Text("\(p.wins)-\(p.losses)")
-                                    .font(.custom("Georgia", size: 11))
-                                    .foregroundStyle(Color.white.opacity(0.4))
+                                    .font(Theme.serif(11))
+                                    .foregroundStyle(Theme.textTertiary)
                                     .frame(width: 48, alignment: .trailing)
                             }
                             .padding(.horizontal, 12)
@@ -658,38 +666,38 @@ struct LobbyView: View {
             if !vm.recentMatches.isEmpty {
                 VStack(alignment: .leading, spacing: 6) {
                     Text("RECENT MATCHES")
-                        .font(.custom("Georgia-Bold", size: 10))
+                        .font(Theme.serifBold(10))
                         .tracking(3)
-                        .foregroundStyle(Color.white.opacity(0.5))
+                        .foregroundStyle(Theme.textTertiary)
                     ForEach(vm.recentMatches) { m in
                         HStack(spacing: 6) {
                             if let winner = m.winner {
                                 NavigationLink(value: PlayerProfileDestination(username: winner)) {
                                     Text(winner)
-                                        .font(.custom("Georgia-Bold", size: 12))
+                                        .font(Theme.serifBold(12))
                                         .foregroundStyle(gold)
                                 }
                                 .buttonStyle(.plain)
                                 Text("beat")
-                                    .font(.custom("Georgia", size: 11))
-                                    .foregroundStyle(Color.white.opacity(0.4))
+                                    .font(Theme.serif(11))
+                                    .foregroundStyle(Theme.textTertiary)
                                 if let loser = m.loser {
                                     NavigationLink(value: PlayerProfileDestination(username: loser)) {
                                         Text(loser)
-                                            .font(.custom("Georgia", size: 12))
-                                            .foregroundStyle(Color.white.opacity(0.7))
+                                            .font(Theme.serif(12))
+                                            .foregroundStyle(Theme.textSecondary)
                                     }
                                     .buttonStyle(.plain)
                                 }
                             }
                             Spacer()
                             Text(formatWinType(m.winType))
-                                .font(.custom("Georgia-Bold", size: 9))
+                                .font(Theme.serifBold(9))
                                 .tracking(1)
-                                .foregroundStyle(Color.white.opacity(0.5))
+                                .foregroundStyle(Theme.textTertiary)
                             Text("\(m.pointsWon)pt")
-                                .font(.custom("Georgia", size: 10))
-                                .foregroundStyle(Color.white.opacity(0.4))
+                                .font(Theme.serif(10))
+                                .foregroundStyle(Theme.textTertiary)
                                 .frame(width: 28, alignment: .trailing)
                         }
                         .padding(.horizontal, 10)
@@ -714,13 +722,13 @@ struct LobbyView: View {
     private func errorBanner(text: String, showRetry: Bool, onRetry: @escaping () -> Void) -> some View {
         VStack(spacing: 8) {
             Text(text)
-                .font(.custom("Georgia", size: 13))
-                .foregroundStyle(red)
+                .font(Theme.serif(13))
+                .foregroundStyle(Theme.errorText)
                 .multilineTextAlignment(.center)
             if showRetry {
                 Button(action: onRetry) {
                     Text("TRY AGAIN")
-                        .font(.custom("Georgia-Bold", size: 12))
+                        .font(Theme.serifBold(12))
                         .tracking(3)
                         .foregroundStyle(bg)
                         .padding(.horizontal, 24)
@@ -735,5 +743,36 @@ struct LobbyView: View {
             RoundedRectangle(cornerRadius: 6)
                 .stroke(red.opacity(0.6), lineWidth: 1)
         )
+    }
+}
+
+/// Three staggered pulsing dots shown while matchmaking. Static (full
+/// opacity) when Reduce Motion is on.
+private struct SearchingDots: View {
+    @State private var animating = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    private let colors: [Color] = [Theme.green, Theme.gold, Theme.red]
+
+    var body: some View {
+        HStack(spacing: 6) {
+            ForEach(0..<3, id: \.self) { i in
+                Circle()
+                    .fill(colors[i])
+                    .frame(width: 10, height: 10)
+                    .opacity(animating ? 1.0 : 0.35)
+                    .animation(
+                        .easeInOut(duration: 0.6)
+                            .repeatForever(autoreverses: true)
+                            .delay(Double(i) * 0.2),
+                        value: animating
+                    )
+            }
+        }
+        .accessibilityHidden(true)
+        .onAppear {
+            guard !reduceMotion else { return }
+            animating = true
+        }
     }
 }

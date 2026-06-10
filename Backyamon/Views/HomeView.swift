@@ -6,8 +6,8 @@ struct HomeView: View {
     @State private var showProfile = false
     @State private var showCustomize = false
 
-    private let bg = Color(red: 0.08, green: 0.12, blue: 0.08)
-    private let gold = Color(red: 0.92, green: 0.78, blue: 0.45)
+    private let bg = Theme.bg
+    private let gold = Theme.gold
 
     var body: some View {
         NavigationStack {
@@ -15,8 +15,8 @@ struct HomeView: View {
                 // Atmospheric radial gradient — warm glow up top fading to deep green
                 RadialGradient(
                     colors: [
-                        Color(red: 0.16, green: 0.24, blue: 0.16),
-                        Color(red: 0.05, green: 0.09, blue: 0.06)
+                        Theme.bgGlow,
+                        Theme.bgDeep
                     ],
                     center: .top,
                     startRadius: 80,
@@ -27,7 +27,7 @@ struct HomeView: View {
                 VStack(spacing: 56) {
                     VStack(spacing: 12) {
                         Text("BACKYAMON")
-                            .font(.custom("Georgia-Bold", size: 44))
+                            .font(Theme.serifBold(44))
                             .foregroundStyle(.white)
                             .tracking(7)
                             .shadow(color: gold.opacity(0.35), radius: 18, y: 0)
@@ -42,15 +42,15 @@ struct HomeView: View {
                             .frame(width: 140, height: 1)
 
                         Text("backgammon on the beach")
-                            .font(.custom("Georgia-Italic", size: 14))
-                            .foregroundStyle(Color.white.opacity(0.55))
+                            .font(Theme.serifItalic(14))
+                            .foregroundStyle(Theme.textTertiary)
                             .tracking(2)
                     }
 
                     VStack(spacing: 14) {
                         PrimaryButton(title: "PLAY", action: { showDifficulty = true })
                         SecondaryButton(title: "PLAY ONLINE",
-                                        color: Color(red: 0.0, green: 0.50, blue: 0.30),
+                                        color: Theme.green,
                                         action: { showLobby = true })
                         GhostButton(title: "CUSTOMIZE", action: { showCustomize = true })
                     }
@@ -65,7 +65,7 @@ struct HomeView: View {
                             Image(systemName: "person.fill")
                                 .font(.system(size: 17, weight: .semibold))
                                 .foregroundStyle(gold)
-                                .frame(width: 42, height: 42)
+                                .frame(width: 44, height: 44)
                                 .background(
                                     Circle()
                                         .fill(Color.white.opacity(0.06))
@@ -73,6 +73,7 @@ struct HomeView: View {
                                 )
                                 .shadow(color: Color.black.opacity(0.4), radius: 4, y: 2)
                         }
+                        .accessibilityLabel("My profile")
                         .padding(.trailing, 20)
                         .padding(.top, 12)
                     }
@@ -103,9 +104,9 @@ struct HomeView: View {
 struct MyProfileLauncher: View {
     @StateObject private var loader = MyProfileLoader()
 
-    private let bg = Color(red: 0.08, green: 0.12, blue: 0.08)
-    private let gold = Color(red: 0.85, green: 0.72, blue: 0.45)
-    private let red = Color(red: 0.7, green: 0.2, blue: 0.2)
+    private let bg = Theme.bg
+    private let gold = Theme.gold
+    private let red = Theme.red
 
     var body: some View {
         ZStack {
@@ -115,14 +116,14 @@ struct MyProfileLauncher: View {
             } else if let err = loader.errorMessage {
                 VStack(spacing: 14) {
                     Text(err)
-                        .font(.custom("Georgia", size: 14))
-                        .foregroundStyle(red)
+                        .font(Theme.serif(14))
+                        .foregroundStyle(Theme.errorText)
                         .multilineTextAlignment(.center)
                     Button {
                         Task { await loader.start() }
                     } label: {
                         Text("RETRY")
-                            .font(.custom("Georgia-Bold", size: 12))
+                            .font(Theme.serifBold(12))
                             .tracking(3)
                             .foregroundStyle(bg)
                             .padding(.horizontal, 24)
@@ -138,11 +139,11 @@ struct MyProfileLauncher: View {
                         .font(.system(size: 40))
                         .foregroundStyle(gold.opacity(0.7))
                     Text("Claim a username first")
-                        .font(.custom("Georgia-Bold", size: 16))
+                        .font(Theme.serifBold(16))
                         .foregroundStyle(.white)
                     Text("Head to the lobby and pick a name to start tracking stats.")
-                        .font(.custom("Georgia", size: 13))
-                        .foregroundStyle(Color.white.opacity(0.5))
+                        .font(Theme.serif(13))
+                        .foregroundStyle(Theme.textTertiary)
                         .multilineTextAlignment(.center)
                 }
                 .padding(.horizontal, 32)
@@ -195,8 +196,8 @@ final class MyProfileLoader: ObservableObject {
 
 // MARK: - Home buttons
 
-private let homeBg = Color(red: 0.08, green: 0.12, blue: 0.08)
-private let homeGold = Color(red: 0.92, green: 0.78, blue: 0.45)
+private let homeBg = Theme.bg
+private let homeGold = Theme.gold
 
 struct PrimaryButton: View {
     let title: String
@@ -205,15 +206,15 @@ struct PrimaryButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.custom("Georgia-Bold", size: 20))
+                .font(Theme.serifBold(20))
                 .tracking(5)
                 .foregroundStyle(homeBg)
                 .frame(width: 240, height: 56)
                 .background(
                     LinearGradient(
                         colors: [
-                            Color(red: 0.98, green: 0.85, blue: 0.52),
-                            Color(red: 0.82, green: 0.65, blue: 0.32)
+                            Theme.goldBright,
+                            Theme.goldDeep
                         ],
                         startPoint: .top,
                         endPoint: .bottom
@@ -238,7 +239,7 @@ struct SecondaryButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.custom("Georgia-Bold", size: 18))
+                .font(Theme.serifBold(18))
                 .tracking(4)
                 .foregroundStyle(.white)
                 .frame(width: 240, height: 52)
@@ -267,7 +268,7 @@ struct GhostButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.custom("Georgia-Bold", size: 15))
+                .font(Theme.serifBold(15))
                 .tracking(4)
                 .foregroundStyle(homeGold)
                 .frame(width: 240, height: 46)

@@ -5,21 +5,24 @@ struct ControlBarView<Game: GameControlling>: View {
     @ObservedObject private var sound = SoundManager.shared
     @ObservedObject private var music = MusicEngine.shared
 
-    private let gold = Color(red: 0.92, green: 0.78, blue: 0.45)
+    private let gold = Theme.gold
 
     var body: some View {
-        HStack(spacing: 14) {
+        HStack(spacing: 8) {
             IconButton(systemName: "arrow.uturn.backward",
                        active: game.canUndo,
+                       label: "Undo move",
                        action: { game.undo() })
                 .disabled(!game.canUndo)
 
             IconButton(systemName: sound.isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill",
                        active: !sound.isMuted,
+                       label: sound.isMuted ? "Unmute sound effects" : "Mute sound effects",
                        action: { sound.toggleMute() })
 
             IconButton(systemName: music.isMusicEnabled ? "music.note" : "music.note.slash",
                        active: music.isMusicEnabled,
+                       label: music.isMusicEnabled ? "Turn music off" : "Turn music on",
                        action: { music.toggleMusic() })
 
             Spacer()
@@ -28,8 +31,8 @@ struct ControlBarView<Game: GameControlling>: View {
                 RollButton(action: { game.performRoll() })
             } else if game.isAIThinking {
                 Text("thinking…")
-                    .font(.custom("Georgia-Italic", size: 14))
-                    .foregroundStyle(Color.white.opacity(0.45))
+                    .font(Theme.serifItalic(14))
+                    .foregroundStyle(Theme.textTertiary)
                     .frame(width: 130, height: 48)
             } else {
                 Color.clear.frame(width: 130, height: 48)
@@ -42,7 +45,7 @@ struct ControlBarView<Game: GameControlling>: View {
                     game.offerDouble()
                 } label: {
                     Text("2×")
-                        .font(.custom("Georgia-Bold", size: 14))
+                        .font(Theme.serifBold(14))
                         .tracking(1)
                         .foregroundStyle(gold)
                         .frame(width: 48, height: 34)
@@ -54,11 +57,14 @@ struct ControlBarView<Game: GameControlling>: View {
                             RoundedRectangle(cornerRadius: 6)
                                 .stroke(gold.opacity(0.7), lineWidth: 1)
                         )
+                        .frame(width: 48, height: 44)
+                        .contentShape(Rectangle())
                 }
+                .accessibilityLabel("Offer double")
             } else {
                 Text("×\(game.state.doublingCube.value)")
-                    .font(.custom("Georgia", size: 12))
-                    .foregroundStyle(Color.white.opacity(0.45))
+                    .font(Theme.serif(12))
+                    .foregroundStyle(Theme.textTertiary)
                     .frame(width: 48, height: 34)
             }
         }
@@ -86,6 +92,7 @@ struct ControlBarView<Game: GameControlling>: View {
 private struct IconButton: View {
     let systemName: String
     let active: Bool
+    let label: String
     let action: () -> Void
 
     var body: some View {
@@ -93,39 +100,43 @@ private struct IconButton: View {
             Image(systemName: systemName)
                 .font(.system(size: 16, weight: .semibold))
                 .foregroundStyle(active
-                    ? Color(red: 0.92, green: 0.78, blue: 0.45)
-                    : Color.white.opacity(0.25))
+                    ? Theme.gold
+                    : Color.white.opacity(0.55))
                 .frame(width: 38, height: 38)
                 .background(
                     Circle()
-                        .fill(Color.white.opacity(active ? 0.06 : 0.02))
+                        .fill(Color.white.opacity(active ? 0.06 : 0.03))
                 )
                 .overlay(
                     Circle()
                         .stroke(active
-                            ? Color(red: 0.92, green: 0.78, blue: 0.45).opacity(0.25)
-                            : Color.clear, lineWidth: 0.8)
+                            ? Theme.gold.opacity(0.25)
+                            : Color.white.opacity(0.12), lineWidth: 0.8)
                 )
+                .frame(width: 44, height: 44)
+                .contentShape(Rectangle())
         }
+        .accessibilityLabel(label)
     }
 }
 
 private struct RollButton: View {
     let action: () -> Void
     @State private var pulse = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         Button(action: action) {
             Text("ROLL")
-                .font(.custom("Georgia-Bold", size: 18))
+                .font(Theme.serifBold(18))
                 .tracking(5)
-                .foregroundStyle(Color(red: 0.08, green: 0.12, blue: 0.08))
+                .foregroundStyle(Theme.bg)
                 .frame(width: 140, height: 48)
                 .background(
                     LinearGradient(
                         colors: [
-                            Color(red: 0.98, green: 0.85, blue: 0.52),
-                            Color(red: 0.82, green: 0.65, blue: 0.32)
+                            Theme.goldBright,
+                            Theme.goldDeep
                         ],
                         startPoint: .top, endPoint: .bottom)
                 )
@@ -134,10 +145,11 @@ private struct RollButton: View {
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(Color.white.opacity(0.3), lineWidth: 0.8)
                 )
-                .shadow(color: Color(red: 0.92, green: 0.78, blue: 0.45).opacity(pulse ? 0.7 : 0.4),
+                .shadow(color: Theme.gold.opacity(pulse ? 0.7 : 0.4),
                         radius: pulse ? 16 : 10, y: 4)
         }
         .onAppear {
+            guard !reduceMotion else { return }
             withAnimation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true)) {
                 pulse = true
             }

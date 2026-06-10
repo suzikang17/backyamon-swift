@@ -8,18 +8,18 @@ import AVFoundation
 struct GalleryView: View {
     @StateObject private var vm = GalleryViewModel()
 
-    private let bg = Color(red: 0.06, green: 0.14, blue: 0.08)
-    private let gold = Color(red: 0.85, green: 0.72, blue: 0.45)
-    private let green = Color(red: 0.0, green: 0.55, blue: 0.32)
-    private let red = Color(red: 0.7, green: 0.2, blue: 0.2)
-    private let cream = Color(red: 0.96, green: 0.94, blue: 0.88)
+    private let bg = Theme.bg
+    private let gold = Theme.gold
+    private let green = Theme.green
+    private let red = Theme.red
+    private let cream = Theme.cream
 
     var body: some View {
         ZStack {
             RadialGradient(
                 colors: [
-                    Color(red: 0.14, green: 0.22, blue: 0.15),
-                    Color(red: 0.05, green: 0.09, blue: 0.06)
+                    Theme.bgGlow,
+                    Theme.bgDeep
                 ],
                 center: .top,
                 startRadius: 80,
@@ -68,7 +68,7 @@ struct GalleryView: View {
     private var header: some View {
         VStack(spacing: 8) {
             Text("GALLERY")
-                .font(.custom("Georgia-Bold", size: 28))
+                .font(Theme.serifBold(28))
                 .tracking(4)
                 .foregroundStyle(gold)
                 .shadow(color: gold.opacity(0.3), radius: 10)
@@ -78,8 +78,8 @@ struct GalleryView: View {
                     startPoint: .leading, endPoint: .trailing))
                 .frame(width: 100, height: 1)
             Text("community creations")
-                .font(.custom("Georgia-Italic", size: 13))
-                .foregroundStyle(Color.white.opacity(0.55))
+                .font(Theme.serifItalic(13))
+                .foregroundStyle(Theme.textTertiary)
         }
         .padding(.top, 16)
         .padding(.bottom, 12)
@@ -95,8 +95,8 @@ struct GalleryView: View {
                     ? "Connecting..."
                     : (vm.connected ? "Connected" : "Disconnected")
             )
-            .font(.custom("Georgia", size: 11))
-            .foregroundStyle(Color.white.opacity(0.6))
+            .font(Theme.serif(11))
+            .foregroundStyle(Theme.textSecondary)
         }
         .padding(.bottom, 8)
     }
@@ -110,7 +110,7 @@ struct GalleryView: View {
                     }
                 } label: {
                     Text(f.label)
-                        .font(.custom("Georgia-Bold", size: 11))
+                        .font(Theme.serifBold(11))
                         .tracking(2)
                         .foregroundStyle(vm.filter == f ? bg : Color.white.opacity(0.65))
                         .padding(.horizontal, 14)
@@ -120,8 +120,8 @@ struct GalleryView: View {
                                 .fill(vm.filter == f
                                     ? AnyShapeStyle(LinearGradient(
                                         colors: [
-                                            Color(red: 0.98, green: 0.85, blue: 0.52),
-                                            Color(red: 0.82, green: 0.65, blue: 0.32)
+                                            Theme.goldBright,
+                                            Theme.goldDeep
                                         ],
                                         startPoint: .top, endPoint: .bottom))
                                     : AnyShapeStyle(Color.white.opacity(0.05)))
@@ -135,6 +135,8 @@ struct GalleryView: View {
                         )
                         .shadow(color: vm.filter == f ? gold.opacity(0.4) : .clear,
                                 radius: 8, y: 3)
+                        .frame(minHeight: 44)
+                        .contentShape(Rectangle())
                 }
             }
         }
@@ -146,14 +148,14 @@ struct GalleryView: View {
         VStack(spacing: 10) {
             Spacer()
             Text(message)
-                .font(.custom("Georgia", size: 13))
-                .foregroundStyle(red)
+                .font(Theme.serif(13))
+                .foregroundStyle(Theme.errorText)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
             Button("RETRY") {
                 Task { await vm.reload() }
             }
-            .font(.custom("Georgia-Bold", size: 12))
+            .font(Theme.serifBold(12))
             .tracking(3)
             .foregroundStyle(bg)
             .padding(.horizontal, 24)
@@ -168,11 +170,11 @@ struct GalleryView: View {
         VStack(spacing: 8) {
             Spacer()
             Text("Gallery is empty")
-                .font(.custom("Georgia-Bold", size: 16))
+                .font(Theme.serifBold(16))
                 .foregroundStyle(gold)
             Text("No community creations published yet — be the first.")
-                .font(.custom("Georgia", size: 12))
-                .foregroundStyle(Color.white.opacity(0.5))
+                .font(Theme.serif(12))
+                .foregroundStyle(Theme.textTertiary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 28)
             Spacer()
@@ -191,12 +193,12 @@ struct GalleryView: View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 6) {
                     Text(asset.title)
-                        .font(.custom("Georgia-Bold", size: 14))
+                        .font(Theme.serifBold(14))
                         .foregroundStyle(cream)
                         .lineLimit(1)
                     if equipped {
                         Text("EQUIPPED")
-                            .font(.custom("Georgia-Bold", size: 8))
+                            .font(Theme.serifBold(8))
                             .tracking(1)
                             .foregroundStyle(bg)
                             .padding(.horizontal, 4)
@@ -207,13 +209,13 @@ struct GalleryView: View {
                 }
                 HStack(spacing: 4) {
                     Text(typeBadge(asset))
-                        .font(.custom("Georgia-Bold", size: 9))
+                        .font(Theme.serifBold(9))
                         .tracking(1.5)
                         .foregroundStyle(typeColor(asset))
                 }
                 Text("by \(asset.creatorId.prefix(8))")
-                    .font(.custom("Georgia", size: 10))
-                    .foregroundStyle(Color.white.opacity(0.4))
+                    .font(Theme.serif(10))
+                    .foregroundStyle(Theme.textTertiary)
                 subtitleLine(for: asset)
             }
 
@@ -223,7 +225,7 @@ struct GalleryView: View {
                 Task { await vm.toggleEquip(asset) }
             } label: {
                 Text(equipped ? "UNEQUIP" : "EQUIP")
-                    .font(.custom("Georgia-Bold", size: 10))
+                    .font(Theme.serifBold(10))
                     .tracking(2)
                     .foregroundStyle(equipped ? bg : gold)
                     .frame(width: 76, height: 28)
@@ -233,7 +235,10 @@ struct GalleryView: View {
                             .stroke(gold.opacity(equipped ? 0 : 0.5), lineWidth: 1)
                     )
                     .clipShape(RoundedRectangle(cornerRadius: 3))
+                    .frame(width: 76, height: 44)
+                    .contentShape(Rectangle())
             }
+            .accessibilityLabel(equipped ? "Unequip \(asset.title)" : "Equip \(asset.title)")
         }
         .padding(.vertical, 10)
         .padding(.horizontal, 10)
@@ -263,7 +268,10 @@ struct GalleryView: View {
                 Image(systemName: vm.previewingId == asset.id ? "stop.fill" : "play.fill")
                     .font(.system(size: 18, weight: .bold))
                     .foregroundStyle(green)
+                    .frame(width: 44, height: 44)
+                    .contentShape(Rectangle())
             }
+            .accessibilityLabel(vm.previewingId == asset.id ? "Stop preview" : "Preview sound")
         case .music:
             Image(systemName: "music.note")
                 .font(.system(size: 18, weight: .bold))
@@ -279,14 +287,14 @@ struct GalleryView: View {
         case .sfx:
             if let meta = asset.decodeSfxMetadata() {
                 Text("\(meta.slot) · \(formatAssetDuration(meta.duration_ms))")
-                    .font(.custom("Georgia", size: 10))
-                    .foregroundStyle(Color.white.opacity(0.4))
+                    .font(Theme.serif(10))
+                    .foregroundStyle(Theme.textTertiary)
             }
         case .music:
             if let meta = asset.decodeMusicMetadata() {
                 Text(formatAssetDuration(meta.duration_ms))
-                    .font(.custom("Georgia", size: 10))
-                    .foregroundStyle(Color.white.opacity(0.4))
+                    .font(Theme.serif(10))
+                    .foregroundStyle(Theme.textTertiary)
             }
         }
     }

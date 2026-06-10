@@ -22,8 +22,8 @@ struct DifficultyView: View {
         ZStack {
             RadialGradient(
                 colors: [
-                    Color(red: 0.14, green: 0.22, blue: 0.15),
-                    Color(red: 0.05, green: 0.09, blue: 0.06)
+                    Theme.bgGlow,
+                    Theme.bgDeep
                 ],
                 center: .top,
                 startRadius: 80,
@@ -35,13 +35,13 @@ struct DifficultyView: View {
                 VStack(spacing: 28) {
                     VStack(spacing: 8) {
                         Text("CHOOSE YOUR OPPONENT")
-                            .font(.custom("Georgia-Bold", size: 18))
+                            .font(Theme.serifBold(18))
                             .foregroundStyle(.white)
                             .tracking(4)
-                            .shadow(color: Color(red: 0.92, green: 0.78, blue: 0.45).opacity(0.3), radius: 10)
+                            .shadow(color: Theme.gold.opacity(0.3), radius: 10)
                         Rectangle()
                             .fill(LinearGradient(
-                                colors: [.clear, Color(red: 0.92, green: 0.78, blue: 0.45).opacity(0.6), .clear],
+                                colors: [.clear, Theme.gold.opacity(0.6), .clear],
                                 startPoint: .leading,
                                 endPoint: .trailing))
                             .frame(width: 120, height: 1)
@@ -71,8 +71,8 @@ struct DifficultyView: View {
 
                     VStack(spacing: 12) {
                         Text("MATCH LENGTH")
-                            .font(.custom("Georgia-Bold", size: 14))
-                            .foregroundStyle(Color.white.opacity(0.7))
+                            .font(Theme.serifBold(14))
+                            .foregroundStyle(Theme.textSecondary)
                             .tracking(3)
 
                         HStack(spacing: 8) {
@@ -92,16 +92,16 @@ struct DifficultyView: View {
                         navigateToGame = true
                     } label: {
                         Text("LET'S PLAY")
-                            .font(.custom("Georgia-Bold", size: 18))
+                            .font(Theme.serifBold(18))
                             .tracking(4)
-                            .foregroundStyle(Color(red: 0.08, green: 0.12, blue: 0.08))
+                            .foregroundStyle(Theme.bg)
                             .frame(width: 220, height: 54)
                             .background(
                                 selectedDifficulty != nil
                                     ? AnyShapeStyle(LinearGradient(
                                         colors: [
-                                            Color(red: 0.98, green: 0.85, blue: 0.52),
-                                            Color(red: 0.82, green: 0.65, blue: 0.32)
+                                            Theme.goldBright,
+                                            Theme.goldDeep
                                         ],
                                         startPoint: .top, endPoint: .bottom))
                                     : AnyShapeStyle(Color.gray.opacity(0.3))
@@ -111,7 +111,7 @@ struct DifficultyView: View {
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(Color.white.opacity(selectedDifficulty != nil ? 0.25 : 0), lineWidth: 0.8)
                             )
-                            .shadow(color: Color(red: 0.92, green: 0.78, blue: 0.45).opacity(selectedDifficulty != nil ? 0.45 : 0),
+                            .shadow(color: Theme.gold.opacity(selectedDifficulty != nil ? 0.45 : 0),
                                     radius: 12, y: 4)
                     }
                     .disabled(selectedDifficulty == nil)
@@ -138,14 +138,14 @@ struct MatchLengthChip: View {
         Button(action: action) {
             VStack(spacing: 2) {
                 Text(label)
-                    .font(.custom("Georgia-Bold", size: 20))
+                    .font(Theme.serifBold(20))
                     .foregroundStyle(isSelected
-                        ? Color(red: 0.08, green: 0.12, blue: 0.08)
+                        ? Theme.bg
                         : .white)
                 Text(sub)
-                    .font(.custom("Georgia", size: 10))
+                    .font(Theme.serif(10))
                     .foregroundStyle(isSelected
-                        ? Color(red: 0.08, green: 0.12, blue: 0.08).opacity(0.7)
+                        ? Theme.bg.opacity(0.7)
                         : Color.white.opacity(0.5))
             }
             .frame(maxWidth: .infinity)
@@ -153,12 +153,12 @@ struct MatchLengthChip: View {
             .background(
                 RoundedRectangle(cornerRadius: 6)
                     .fill(isSelected
-                        ? Color(red: 0.85, green: 0.72, blue: 0.45)
+                        ? Theme.gold
                         : Color.white.opacity(0.06))
                     .overlay(
                         RoundedRectangle(cornerRadius: 6)
                             .stroke(isSelected
-                                ? Color(red: 0.85, green: 0.72, blue: 0.45)
+                                ? Theme.gold
                                 : Color.white.opacity(0.15),
                                     lineWidth: 1)
                     )
@@ -178,8 +178,8 @@ struct DifficultyCard: View {
     private var accent: Color {
         switch difficulty {
         case .beachBum:  return Color(red: 0.40, green: 0.78, blue: 0.85)
-        case .selector:  return Color(red: 0.92, green: 0.78, blue: 0.45)
-        case .kingTubby: return Color(red: 0.85, green: 0.22, blue: 0.30)
+        case .selector:  return Theme.gold
+        case .kingTubby: return Theme.red
         }
     }
 
@@ -210,11 +210,11 @@ struct DifficultyCard: View {
 
                 VStack(alignment: .leading, spacing: 3) {
                     Text(name)
-                        .font(.custom("Georgia-Bold", size: 18))
+                        .font(Theme.serifBold(18))
                         .foregroundStyle(.white)
                     Text(description)
-                        .font(.custom("Georgia", size: 13))
-                        .foregroundStyle(Color.white.opacity(0.55))
+                        .font(Theme.serif(13))
+                        .foregroundStyle(Theme.textTertiary)
                         .multilineTextAlignment(.leading)
                 }
                 Spacer(minLength: 8)

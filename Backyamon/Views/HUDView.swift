@@ -12,14 +12,14 @@ struct HUDView<Game: GameControlling>: View {
             if game.state.matchLength > 1 {
                 HStack(spacing: 6) {
                     Text("MATCH TO \(game.matchTarget)")
-                        .font(.custom("Georgia-Bold", size: 10))
+                        .font(Theme.serifBold(10))
                         .tracking(2)
-                        .foregroundStyle(Color.white.opacity(0.65))
+                        .foregroundStyle(Theme.textSecondary)
                     if game.state.isCrawford {
                         Text("• CRAWFORD")
-                            .font(.custom("Georgia-Bold", size: 10))
+                            .font(Theme.serifBold(10))
                             .tracking(2)
-                            .foregroundStyle(Color(red: 0.85, green: 0.72, blue: 0.45))
+                            .foregroundStyle(Theme.gold)
                     }
                 }
                 .padding(.top, 2)
@@ -30,8 +30,8 @@ struct HUDView<Game: GameControlling>: View {
                     label: leftLabel,
                     score: game.state.matchScore[game.humanPlayer] ?? 0,
                     color: game.humanPlayer == .gold
-                        ? Color(red: 0.92, green: 0.78, blue: 0.45)
-                        : Color(red: 0.82, green: 0.22, blue: 0.20),
+                        ? Theme.gold
+                        : Theme.red,
                     isActive: game.state.currentPlayer == game.humanPlayer
                 )
                 .frame(maxWidth: .infinity)
@@ -47,8 +47,8 @@ struct HUDView<Game: GameControlling>: View {
                         DoublingCubeView(cube: game.state.doublingCube)
                     }
                     Text(game.message)
-                        .font(.custom("Georgia", size: 13))
-                        .foregroundStyle(Color.white.opacity(0.7))
+                        .font(Theme.serif(13))
+                        .foregroundStyle(Theme.textSecondary)
                         .multilineTextAlignment(.center)
                         .lineLimit(2)
                 }
@@ -58,8 +58,8 @@ struct HUDView<Game: GameControlling>: View {
                     label: rightLabel,
                     score: game.state.matchScore[opponent(of: game.humanPlayer)] ?? 0,
                     color: opponent(of: game.humanPlayer) == .gold
-                        ? Color(red: 0.92, green: 0.78, blue: 0.45)
-                        : Color(red: 0.82, green: 0.22, blue: 0.20),
+                        ? Theme.gold
+                        : Theme.red,
                     isActive: game.state.currentPlayer != game.humanPlayer
                 )
                 .frame(maxWidth: .infinity)
@@ -78,6 +78,7 @@ struct PlayerScore: View {
     let isActive: Bool
 
     @State private var pulse = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         VStack(spacing: 4) {
@@ -93,16 +94,19 @@ struct PlayerScore: View {
                     .shadow(color: color.opacity(isActive ? 0.65 : 0),
                             radius: pulse ? 6 : 2)
                 Text(label)
-                    .font(.system(size: 10, weight: .bold))
-                    .foregroundStyle(Color.white.opacity(isActive ? 0.92 : 0.4))
+                    .font(.system(size: 11, weight: .bold))
+                    .foregroundStyle(Color.white.opacity(isActive ? 0.92 : 0.55))
                     .tracking(2)
             }
             Text("\(score)")
-                .font(.custom("Georgia-Bold", size: 28))
+                .font(Theme.serifBold(28))
                 .foregroundStyle(color)
                 .shadow(color: color.opacity(isActive ? 0.4 : 0), radius: 6)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(label), \(score) points\(isActive ? ", their turn" : "")")
         .onAppear {
+            guard !reduceMotion, !pulse else { return }
             withAnimation(.easeInOut(duration: 1.1).repeatForever(autoreverses: true)) {
                 pulse = true
             }
@@ -170,8 +174,8 @@ struct DoublingCubeView: View {
 
     private var borderColor: Color {
         switch cube.holder {
-        case .gold: return Color(red: 0.92, green: 0.78, blue: 0.45)
-        case .red:  return Color(red: 0.82, green: 0.22, blue: 0.20)
+        case .gold: return Theme.gold
+        case .red:  return Theme.red
         case .none: return Color.white.opacity(0.45)
         }
     }
@@ -181,11 +185,12 @@ struct DoublingCubeView: View {
     }
 
     var body: some View {
+        // Dark fill + gold numeral so the cube can't be mistaken for a
+        // third die next to the ivory dice in the HUD.
         let size: CGFloat = 30
         ZStack {
             RoundedRectangle(cornerRadius: 6)
-                .fill(LinearGradient(colors: [Color(red: 1.0, green: 0.98, blue: 0.92),
-                                               Color(red: 0.86, green: 0.82, blue: 0.74)],
+                .fill(LinearGradient(colors: [Color(white: 0.18), Color(white: 0.10)],
                                      startPoint: .top, endPoint: .bottom))
                 .frame(width: size, height: size)
                 .overlay(
@@ -194,11 +199,13 @@ struct DoublingCubeView: View {
                 )
                 .shadow(color: Color.black.opacity(0.35), radius: 2, x: 0, y: 1.5)
             Text("\(displayValue)")
-                .font(.custom("Georgia-Bold", size: 14))
-                .foregroundStyle(Color(red: 0.08, green: 0.12, blue: 0.08))
+                .font(Theme.serifBold(13))
+                .foregroundStyle(Theme.gold)
         }
+        .padding(.leading, 6)
         .opacity(cube.offered ? 0.65 : 1.0)
         .scaleEffect(cube.offered ? 1.1 : 1.0)
         .animation(.easeInOut(duration: 0.25), value: cube.offered)
+        .accessibilityLabel("Doubling cube at \(cube.value)")
     }
 }
