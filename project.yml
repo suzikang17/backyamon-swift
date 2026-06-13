@@ -24,7 +24,8 @@ targets:
     dependencies:
       - package: SocketIO
     scheme:
-      testTargets: []
+      testTargets:
+        - RiddimTests
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.backyamon.app
@@ -49,3 +50,15 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
         UIRequiresFullScreen: true
+
+  RiddimTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: RiddimTests
+    dependencies:
+      - target: Backyamon
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.backyamon.RiddimTests
+        GENERATE_INFOPLIST_FILE: YES

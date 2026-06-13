@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -34,6 +34,7 @@
 		A302D41E51416343AA178C67 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786E23408C6DAA557A2A464A /* ProfileView.swift */; };
 		A6B62DF9840122E7FB87D9F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 828507FFB059300EE87F0A12 /* Assets.xcassets */; };
 		C7B6DCFE18C2324E622AA27C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B3B593B5DB997D32B0C3BB /* HomeView.swift */; };
+		CA28D527B66CB4B00C50C3E0 /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C556A8B1B433C991476DD05 /* SmokeTests.swift */; };
 		CB87968F3B7CD194EF013DA6 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8637A66695F543D530C26D28 /* ProfileViewModel.swift */; };
 		D23DE17915CAB8B72CD53D69 /* OnlineGameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30582C4729E8E21AC8F0E83D /* OnlineGameController.swift */; };
 		D6E8AB5813498D5985D89FFD /* Winner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1271D746311550C66273D717 /* Winner.swift */; };
@@ -45,6 +46,16 @@
 		EF4A36C96ED6C65D804BDD3C /* TurnGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F63C95912D2F9F240EFC16B /* TurnGenerator.swift */; };
 		F29E2EDBA0491E2DF09AE70F /* MusicEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873CD643593AD559421001D /* MusicEngine.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		30626BE2A4FE96CAE3A6AE4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3980859220A2A8543C7CDFB7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9517078929500964803388B6;
+			remoteInfo = Backyamon;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		01D8CDDDEF1806A1A8EA0020 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
@@ -62,6 +73,7 @@
 		4A03F1E52E38B550B4597111 /* PlayerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModels.swift; sourceTree = "<group>"; };
 		5C4E0097D45615D4A50672CA /* LobbyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyView.swift; sourceTree = "<group>"; };
 		6B8501154D20B54457B58A11 /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
+		6C556A8B1B433C991476DD05 /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 		75DEB2C404A69F07CDE18923 /* BearingOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearingOff.swift; sourceTree = "<group>"; };
 		76F5841397C8FAF2F8CCB92D /* KingTubby.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingTubby.swift; sourceTree = "<group>"; };
 		786E23408C6DAA557A2A464A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -80,7 +92,8 @@
 		CDE32063FA60F297D4351D12 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		D5F473EA1E920288ABA111A8 /* ControlBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBarView.swift; sourceTree = "<group>"; };
 		D6D4A6DC232C34F97AFACDAC /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		E089392DB782B733DD188FD2 /* Backyamon.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Backyamon.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E089392DB782B733DD188FD2 /* Backyamon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Backyamon.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E29DC5DFABF1BDACE0F13630 /* RiddimTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = RiddimTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4153ADB05B7F431EAC0B898 /* BackyamonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackyamonApp.swift; sourceTree = "<group>"; };
 		E56A082810F7D964E5E0E9C6 /* DifficultyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyView.swift; sourceTree = "<group>"; };
 		E7F3DFD8BC6BC4307ADF842E /* GalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryView.swift; sourceTree = "<group>"; };
@@ -126,6 +139,14 @@
 			path = Audio;
 			sourceTree = "<group>";
 		};
+		2013D9211C9998DD36E46EB1 /* RiddimTests */ = {
+			isa = PBXGroup;
+			children = (
+				6C556A8B1B433C991476DD05 /* SmokeTests.swift */,
+			);
+			path = RiddimTests;
+			sourceTree = "<group>";
+		};
 		44D2D09F2F97C49EE244D763 /* Online */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				0EF3DADF5B39F1E17FB13251 /* Backyamon */,
+				2013D9211C9998DD36E46EB1 /* RiddimTests */,
 				D0B60C48A68D2141F584BEE6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -201,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				E089392DB782B733DD188FD2 /* Backyamon.app */,
+				E29DC5DFABF1BDACE0F13630 /* RiddimTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -238,6 +261,24 @@
 			productReference = E089392DB782B733DD188FD2 /* Backyamon.app */;
 			productType = "com.apple.product-type.application";
 		};
+		E13D23117DC39C0DE270FFF0 /* RiddimTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1C979EE0CA9DC90E733D87F1 /* Build configuration list for PBXNativeTarget "RiddimTests" */;
+			buildPhases = (
+				676884577C87C9690FD034AA /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F7449A06CA226709FCBE317F /* PBXTargetDependency */,
+			);
+			name = RiddimTests;
+			packageProductDependencies = (
+			);
+			productName = RiddimTests;
+			productReference = E29DC5DFABF1BDACE0F13630 /* RiddimTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -258,13 +299,13 @@
 			mainGroup = 9A0A04C85B64EC40459E48FA;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				782B980DDC4CC3D7DD0B715E /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
+				782B980DDC4CC3D7DD0B715E /* XCRemoteSwiftPackageReference "socket" */,
 			);
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				9517078929500964803388B6 /* Backyamon */,
+				E13D23117DC39C0DE270FFF0 /* RiddimTests */,
 			);
 		};
 /* End PBXProject section */
@@ -323,9 +364,42 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		676884577C87C9690FD034AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA28D527B66CB4B00C50C3E0 /* SmokeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		F7449A06CA226709FCBE317F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9517078929500964803388B6 /* Backyamon */;
+			targetProxy = 30626BE2A4FE96CAE3A6AE4B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		05DAA7417672D581E9B729E1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.backyamon.RiddimTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Backyamon.app/Backyamon";
+			};
+			name = Release;
+		};
 		10F10B3F688E0851EE4CF412 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -394,6 +468,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = X5C7XC8SAV;
 				INFOPLIST_FILE = Backyamon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -411,6 +486,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = X5C7XC8SAV;
 				INFOPLIST_FILE = Backyamon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -479,9 +555,35 @@
 			};
 			name = Release;
 		};
+		D19330EDEED34F320F9873CC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.backyamon.RiddimTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Backyamon.app/Backyamon";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1C979EE0CA9DC90E733D87F1 /* Build configuration list for PBXNativeTarget "RiddimTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D19330EDEED34F320F9873CC /* Debug */,
+				05DAA7417672D581E9B729E1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		34E62F3153F908282A4E6B11 /* Build configuration list for PBXProject "Backyamon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -503,7 +605,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		782B980DDC4CC3D7DD0B715E /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
+		782B980DDC4CC3D7DD0B715E /* XCRemoteSwiftPackageReference "socket" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
 			requirement = {
@@ -516,7 +618,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		C5445E8BABFCD320FA832A46 /* SocketIO */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 782B980DDC4CC3D7DD0B715E /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
+			package = 782B980DDC4CC3D7DD0B715E /* XCRemoteSwiftPackageReference "socket" */;
 			productName = SocketIO;
 		};
 /* End XCSwiftPackageProductDependency section */
