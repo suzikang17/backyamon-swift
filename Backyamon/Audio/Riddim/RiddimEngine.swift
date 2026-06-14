@@ -97,4 +97,52 @@ final class RiddimEngine {
     private func emptyBuffer() -> AVAudioPCMBuffer {
         let b = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 1)!; b.frameLength = 1; return b
     }
+
+    /// Run the assembled loop through the dub FX chain offline (manual rendering),
+    /// returning a buffer that includes the reverb/echo tail.
+    func renderProcessedLoop(tailSeconds: Double = 1.5) throws -> AVAudioPCMBuffer {
+        let source = renderLoopBuffer()
+        let engine = AVAudioEngine()
+        let player = AVAudioPlayerNode()
+        let delay = AVAudioUnitDelay()
+        let reverb = AVAudioUnitReverb()
+
+        delay.delayTime = (60.0 / pattern.bpm) * 0.75
+        delay.feedback = 40
+        delay.lowPassCutoff = 2800
+        delay.wetDryMix = 28
+        reverb.loadFactoryPreset(.largeRoom)
+        reverb.wetDryMix = 22
+
+        engine.attach(player); engine.attach(delay); engine.attach(reverb)
+        engine.connect(player, to: delay, format: format)
+        engine.connect(delay, to: reverb, format: format)
+        engine.connect(reverb, to: engine.mainMixerNode, format: format)
+
+        let total = AVAudioFrameCount(Double(source.frameLength) + tailSeconds * sampleRate)
+        try engine.enableManualRenderingMode(.offline, format: format, maximumFrameCount: 4096)
+        try engine.start()
+        player.scheduleBuffer(source, at: nil, options: [], completionHandler: nil)
+        player.play()
+
+        let out = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: total)!
+        let chunk = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 4096)!
+        while engine.manualRenderingSampleTime < AVAudioFramePosition(total) {
+            let remaining = total - AVAudioFrameCount(engine.manualRenderingSampleTime)
+            let toRender = min(chunk.frameCapacity, remaining)
+            let status = try engine.renderOffline(toRender, to: chunk)
+            guard status == .success || status == .insufficientDataFromInputNode else { break }
+            appendBuffer(chunk, to: out)
+        }
+        engine.stop()
+        return out
+    }
+
+    private func appendBuffer(_ src: AVAudioPCMBuffer, to dst: AVAudioPCMBuffer) {
+        let n = Int(src.frameLength); let off = Int(dst.frameLength)
+        let s = src.floatChannelData![0]; let d = dst.floatChannelData![0]
+        let cap = Int(dst.frameCapacity)
+        for i in 0..<n where off + i < cap { d[off + i] = s[i] }
+        dst.frameLength = AVAudioFrameCount(min(cap, off + n))
+    }
 }

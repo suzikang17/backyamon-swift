@@ -34,4 +34,15 @@ final class RiddimEngineRenderTests: XCTestCase {
         e2.setProgression([Chord(root: 0, quality: .major)])
         XCTAssertNotEqual(rms(e1.renderLoopBuffer()), rms(e2.renderLoopBuffer()), accuracy: 1e-6)
     }
+
+    func test_dubFXAddsTailEnergy() throws {
+        let e = try RiddimEngine(); e.load(preset: .oneDrop)
+        let dry = e.renderLoopBuffer()
+        let wet = try e.renderProcessedLoop()
+        XCTAssertGreaterThan(Int(wet.frameLength), Int(dry.frameLength))
+        let p = wet.floatChannelData![0]; let n = Int(wet.frameLength)
+        var tail: Float = 0; let start = max(0, n - Int(0.3*44100))
+        for i in start..<n { tail += abs(p[i]) }
+        XCTAssertGreaterThan(tail, 0.0)
+    }
 }
