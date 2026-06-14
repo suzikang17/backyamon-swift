@@ -45,4 +45,12 @@ final class RiddimEngineRenderTests: XCTestCase {
         for i in start..<n { tail += abs(p[i]) }
         XCTAssertGreaterThan(tail, 0.0)
     }
+
+    func test_writesPlayableFile() throws {
+        let e = try RiddimEngine(); e.load(preset: .oneDrop)
+        let url = try e.renderToFile(loops: 2)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: url.path))
+        let f = try AVAudioFile(forReading: url)
+        XCTAssertGreaterThan(f.length, 0)
+    }
 }

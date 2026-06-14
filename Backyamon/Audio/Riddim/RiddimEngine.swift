@@ -138,6 +138,24 @@ final class RiddimEngine {
         return out
     }
 
+    /// Render the processed loop, tiled `loops` times, to a WAV file in caches.
+    func renderToFile(loops: Int = 1) throws -> URL {
+        let one = try renderProcessedLoop()
+        let dir = try FileManager.default.url(for: .cachesDirectory, in: .userDomainMask,
+                                              appropriateFor: nil, create: true)
+        let url = dir.appendingPathComponent("riddim-\(UUID().uuidString).wav")
+        let settings: [String: Any] = [
+            AVFormatIDKey: kAudioFormatLinearPCM,
+            AVSampleRateKey: sampleRate,
+            AVNumberOfChannelsKey: 1,
+            AVLinearPCMBitDepthKey: 16,
+            AVLinearPCMIsFloatKey: false,
+        ]
+        let file = try AVAudioFile(forWriting: url, settings: settings)
+        for _ in 0..<max(1, loops) { try file.write(from: one) }
+        return url
+    }
+
     private func appendBuffer(_ src: AVAudioPCMBuffer, to dst: AVAudioPCMBuffer) {
         let n = Int(src.frameLength); let off = Int(dst.frameLength)
         let s = src.floatChannelData![0]; let d = dst.floatChannelData![0]
