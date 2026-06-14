@@ -17,10 +17,12 @@
 		3DD3FA2EE356EDE6CD079657 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8501154D20B54457B58A11 /* GameController.swift */; };
 		41375628143F416DF915010D /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454415EE7E76B414FE2ACFBF /* SoundManager.swift */; };
 		459C012DCDE775D0913564EC /* DifficultyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A082810F7D964E5E0E9C6 /* DifficultyView.swift */; };
+		46D1A85125BA9390B73496D6 /* AudioRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1D14906FC92817FB62EB39 /* AudioRecorderTests.swift */; };
 		47B20685BC3EFDF050145A9C /* Moves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C968A8E72F685B5C915E622 /* Moves.swift */; };
 		504496E06111C47406D6FF0F /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = C5445E8BABFCD320FA832A46 /* SocketIO */; };
 		594E8BCCED6C88FD8B4D37AA /* BeachBum.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF416707908D2BD46ABDF1F /* BeachBum.swift */; };
 		5E405E23CCF846BDC664C849 /* AssetUploaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13243713FE68D21D52967FE /* AssetUploaderTests.swift */; };
+		601DF0D2E72E94170EE4187D /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FFF02F5B5DA4E0F053E6A8 /* AudioRecorder.swift */; };
 		635122BAD925778E7F2BD847 /* BackyamonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4153ADB05B7F431EAC0B898 /* BackyamonApp.swift */; };
 		701912FB6D0EBBCD348DB318 /* AssetModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36EC87C4B09558871A72FE6 /* AssetModels.swift */; };
 		7C1230BA61484B187DE1651B /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D8CDDDEF1806A1A8EA0020 /* BoardView.swift */; };
@@ -78,6 +80,7 @@
 		4A03F1E52E38B550B4597111 /* PlayerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModels.swift; sourceTree = "<group>"; };
 		5439BB768359118F0A1C78AB /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 		5C4E0097D45615D4A50672CA /* LobbyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyView.swift; sourceTree = "<group>"; };
+		6B1D14906FC92817FB62EB39 /* AudioRecorderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderTests.swift; sourceTree = "<group>"; };
 		6B8501154D20B54457B58A11 /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 		75DEB2C404A69F07CDE18923 /* BearingOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearingOff.swift; sourceTree = "<group>"; };
 		76F5841397C8FAF2F8CCB92D /* KingTubby.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingTubby.swift; sourceTree = "<group>"; };
@@ -106,6 +109,7 @@
 		E7F3DFD8BC6BC4307ADF842E /* GalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryView.swift; sourceTree = "<group>"; };
 		ED5B31B6884585906F6344CA /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		F3213CE90AA3059100AD5427 /* SampleUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleUpload.swift; sourceTree = "<group>"; };
+		F6FFF02F5B5DA4E0F053E6A8 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +147,7 @@
 				CDE32063FA60F297D4351D12 /* HapticManager.swift */,
 				0873CD643593AD559421001D /* MusicEngine.swift */,
 				454415EE7E76B414FE2ACFBF /* SoundManager.swift */,
+				FCBB5160BC2D25985300090C /* Capture */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -225,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				B13243713FE68D21D52967FE /* AssetUploaderTests.swift */,
+				6B1D14906FC92817FB62EB39 /* AudioRecorderTests.swift */,
 				B09C3D0D968FCD177A974427 /* SampleUploadTests.swift */,
 				5439BB768359118F0A1C78AB /* SmokeTests.swift */,
 			);
@@ -238,6 +244,14 @@
 				C472B70C7E601F352144C6C6 /* SampleTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		FCBB5160BC2D25985300090C /* Capture */ = {
+			isa = PBXGroup;
+			children = (
+				F6FFF02F5B5DA4E0F053E6A8 /* AudioRecorder.swift */,
+			);
+			path = Capture;
 			sourceTree = "<group>";
 		};
 		FFFC5EF1CE8555E476451876 /* AI */ = {
@@ -342,6 +356,7 @@
 				919628C5538CEFF2F30CABCE /* AssetManager.swift in Sources */,
 				701912FB6D0EBBCD348DB318 /* AssetModels.swift in Sources */,
 				FA64CCD1A7373A2E30C3BFBF /* AssetUploader.swift in Sources */,
+				601DF0D2E72E94170EE4187D /* AudioRecorder.swift in Sources */,
 				635122BAD925778E7F2BD847 /* BackyamonApp.swift in Sources */,
 				594E8BCCED6C88FD8B4D37AA /* BeachBum.swift in Sources */,
 				DB79699BF05C8896A31E0761 /* BearingOff.swift in Sources */,
@@ -384,6 +399,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E405E23CCF846BDC664C849 /* AssetUploaderTests.swift in Sources */,
+				46D1A85125BA9390B73496D6 /* AudioRecorderTests.swift in Sources */,
 				9D42F91FE960DE1BFAD00129 /* SampleUploadTests.swift in Sources */,
 				CF3CE7DF810CF6722ECC31FD /* SmokeTests.swift in Sources */,
 			);
