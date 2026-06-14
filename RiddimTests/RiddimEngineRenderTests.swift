@@ -53,4 +53,12 @@ final class RiddimEngineRenderTests: XCTestCase {
         let f = try AVAudioFile(forReading: url)
         XCTAssertGreaterThan(f.length, 0)
     }
+
+    @MainActor
+    func test_soundManagerLoadsLocalRender() throws {
+        let e = try RiddimEngine(); e.load(preset: .oneDrop)
+        let url = try e.renderToFile(loops: 1)
+        SoundManager.shared.loadCustomMusic(fileURL: url)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: url.path))
+    }
 }
