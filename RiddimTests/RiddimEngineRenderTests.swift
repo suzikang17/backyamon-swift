@@ -26,4 +26,12 @@ final class RiddimEngineRenderTests: XCTestCase {
                            Chord(root: 7, quality: .minor), Chord(root: 3, quality: .major)])
         XCTAssertNotEqual(rms(e1.renderLoopBuffer()), rms(e2.renderLoopBuffer()), accuracy: 1e-6)
     }
+
+    func test_chordQualityChangesMelodicContent() throws {
+        let e1 = try RiddimEngine(); e1.load(preset: .oneDrop)
+        e1.setProgression([Chord(root: 0, quality: .minor)])
+        let e2 = try RiddimEngine(); e2.load(preset: .oneDrop)
+        e2.setProgression([Chord(root: 0, quality: .major)])
+        XCTAssertNotEqual(rms(e1.renderLoopBuffer()), rms(e2.renderLoopBuffer()), accuracy: 1e-6)
+    }
 }

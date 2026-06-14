@@ -47,15 +47,29 @@ final class RiddimEngine {
 
     private func sampleForHit(_ id: InstrumentID, step: Int) -> AVAudioPCMBuffer {
         guard let base = library.buffer(for: id) else { return emptyBuffer() }
-        guard library.rootMidiNote(for: id) != nil else { return base }  // drums
+        guard library.rootMidiNote(for: id) != nil else { return base }   // drums
         let bar = pattern.bar(ofStep: step)
         let chord = progression[bar % progression.count]
-        let targetSemis: Int
-        switch id {
-        case .bass: targetSemis = chord.root - 12
-        default:    targetSemis = chord.voicing().count > 1 ? chord.voicing()[1] : chord.root
+        if id == .bass {
+            return repitch(base, semitones: Double(chord.root - 12))
         }
-        return repitch(base, semitones: Double(targetSemis))
+        // Melodic: sum repitched copies for each chord tone.
+        return layeredChord(base: base, voicing: chord.voicing())
+    }
+
+    private func layeredChord(base: AVAudioPCMBuffer, voicing: [Int]) -> AVAudioPCMBuffer {
+        let copies = voicing.map { repitch(base, semitones: Double($0)) }
+        let maxLen = copies.map { Int($0.frameLength) }.max() ?? 0
+        let out = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(maxLen))!
+        out.frameLength = AVAudioFrameCount(maxLen)
+        let dst = out.floatChannelData![0]
+        for i in 0..<maxLen { dst[i] = 0 }
+        let norm = Float(1.0 / Double(max(1, copies.count)))
+        for c in copies {
+            let s = c.floatChannelData![0]; let n = Int(c.frameLength)
+            for i in 0..<n { dst[i] += s[i] * norm }
+        }
+        return out
     }
 
     private func gain(for id: InstrumentID) -> Float {
