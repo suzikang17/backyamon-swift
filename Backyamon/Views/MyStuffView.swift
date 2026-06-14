@@ -10,6 +10,7 @@ struct MyStuffView: View {
     @StateObject private var vm = MyStuffViewModel()
     @State private var pendingDelete: Asset?
     @State private var showGallery = false
+    @State private var showCreate = false
 
     private let bg = Theme.bg
     private let gold = Theme.gold
@@ -63,6 +64,11 @@ struct MyStuffView: View {
         .navigationDestination(isPresented: $showGallery) {
             GalleryView()
         }
+        .sheet(isPresented: $showCreate) {
+            CreateSampleView(socket: vm.client) {
+                Task { await vm.reload() }
+            }
+        }
         .task {
             await vm.start()
         }
@@ -106,6 +112,15 @@ struct MyStuffView: View {
         }
         .padding(.top, 16)
         .padding(.bottom, 12)
+        .overlay(alignment: .topTrailing) {
+            Button { showCreate = true } label: {
+                Image(systemName: "plus.circle.fill")
+                    .font(.system(size: 22))
+                    .foregroundStyle(Theme.gold)
+                    .padding(.trailing, 16)
+            }
+            .accessibilityLabel("Create sample")
+        }
     }
 
     private var statusBar: some View {
@@ -195,11 +210,22 @@ struct MyStuffView: View {
             Text("Nothing here yet")
                 .font(Theme.serifBold(16))
                 .foregroundStyle(gold)
-            Text("Create assets on the web at backyamon.com/create — they'll show up here.")
+            Text("Record or import your own samples to use in the game.")
                 .font(Theme.serif(12))
                 .foregroundStyle(Theme.textTertiary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 28)
+            Button {
+                showCreate = true
+            } label: {
+                Text("＋ CREATE SAMPLE")
+                    .font(Theme.serifBold(12)).tracking(2)
+                    .foregroundStyle(Theme.bg)
+                    .padding(.horizontal, 20).padding(.vertical, 10)
+                    .background(Theme.gold)
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
+            }
+            .padding(.top, 6)
             Spacer()
         }
     }
