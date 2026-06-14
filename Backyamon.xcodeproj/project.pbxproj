@@ -10,6 +10,7 @@
 		142402CE3BB1A16113BEA3B5 /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44384CCC0031879036E339F0 /* HUDView.swift */; };
 		169F344BCD6933B2CEA76EA3 /* KingTubby.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F5841397C8FAF2F8CCB92D /* KingTubby.swift */; };
 		1B1CF9C4DFEB01AD9AE71FBA /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72C98B7E626055C27F75A0 /* State.swift */; };
+		207A8BB2F8FE4568DD9782F8 /* CreateSampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D813FE58AFC8CC7778ECDBF5 /* CreateSampleView.swift */; };
 		263E00DB42831CAC970082C5 /* LobbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4E0097D45615D4A50672CA /* LobbyView.swift */; };
 		2779F7A3B4B78E9285C928A6 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE32063FA60F297D4351D12 /* HapticManager.swift */; };
 		3463CC9AD2FF45B7AE68FE6C /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FE39DCDB5A47244432CB0A /* GameOverView.swift */; };
@@ -103,6 +104,7 @@
 		CDE32063FA60F297D4351D12 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		D5F473EA1E920288ABA111A8 /* ControlBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBarView.swift; sourceTree = "<group>"; };
 		D6D4A6DC232C34F97AFACDAC /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		D813FE58AFC8CC7778ECDBF5 /* CreateSampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSampleView.swift; sourceTree = "<group>"; };
 		E089392DB782B733DD188FD2 /* Backyamon.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Backyamon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4153ADB05B7F431EAC0B898 /* BackyamonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackyamonApp.swift; sourceTree = "<group>"; };
 		E56A082810F7D964E5E0E9C6 /* DifficultyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyView.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 			children = (
 				01D8CDDDEF1806A1A8EA0020 /* BoardView.swift */,
 				D5F473EA1E920288ABA111A8 /* ControlBarView.swift */,
+				D813FE58AFC8CC7778ECDBF5 /* CreateSampleView.swift */,
 				E56A082810F7D964E5E0E9C6 /* DifficultyView.swift */,
 				E7F3DFD8BC6BC4307ADF842E /* GalleryView.swift */,
 				C9FE39DCDB5A47244432CB0A /* GameOverView.swift */,
@@ -363,6 +366,7 @@
 				7C1230BA61484B187DE1651B /* BoardView.swift in Sources */,
 				98354F06B66D37705462EFA4 /* Constants.swift in Sources */,
 				8E4CDA54B7AD19656B205F9B /* ControlBarView.swift in Sources */,
+				207A8BB2F8FE4568DD9782F8 /* CreateSampleView.swift in Sources */,
 				99A9B7BD6AA21B727BB73B7A /* Dice.swift in Sources */,
 				459C012DCDE775D0913564EC /* DifficultyView.swift in Sources */,
 				861B436C9BF58EC18A81DDBB /* GalleryView.swift in Sources */,
