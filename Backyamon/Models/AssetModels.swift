@@ -154,6 +154,16 @@ extension SocketClient {
             throw SocketClientError.server(err)
         }
     }
+
+    /// Create an asset row on the server and get a presigned upload URL back.
+    /// Mirrors the web `/create` flow. Returns the new asset id + optional PUT url.
+    func createAsset(type: AssetType, title: String, metadata: String,
+                     contentType: String, fileSize: Int) async throws -> (id: String, uploadUrl: String?) {
+        let payload = createAssetPayload(type: type, title: title, metadata: metadata,
+                                         contentType: contentType, fileSize: fileSize)
+        let dict = try await emitWithAck(event: "create-asset", payload: payload)
+        return try parseCreateAssetAck(dict)
+    }
 }
 
 /// Decode the `{ assets: [...] }` envelope returned by the server. Unknown /
