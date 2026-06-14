@@ -35,6 +35,7 @@
 		A6B62DF9840122E7FB87D9F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 828507FFB059300EE87F0A12 /* Assets.xcassets */; };
 		C7B6DCFE18C2324E622AA27C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B3B593B5DB997D32B0C3BB /* HomeView.swift */; };
 		CB87968F3B7CD194EF013DA6 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8637A66695F543D530C26D28 /* ProfileViewModel.swift */; };
+		CF3CE7DF810CF6722ECC31FD /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5439BB768359118F0A1C78AB /* SmokeTests.swift */; };
 		D23DE17915CAB8B72CD53D69 /* OnlineGameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30582C4729E8E21AC8F0E83D /* OnlineGameController.swift */; };
 		D6E8AB5813498D5985D89FFD /* Winner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1271D746311550C66273D717 /* Winner.swift */; };
 		DA91C39C2A4F366E5D1EEFB8 /* PlayerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A03F1E52E38B550B4597111 /* PlayerModels.swift */; };
@@ -45,6 +46,16 @@
 		EF4A36C96ED6C65D804BDD3C /* TurnGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F63C95912D2F9F240EFC16B /* TurnGenerator.swift */; };
 		F29E2EDBA0491E2DF09AE70F /* MusicEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873CD643593AD559421001D /* MusicEngine.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E4C4E5E1C65E4646AF93E5F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3980859220A2A8543C7CDFB7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9517078929500964803388B6;
+			remoteInfo = Backyamon;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		01D8CDDDEF1806A1A8EA0020 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
@@ -60,6 +71,7 @@
 		454415EE7E76B414FE2ACFBF /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		496E2D90FA1447D13CEDF2AD /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		4A03F1E52E38B550B4597111 /* PlayerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModels.swift; sourceTree = "<group>"; };
+		5439BB768359118F0A1C78AB /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 		5C4E0097D45615D4A50672CA /* LobbyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyView.swift; sourceTree = "<group>"; };
 		6B8501154D20B54457B58A11 /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 		75DEB2C404A69F07CDE18923 /* BearingOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearingOff.swift; sourceTree = "<group>"; };
@@ -76,6 +88,7 @@
 		A7B3B593B5DB997D32B0C3BB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B47418F68CEF81062BB8CF9E /* MyStuffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStuffView.swift; sourceTree = "<group>"; };
 		BCF416707908D2BD46ABDF1F /* BeachBum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeachBum.swift; sourceTree = "<group>"; };
+		C472B70C7E601F352144C6C6 /* SampleTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9FE39DCDB5A47244432CB0A /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 		CDE32063FA60F297D4351D12 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		D5F473EA1E920288ABA111A8 /* ControlBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBarView.swift; sourceTree = "<group>"; };
@@ -168,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				0EF3DADF5B39F1E17FB13251 /* Backyamon */,
+				CE2246D5D1E97095FAD72F02 /* SampleTests */,
 				D0B60C48A68D2141F584BEE6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -197,10 +211,19 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		CE2246D5D1E97095FAD72F02 /* SampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				5439BB768359118F0A1C78AB /* SmokeTests.swift */,
+			);
+			path = SampleTests;
+			sourceTree = "<group>";
+		};
 		D0B60C48A68D2141F584BEE6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				E089392DB782B733DD188FD2 /* Backyamon.app */,
+				C472B70C7E601F352144C6C6 /* SampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -218,6 +241,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		59FD5BD1EB958B8ED1187CD3 /* SampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 14B20B47EE818A427A4E64A8 /* Build configuration list for PBXNativeTarget "SampleTests" */;
+			buildPhases = (
+				C4A5613E9372AE2C907E713C /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5B32986EE447E80B86B702E8 /* PBXTargetDependency */,
+			);
+			name = SampleTests;
+			packageProductDependencies = (
+			);
+			productName = SampleTests;
+			productReference = C472B70C7E601F352144C6C6 /* SampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		9517078929500964803388B6 /* Backyamon */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EFA839D3C9368EB34727572C /* Build configuration list for PBXNativeTarget "Backyamon" */;
@@ -265,6 +306,7 @@
 			projectRoot = "";
 			targets = (
 				9517078929500964803388B6 /* Backyamon */,
+				59FD5BD1EB958B8ED1187CD3 /* SampleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -323,7 +365,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C4A5613E9372AE2C907E713C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF3CE7DF810CF6722ECC31FD /* SmokeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5B32986EE447E80B86B702E8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9517078929500964803388B6 /* Backyamon */;
+			targetProxy = E4C4E5E1C65E4646AF93E5F8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		10F10B3F688E0851EE4CF412 /* Debug */ = {
@@ -406,6 +464,23 @@
 			};
 			name = Release;
 		};
+		295900A3B891B26D7F523E60 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.backyamon.SampleTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Backyamon.app/Backyamon";
+			};
+			name = Debug;
+		};
 		30CB5F37DFD254D2EA10CAFB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -422,6 +497,23 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
+		};
+		41BDB65459F0CFDE267EB2BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.backyamon.SampleTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Backyamon.app/Backyamon";
+			};
+			name = Release;
 		};
 		B9134D3F75C800C4BE2FF5F9 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -482,6 +574,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		14B20B47EE818A427A4E64A8 /* Build configuration list for PBXNativeTarget "SampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				295900A3B891B26D7F523E60 /* Debug */,
+				41BDB65459F0CFDE267EB2BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		34E62F3153F908282A4E6B11 /* Build configuration list for PBXProject "Backyamon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
