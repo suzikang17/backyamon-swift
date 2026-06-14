@@ -1,7 +1,9 @@
 import AVFoundation
 
-/// Sample-based riddim engine. This task implements offline buffer assembly;
-/// later tasks add chord-voicing depth, FX, and file render.
+/// Sample-based riddim engine: assembles a looped 4-stem groove from the
+/// bundled sample kit, voices the chord progression (bass = root, melodic =
+/// full chord), runs it through the dub FX chain (tape delay + spring reverb),
+/// and renders the result to a playable WAV file. Mono 44.1k (Phase 1).
 final class RiddimEngine {
     private let library: SampleLibrary
     private let sampleRate: Double = 44100
