@@ -105,6 +105,14 @@ final class AssetManager: ObservableObject {
         equippedSFXIds[slot]
     }
 
+    /// The asset id currently overriding a given riddim voice slot (e.g.
+    /// "riddim-bass"), if any. Read-only; used by the gallery USE flow so the
+    /// confirmation toast can detect a riddim-voice replacement.
+    func equippedRiddimId(forSlot slot: String) -> String? {
+        guard let voice = riddimVoice(forSlot: slot) else { return nil }
+        return equippedRiddimIds[voice.rawValue]
+    }
+
     /// Toggle equip state for an asset. Equipping replaces any other asset in
     /// the same slot. After the preference update the underlying audio /
     /// visual state is reloaded via `loadEquippedAssets(socket:)`.

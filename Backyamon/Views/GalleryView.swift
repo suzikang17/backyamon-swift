@@ -483,19 +483,31 @@ final class GalleryViewModel: ObservableObject {
 
     func use(_ asset: Asset) async {
         let wasEquipped = isEquipped(asset)
-        // Detect a prior occupant of this SFX slot before equipping.
-        var replacedSlot: String?
-        if !wasEquipped, asset.type == .sfx,
-           let slot = asset.decodeSfxMetadata()?.slot,
-           let prior = AssetManager.shared.equippedSfxId(forSlot: slot),
-           prior != asset.id {
-            replacedSlot = slot
+        // Detect a prior occupant of this slot before equipping. Riddim-voice
+        // SFX live in a separate map, so resolve them via equippedRiddimId.
+        var replaced = false
+        var riddimVoiceLabel: String?
+        if !wasEquipped, asset.type == .sfx, let slot = asset.decodeSfxMetadata()?.slot {
+            if slot.hasPrefix("riddim-") {
+                riddimVoiceLabel = String(slot.dropFirst("riddim-".count))
+                if let prior = AssetManager.shared.equippedRiddimId(forSlot: slot), prior != asset.id {
+                    replaced = true
+                }
+            } else if let prior = AssetManager.shared.equippedSfxId(forSlot: slot), prior != asset.id {
+                replaced = true
+                riddimVoiceLabel = nil
+            }
+            if !slot.hasPrefix("riddim-") { riddimVoiceLabel = nil }
         }
+        // Capture the non-riddim slot name for the toast.
+        let sfxSlot = (!wasEquipped && asset.type == .sfx) ? asset.decodeSfxMetadata()?.slot : nil
         await AssetManager.shared.toggleEquip(asset, socket: client)
         objectWillChange.send()
         if wasEquipped {
             toastMessage = "Removed from your game"
-        } else if let slot = replacedSlot {
+        } else if let voice = riddimVoiceLabel {
+            toastMessage = replaced ? "Replaced your \(voice) voice" : "Set as your \(voice) voice"
+        } else if replaced, let slot = sfxSlot {
             toastMessage = "Replaced your \(slot) sound"
         } else {
             toastMessage = "Added to your game"

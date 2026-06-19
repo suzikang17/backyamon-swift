@@ -19,5 +19,6 @@ struct RiddimPlayView: View {
         }
         .padding()
         .navigationTitle("Riddim")
+        .onDisappear { holder.stop() }
     }
 }

@@ -39,6 +39,12 @@ final class SoundManager: ObservableObject {
     // Background music player (for an equipped custom track).
     private var musicPlayer: AVAudioPlayer?
 
+    // Transient preview player (e.g. auditioning a generated riddim). Kept
+    // separate from `musicPlayer` so a preview pauses — never destroys — the
+    // equipped background music, then resumes it when the preview stops.
+    private var previewPlayer: AVAudioPlayer?
+    private var musicWasPlayingBeforePreview = false
+
     private init() {
         self.mixer = engine.mainMixerNode
         self.format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
@@ -191,6 +197,43 @@ final class SoundManager: ObservableObject {
     func clearCustomMusic() {
         musicPlayer?.stop()
         musicPlayer = nil
+    }
+
+    /// Audition a local audio file (e.g. a freshly-rendered riddim) without
+    /// disturbing the equipped background music: the background track is paused
+    /// while the preview loops, and `stopPreview()` resumes it. Replaces any
+    /// prior preview.
+    func playPreview(fileURL: URL) {
+        previewPlayer?.stop()
+        previewPlayer = nil
+        // Pause (don't clear) the equipped background music; remember to resume.
+        if let music = musicPlayer, music.isPlaying {
+            musicWasPlayingBeforePreview = true
+            music.pause()
+        }
+        do {
+            let player = try AVAudioPlayer(contentsOf: fileURL)
+            player.numberOfLoops = -1
+            player.volume = 0.4
+            player.prepareToPlay()
+            previewPlayer = player
+            player.play()
+        } catch {
+            // Preview failed — resume background music so we don't leave silence.
+            if musicWasPlayingBeforePreview { musicPlayer?.play() }
+            musicWasPlayingBeforePreview = false
+        }
+    }
+
+    /// Stop the preview and resume the equipped background music if it had been
+    /// playing when the preview started.
+    func stopPreview() {
+        previewPlayer?.stop()
+        previewPlayer = nil
+        if musicWasPlayingBeforePreview {
+            musicPlayer?.play()
+            musicWasPlayingBeforePreview = false
+        }
     }
 
     /// Cache a downloaded file in the app's Caches directory keyed by a hash

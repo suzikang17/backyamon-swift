@@ -34,15 +34,16 @@ final class RiddimEngineHolder: ObservableObject {
             // is observable and the UI does not freeze. (A Sendable warning here
             // under Swift 5.10 is acceptable.)
             let url = try await Task.detached { try engine.renderToFile() }.value
-            SoundManager.shared.loadCustomMusic(fileURL: url)
-            SoundManager.shared.playCustomMusic()
+            // Audition as a preview so the player's equipped background music is
+            // paused (not clobbered) and resumes when they stop / leave.
+            SoundManager.shared.playPreview(fileURL: url)
         } catch {
             // Render failed — leave existing audio untouched.
         }
     }
 
-    /// Stop the looping riddim playback.
+    /// Stop the riddim audition and resume any equipped background music.
     func stop() {
-        SoundManager.shared.clearCustomMusic()
+        SoundManager.shared.stopPreview()
     }
 }

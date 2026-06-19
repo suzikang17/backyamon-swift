@@ -38,6 +38,7 @@
 - [ ] Override a **drum** (kick) → plays at native pitch (no repitch artifacts).
 - [ ] **Unequip** the voice → Generate & Play → the default bundled voice returns (no stale override). *(Verifies clear-before-apply.)*
 - [ ] Swap a second voice while one is already overridden → both apply correctly together.
+- [ ] **Preview vs background music:** equip a community **music** track so it's playing, then Generate & Play a riddim → the background music **pauses** and the riddim plays; tap **Stop** or leave the Riddim screen → the background music **resumes** (it was paused, not clobbered). *(Verifies the preview-player separation.)*
 
 ## Cross-cutting
 
@@ -47,6 +48,6 @@
 ---
 
 ## Known minor gaps (not blockers; tracked, not yet fixed)
-- Gallery "USE" replacement toast doesn't detect a prior **riddim** voice (riddim voices aren't equipped via Gallery, so largely moot).
-- Equipped community **music** and a rendered **riddim** share one `AVAudioPlayer` (`musicPlayer`) and can clobber each other — needs a design decision (two players or priority).
 - Bundled dub **samples are placeholders** pending license vetting.
+
+*(Resolved 2026-06-18: the Gallery USE toast is now riddim-voice-aware via `equippedRiddimId(forSlot:)`, and riddim auditions use a separate preview player that pauses/resumes the equipped background music instead of clobbering it.)*
