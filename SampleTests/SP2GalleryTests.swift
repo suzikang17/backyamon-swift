@@ -51,6 +51,21 @@ final class SP2GalleryTests: XCTestCase {
         XCTAssertTrue(filterAssets(rows, type: nil, search: "zzz").isEmpty)
     }
 
+    @MainActor
+    func test_equippedSfxId_forSlotReflectsEquip() async {
+        let mgr = AssetManager.shared
+        let socket = SocketClient()                 // not connected; equipAsset writes prefs locally
+        let row = sfx("foreign-1", title: "Boom", slot: "victory")
+        XCTAssertNil(mgr.equippedSfxId(forSlot: "victory"))
+        await mgr.equipAsset(row, socket: socket)
+        XCTAssertEqual(mgr.equippedSfxId(forSlot: "victory"), "foreign-1")
+        // USE/USING label correctness: the same gallery row reads as equipped.
+        XCTAssertTrue(mgr.isEquipped(row))
+        // cleanup so we do not leak prefs across tests
+        await mgr.toggleEquip(row, socket: socket)
+        XCTAssertNil(mgr.equippedSfxId(forSlot: "victory"))
+    }
+
     // MARK: - Helpers
     private func sfx(_ id: String, title: String, slot: String, createdAt: Int64 = 0) -> Asset {
         let meta = sampleMetadataJSON(kind: .soundEffect(slot: slot), durationMs: 1000, fileSize: 1)

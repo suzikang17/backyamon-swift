@@ -74,6 +74,12 @@ final class AssetManager: ObservableObject {
         }
     }
 
+    /// The asset id currently equipped in a given SFX slot, if any. Read-only;
+    /// used by the gallery USE flow to detect a slot replacement.
+    func equippedSfxId(forSlot slot: String) -> String? {
+        equippedSFXIds[slot]
+    }
+
     /// Toggle equip state for an asset. Equipping replaces any other asset in
     /// the same slot. After the preference update the underlying audio /
     /// visual state is reloaded via `loadEquippedAssets(socket:)`.
