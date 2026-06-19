@@ -91,6 +91,10 @@ final class AssetManager: ObservableObject {
             return prefs.music == asset.id
         case .sfx:
             guard let slot = asset.decodeSfxMetadata()?.slot else { return false }
+            if slot.hasPrefix("riddim-") {
+                guard let voice = riddimVoice(forSlot: slot) else { return false }
+                return prefs.riddim[voice.rawValue] == asset.id
+            }
             return prefs.sfx[slot] == asset.id
         }
     }
@@ -114,37 +118,54 @@ final class AssetManager: ObservableObject {
 
     /// Equip an asset by updating preferences then reloading derived state.
     func equipAsset(_ asset: Asset, socket: SocketClient) async {
-        switch asset.type {
-        case .piece:
-            prefs.pieceSet = asset.id
-            equippedPieceId = asset.id
-        case .music:
-            prefs.music = asset.id
-            equippedMusicId = asset.id
-        case .sfx:
-            if let slot = asset.decodeSfxMetadata()?.slot {
-                prefs.sfx[slot] = asset.id
-                equippedSFXIds = prefs.sfx
-            }
-        }
+        applyEquip(asset)
         await loadEquippedAssets(socket: socket)
     }
 
     /// Unequip an asset by clearing the corresponding preference slot then
     /// reloading derived state.
     func unequipAsset(_ asset: Asset, socket: SocketClient) async {
+        applyUnequip(asset)
+        await loadEquippedAssets(socket: socket)
+    }
+
+    /// Synchronous pref mutation for equip (no network). Returns after persisting.
+    func applyEquip(_ asset: Asset) {
         switch asset.type {
         case .piece:
-            prefs.pieceSet = nil
-            equippedPieceId = nil
-            equippedPieceSvg = nil
-            equippedPieceRedSvg = nil
+            prefs.pieceSet = asset.id; equippedPieceId = asset.id
         case .music:
-            prefs.music = nil
-            equippedMusicId = nil
+            prefs.music = asset.id; equippedMusicId = asset.id
+        case .sfx:
+            guard let slot = asset.decodeSfxMetadata()?.slot else { return }
+            if slot.hasPrefix("riddim-") {
+                guard let voice = riddimVoice(forSlot: slot) else { return }
+                prefs.riddim[voice.rawValue] = asset.id
+                equippedRiddimIds = prefs.riddim
+            } else {
+                prefs.sfx[slot] = asset.id
+                equippedSFXIds = prefs.sfx
+            }
+        }
+    }
+
+    /// Synchronous pref mutation for unequip (no network).
+    func applyUnequip(_ asset: Asset) {
+        switch asset.type {
+        case .piece:
+            prefs.pieceSet = nil; equippedPieceId = nil
+            equippedPieceSvg = nil; equippedPieceRedSvg = nil
+        case .music:
+            prefs.music = nil; equippedMusicId = nil
             SoundManager.shared.clearCustomMusic()
         case .sfx:
-            if let slot = asset.decodeSfxMetadata()?.slot {
+            guard let slot = asset.decodeSfxMetadata()?.slot else { return }
+            if slot.hasPrefix("riddim-") {
+                guard let voice = riddimVoice(forSlot: slot) else { return }
+                prefs.riddim[voice.rawValue] = nil
+                equippedRiddimIds = prefs.riddim
+                RiddimEngineHolder.shared.sampleLibrary?.clearOverride(for: voice)
+            } else {
                 prefs.sfx[slot] = nil
                 equippedSFXIds = prefs.sfx
                 if let game = gameSoundForSlot(slot) {
@@ -152,7 +173,14 @@ final class AssetManager: ObservableObject {
                 }
             }
         }
-        await loadEquippedAssets(socket: socket)
+    }
+
+    /// Test seam: wipe persisted prefs.
+    func resetPrefsForTesting() {
+        prefs = Prefs()
+        equippedPieceId = nil; equippedMusicId = nil
+        equippedSFXIds = [:]; equippedRiddimIds = [:]
+        equippedPieceSvg = nil; equippedPieceRedSvg = nil
     }
 
     /// Convenience overload — equip by asset ID. Looks the asset up via

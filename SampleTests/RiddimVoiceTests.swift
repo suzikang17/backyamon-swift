@@ -129,4 +129,22 @@ final class RiddimVoiceTests: XCTestCase {
         XCTAssertEqual(prefs?.sfx["dice-roll"], "a1")
         XCTAssertEqual(prefs?.riddim, [:])   // missing key => default
     }
+
+    @MainActor
+    func test_equippingRiddimSlotPopulatesRiddimNotSfx() throws {
+        let mgr = AssetManager.shared
+        mgr.resetPrefsForTesting()
+        let meta = #"{"slot":"riddim-bass","duration_ms":800,"file_size":10,"root_midi_note":33}"#
+        let asset = Asset(id: "rv1", creatorId: "c", type: .sfx, title: "Bass",
+                          status: .private, metadata: meta, r2Key: "k", url: "https://x/y.m4a",
+                          createdAt: 0, updatedAt: 0)
+        mgr.applyEquip(asset)
+        XCTAssertEqual(mgr.equippedRiddimIds["bass"], "rv1")
+        XCTAssertNil(mgr.equippedSFXIds["riddim-bass"])
+        XCTAssertTrue(mgr.isEquipped(asset))
+
+        mgr.applyUnequip(asset)
+        XCTAssertNil(mgr.equippedRiddimIds["bass"])
+        XCTAssertFalse(mgr.isEquipped(asset))
+    }
 }
