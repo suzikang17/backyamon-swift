@@ -55,3 +55,9 @@ func makeUploadRequest(url: URL, contentType: String) -> URLRequest {
     req.setValue(contentType, forHTTPHeaderField: "Content-Type")
     return req
 }
+
+/// Payload dict for the server `publish-asset` event. Mirrors the inline
+/// payload `SocketClient.publishAsset` builds, extracted so it is unit-testable.
+func publishAssetPayload(assetId: String) -> [String: Any] {
+    return ["assetId": assetId]
+}

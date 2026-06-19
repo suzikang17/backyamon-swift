@@ -8,6 +8,12 @@ final class SP2GalleryTests: XCTestCase {
         XCTAssertTrue(true)
     }
 
+    func test_publishAssetPayloadShape() {
+        let p = publishAssetPayload(assetId: "asset-123")
+        XCTAssertEqual(p["assetId"] as? String, "asset-123")
+        XCTAssertEqual(p.count, 1)
+    }
+
     // MARK: - Helpers
     private func sfx(_ id: String, title: String, slot: String, createdAt: Int64 = 0) -> Asset {
         let meta = sampleMetadataJSON(kind: .soundEffect(slot: slot), durationMs: 1000, fileSize: 1)
