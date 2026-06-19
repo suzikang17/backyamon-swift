@@ -1,0 +1,25 @@
+name: idea
+dir: ideas
+heading: Ideas
+id: { strategy: sequential, pad: 4 }
+body: free
+frontmatter:
+  - { name: title, type: string, required: true }
+  - { name: status, type: enum, values: [raw, promising, promoted, parked], required: true }
+  - { name: category, type: string }
+  - { name: effort, type: enum, values: [quick, small, medium, large] }
+  - { name: promoted_to, type: string }
+  - { name: created, type: date }
+index:
+  - { header: "#", source: id }
+  - { header: Idea, source: title, link: true }
+  - { header: Status, source: status }
+  - { header: Category, source: category }
+prompt: |
+  You are expanding a raw idea into a structured task proposal. Given a title and context, produce the markdown body only (no frontmatter).
+
+  Structure:
+  - One sentence on what this is and why it matters.
+  - ## What to build — concrete description of the feature or change.
+  - ## Acceptance criteria — 2-4 checkboxes for when it's done.
+  - ## Open questions — (optional) unknowns worth resolving before starting.
