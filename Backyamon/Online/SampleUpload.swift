@@ -14,6 +14,21 @@ enum SampleKind: Equatable {
     }
 }
 
+/// Filter a (server-sorted) asset list by optional `AssetType` and a
+/// case-insensitive title substring. Input order is preserved — the array is
+/// already newest-first from the server, so we never re-sort.
+func filterAssets(_ assets: [Asset], type: AssetType?, search: String) -> [Asset] {
+    let trimmed = search.trimmingCharacters(in: .whitespacesAndNewlines)
+    return assets.filter { asset in
+        if let type = type, asset.type != type { return false }
+        if !trimmed.isEmpty,
+           asset.title.range(of: trimmed, options: .caseInsensitive) == nil {
+            return false
+        }
+        return true
+    }
+}
+
 /// Build the JSON metadata string the server stores for a sample asset.
 /// Shapes match `SfxMetadata` / `MusicMetadata` in AssetModels.swift.
 func sampleMetadataJSON(kind: SampleKind, durationMs: Int, fileSize: Int) -> String {
