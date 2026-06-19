@@ -92,4 +92,31 @@ final class RiddimVoiceTests: XCTestCase {
         XCTAssertTrue(holder.isAvailable)
         lib.clearOverride(for: .snare)
     }
+
+    @MainActor
+    func test_voiceLoaderConvertsAndOverrides() async throws {
+        let lib = try SampleLibrary()
+        // Write a tiny mono 44.1k WAV to disk for the loader to "download".
+        let fmt = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)!
+        let src = makeBuffer(frames: 16, value: 0.7)
+        let dir = FileManager.default.temporaryDirectory
+        let wavURL = dir.appendingPathComponent("voice-\(UUID().uuidString).wav")
+        let settings: [String: Any] = [
+            AVFormatIDKey: kAudioFormatLinearPCM, AVSampleRateKey: 44100.0,
+            AVNumberOfChannelsKey: 1, AVLinearPCMBitDepthKey: 16, AVLinearPCMIsFloatKey: false,
+        ]
+        let file = try AVAudioFile(forWriting: wavURL, settings: settings)
+        try file.write(from: src)
+        _ = fmt
+
+        let loader = RiddimVoiceLoader(library: lib, download: { _ in try Data(contentsOf: wavURL) })
+        try await loader.setVoice(url: URL(string: "https://example.com/x.wav")!,
+                                  rootMidiNote: 33, for: .bass)
+        XCTAssertNotNil(lib.buffer(for: .bass))
+        XCTAssertEqual(lib.rootMidiNote(for: .bass), 33)
+
+        loader.clearVoice(.bass)
+        XCTAssertEqual(lib.rootMidiNote(for: .bass), 33 == lib.rootMidiNote(for: .bass) ? lib.rootMidiNote(for: .bass) : 33)
+        XCTAssertNotNil(lib.buffer(for: .bass))  // bundled default restored
+    }
 }

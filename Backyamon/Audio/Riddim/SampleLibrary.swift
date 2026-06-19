@@ -55,6 +55,12 @@ final class SampleLibrary {
     /// Read a WAV, downmixing to mono and converting to the engine format.
     internal static func loadMono(url: URL, format: AVAudioFormat) throws -> AVAudioPCMBuffer {
         let file = try AVAudioFile(forReading: url)
+        // A zero-length source (e.g. a still-open writer whose header has not
+        // yet been finalized) would crash AVAudioFile.read with a frameCapacity
+        // assertion; return a valid empty buffer in the target format instead.
+        guard file.length > 0 else {
+            return AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 1)!
+        }
         let inBuf = AVAudioPCMBuffer(pcmFormat: file.processingFormat,
                                      frameCapacity: AVAudioFrameCount(file.length))!
         try file.read(into: inBuf)

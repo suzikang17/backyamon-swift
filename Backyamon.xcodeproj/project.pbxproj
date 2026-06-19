@@ -16,6 +16,7 @@
 		263E00DB42831CAC970082C5 /* LobbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4E0097D45615D4A50672CA /* LobbyView.swift */; };
 		26FDAF03F5BB56E291BDABCF /* hat.wav in Resources */ = {isa = PBXBuildFile; fileRef = 06E3915EDE55CDB2CE6440B3 /* hat.wav */; };
 		2779F7A3B4B78E9285C928A6 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE32063FA60F297D4351D12 /* HapticManager.swift */; };
+		286D3AD389081FA73F00FCCC /* RiddimVoiceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C649223D5F7F73A3C3EF91F /* RiddimVoiceLoader.swift */; };
 		30FDF83761F4BB6B50AAF980 /* ChordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E723B751498D17E3A8DB56 /* ChordTests.swift */; };
 		31F4BAD6C20AD7903F8D9BBF /* SampleLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE619681BDC7E83520181AD5 /* SampleLibrary.swift */; };
 		3463CC9AD2FF45B7AE68FE6C /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FE39DCDB5A47244432CB0A /* GameOverView.swift */; };
@@ -100,6 +101,7 @@
 		057AA6B898491EA38149A3C5 /* AssetUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetUploader.swift; sourceTree = "<group>"; };
 		06E3915EDE55CDB2CE6440B3 /* hat.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hat.wav; sourceTree = "<group>"; };
 		0873CD643593AD559421001D /* MusicEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicEngine.swift; sourceTree = "<group>"; };
+		0C649223D5F7F73A3C3EF91F /* RiddimVoiceLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiddimVoiceLoader.swift; sourceTree = "<group>"; };
 		1271D746311550C66273D717 /* Winner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Winner.swift; sourceTree = "<group>"; };
 		144A6D6C8757EBBAACBBB3D3 /* Selector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selector.swift; sourceTree = "<group>"; };
 		15DB065A931A355B0FFC0B67 /* melodica.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = melodica.wav; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				914FFCD693DA23542597565D /* RiddimEngine.swift */,
 				7549AFE2DF4EECE9C7C0A78C /* RiddimEngineHolder.swift */,
 				50737E9A6DBC874E63D2ED6F /* RiddimPattern.swift */,
+				0C649223D5F7F73A3C3EF91F /* RiddimVoiceLoader.swift */,
 				AE619681BDC7E83520181AD5 /* SampleLibrary.swift */,
 				B55E0C3380CE28A9C0991DDF /* Samples */,
 			);
@@ -527,6 +530,7 @@
 				D1AB67939AA8CBD7F4CA70F1 /* RiddimEngine.swift in Sources */,
 				D1870F5365AA1EEAE68A506C /* RiddimEngineHolder.swift in Sources */,
 				C7C73C0C1A2BCC1CA288D288 /* RiddimPattern.swift in Sources */,
+				286D3AD389081FA73F00FCCC /* RiddimVoiceLoader.swift in Sources */,
 				31F4BAD6C20AD7903F8D9BBF /* SampleLibrary.swift in Sources */,
 				AA0D17799A39A74641D180BE /* SampleUpload.swift in Sources */,
 				EE6EDF345526CB28E760E4C6 /* Selector.swift in Sources */,
