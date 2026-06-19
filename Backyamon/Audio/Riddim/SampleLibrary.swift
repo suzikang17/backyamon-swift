@@ -52,6 +52,18 @@ final class SampleLibrary {
         return rootNotes[id]
     }
 
+    /// The BUNDLED default root for a voice, ignoring any installed override.
+    /// (bass 33; organ/skank/melodica 57; drums nil.)
+    func defaultRootMidiNote(for id: InstrumentID) -> Int? {
+        rootNotes[id]
+    }
+
+    /// Remove all installed voice overrides, restoring every bundled default.
+    func clearAllOverrides() {
+        overrideBuffers.removeAll()
+        overrideRoots.removeAll()
+    }
+
     /// Read a WAV, downmixing to mono and converting to the engine format.
     internal static func loadMono(url: URL, format: AVAudioFormat) throws -> AVAudioPCMBuffer {
         let file = try AVAudioFile(forReading: url)

@@ -56,11 +56,17 @@ final class RiddimEngine {
         guard library.rootMidiNote(for: id) != nil else { return base }   // drums
         let bar = pattern.bar(ofStep: step)
         let chord = progression[bar % progression.count]
+        // If the voice was overridden with a sample recorded at a non-default
+        // root note, compensate so the override plays at the intended pitch.
+        // `delta` is 0 whenever there is no override (or the override matches
+        // the bundled default), so default behavior is unchanged.
+        let def = 57
+        let delta = (library.rootMidiNote(for: id) ?? def) - (library.defaultRootMidiNote(for: id) ?? def)
         if id == .bass {
-            return repitch(base, semitones: Double(chord.root - 12))
+            return repitch(base, semitones: Double(chord.root - 12 - delta))
         }
         // Melodic: sum repitched copies for each chord tone.
-        return layeredChord(base: base, voicing: chord.voicing())
+        return layeredChord(base: base, voicing: chord.voicing().map { $0 - delta })
     }
 
     private func layeredChord(base: AVAudioPCMBuffer, voicing: [Int]) -> AVAudioPCMBuffer {

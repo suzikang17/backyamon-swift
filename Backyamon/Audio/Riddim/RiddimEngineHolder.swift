@@ -25,12 +25,15 @@ final class RiddimEngineHolder: ObservableObject {
 
     /// Render the current loop (with whatever overrides are installed) to a file
     /// and loop it via SoundManager. Pull-based: call after overrides change.
-    func regenerateAndPlay() {
+    func regenerateAndPlay() async {
         guard let engine else { return }
         isGenerating = true
         defer { isGenerating = false }
         do {
-            let url = try engine.renderToFile()
+            // Run the heavy offline render OFF the main actor so the busy state
+            // is observable and the UI does not freeze. (A Sendable warning here
+            // under Swift 5.10 is acceptable.)
+            let url = try await Task.detached { try engine.renderToFile() }.value
             SoundManager.shared.loadCustomMusic(fileURL: url)
             SoundManager.shared.playCustomMusic()
         } catch {

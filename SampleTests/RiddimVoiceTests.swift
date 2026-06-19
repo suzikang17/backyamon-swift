@@ -110,14 +110,26 @@ final class RiddimVoiceTests: XCTestCase {
         _ = fmt
 
         let loader = RiddimVoiceLoader(library: lib, download: { _ in try Data(contentsOf: wavURL) })
+        // Override with a DISTINCT root (40) so clearing back to the bundled
+        // default (33) is a real assertion, not a no-op.
         try await loader.setVoice(url: URL(string: "https://example.com/x.wav")!,
-                                  rootMidiNote: 33, for: .bass)
+                                  rootMidiNote: 40, for: .bass)
         XCTAssertNotNil(lib.buffer(for: .bass))
-        XCTAssertEqual(lib.rootMidiNote(for: .bass), 33)
+        XCTAssertEqual(lib.rootMidiNote(for: .bass), 40)
 
         loader.clearVoice(.bass)
-        XCTAssertEqual(lib.rootMidiNote(for: .bass), 33 == lib.rootMidiNote(for: .bass) ? lib.rootMidiNote(for: .bass) : 33)
-        XCTAssertNotNil(lib.buffer(for: .bass))  // bundled default restored
+        XCTAssertEqual(lib.rootMidiNote(for: .bass), 33)  // bundled default restored
+        XCTAssertNotNil(lib.buffer(for: .bass))  // bundled default buffer restored
+    }
+
+    func test_overridePitchedVoiceWithNilRootReportsNil() throws {
+        // A pitched voice (.bass, default 33) overridden with rootMidiNote: nil
+        // must report nil — exercises the present-but-nil override membership
+        // logic (`overrideRoots[id]` exists with a nil value).
+        let lib = try SampleLibrary()
+        XCTAssertEqual(lib.rootMidiNote(for: .bass), 33)
+        lib.setOverride(buffer: makeBuffer(value: 0.5), rootMidiNote: nil, for: .bass)
+        XCTAssertNil(lib.rootMidiNote(for: .bass))
     }
 
     @MainActor

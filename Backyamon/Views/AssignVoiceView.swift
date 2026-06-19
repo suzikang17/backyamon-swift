@@ -55,8 +55,24 @@ struct AssignVoiceView: View {
                 }
             }
             .fileImporter(isPresented: $isImporting, allowedContentTypes: [.audio]) { result in
-                if case .success(let url) = result { importedURL = url }
+                if case .success(let url) = result { importFile(url) }
             }
+        }
+    }
+
+    /// Copy an externally-picked (iCloud/Files) file into the sandbox under a
+    /// security scope, then keep the local copy URL. Mirrors CreateSampleView.
+    private func importFile(_ url: URL) {
+        let needsStop = url.startAccessingSecurityScopedResource()
+        defer { if needsStop { url.stopAccessingSecurityScopedResource() } }
+        let dest = AudioRecorder.makeTempURL().deletingPathExtension()
+            .appendingPathExtension(url.pathExtension.isEmpty ? "m4a" : url.pathExtension)
+        try? FileManager.default.removeItem(at: dest)
+        do {
+            try FileManager.default.copyItem(at: url, to: dest)
+            importedURL = dest
+        } catch {
+            errorText = "Could not import that file."
         }
     }
 

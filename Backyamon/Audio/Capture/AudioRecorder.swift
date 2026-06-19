@@ -53,6 +53,13 @@ final class AudioRecorder: NSObject, ObservableObject {
         recorder?.stop()
         recorder = nil
         isRecording = false
+        #if os(iOS)
+        // Restore the shared session to SoundManager's playback config so the
+        // mic's .playAndRecord category doesn't conflict with .ambient playback.
+        let session = AVAudioSession.sharedInstance()
+        try? session.setCategory(.ambient, mode: .default, options: [.mixWithOthers])
+        try? session.setActive(true, options: [])
+        #endif
         return fileURL
     }
 }

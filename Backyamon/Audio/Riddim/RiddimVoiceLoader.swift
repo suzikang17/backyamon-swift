@@ -59,7 +59,11 @@ final class RiddimVoiceLoader {
                                               appropriateFor: nil, create: true)
             .appendingPathComponent("backyamon-audio", isDirectory: true)
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        let key = String(url.absoluteString.hashValue, radix: 16)
+        // Derive a STABLE filename from the URL (String.hashValue is randomized
+        // per process, so it never hits across launches). Percent-encoding to
+        // the alphanumerics set keeps the filename filesystem-safe.
+        let key = url.absoluteString
+            .addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? "voice"
         return dir.appendingPathComponent("voice-\(key)").appendingPathExtension("dat")
     }
 }

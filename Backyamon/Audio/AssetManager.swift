@@ -257,6 +257,11 @@ final class AssetManager: ObservableObject {
         }
 
         // Riddim voices — resolve each and install as a library override.
+        // Clear any stale overrides first (mirrors clearAllCustomSFX above) so
+        // an unequipped-then-changed voice can't leave a stale override behind.
+        if let library = RiddimEngineHolder.shared.sampleLibrary {
+            library.clearAllOverrides()
+        }
         if !prefs.riddim.isEmpty, let library = RiddimEngineHolder.shared.sampleLibrary {
             let loader = RiddimVoiceLoader.live(library: library)
             for (_, assetId) in prefs.riddim {

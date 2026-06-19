@@ -9,7 +9,7 @@ struct RiddimPlayView: View {
         VStack(spacing: 16) {
             if holder.isAvailable {
                 Button(holder.isGenerating ? "Generating…" : "Generate & Play") {
-                    holder.regenerateAndPlay()
+                    Task { await holder.regenerateAndPlay() }
                 }
                 .disabled(holder.isGenerating)
                 Button("Stop") { holder.stop() }
