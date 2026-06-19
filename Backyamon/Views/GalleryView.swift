@@ -87,6 +87,9 @@ struct GalleryView: View {
         .task {
             await vm.start()
         }
+        .onAppear {
+            if vm.connected { Task { await vm.reload() } }
+        }
         .onChange(of: vm.toastMessage) { _, newValue in
             guard newValue != nil else { return }
             Task {
