@@ -148,7 +148,7 @@ extension SocketClient {
     func publishAsset(assetId: String) async throws {
         let dict = try await emitWithAck(
             event: "publish-asset",
-            payload: ["assetId": assetId]
+            payload: publishAssetPayload(assetId: assetId)
         )
         if let err = dict["error"] as? String {
             throw SocketClientError.server(err)
