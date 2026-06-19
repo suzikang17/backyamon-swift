@@ -53,6 +53,7 @@ struct SfxMetadata: Decodable, Hashable {
     let slot: String
     let duration_ms: Int
     let file_size: Int?
+    let root_midi_note: Int?
 }
 
 /// Music metadata: duration/size for display.
