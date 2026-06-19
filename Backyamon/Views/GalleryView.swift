@@ -31,6 +31,7 @@ struct GalleryView: View {
                 header
                 statusBar
                 filterPicker
+                searchField
 
                 if vm.loading {
                     Spacer()
@@ -39,7 +40,11 @@ struct GalleryView: View {
                 } else if let err = vm.errorMessage {
                     errorView(err)
                 } else if vm.filteredAssets.isEmpty {
-                    emptyState
+                    if vm.searchText.trimmingCharacters(in: .whitespaces).isEmpty {
+                        emptyState
+                    } else {
+                        noSearchMatchView
+                    }
                 } else {
                     ScrollView {
                         LazyVStack(spacing: 10) {
@@ -144,6 +149,20 @@ struct GalleryView: View {
         .padding(.bottom, 12)
     }
 
+    private var searchField: some View {
+        TextField("Search samples", text: $vm.searchText)
+            .textInputAutocapitalization(.never)
+            .autocorrectionDisabled()
+            .font(Theme.serif(14))
+            .foregroundStyle(Theme.textPrimary)
+            .padding(.horizontal, 12)
+            .frame(height: 44)
+            .background(Color.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 10))
+            .padding(.horizontal)
+            .padding(.bottom, 12)
+            .accessibilityLabel("Search samples")
+    }
+
     private func errorView(_ message: String) -> some View {
         VStack(spacing: 10) {
             Spacer()
@@ -173,6 +192,21 @@ struct GalleryView: View {
                 .font(Theme.serifBold(16))
                 .foregroundStyle(gold)
             Text("No community creations published yet — be the first.")
+                .font(Theme.serif(12))
+                .foregroundStyle(Theme.textTertiary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 28)
+            Spacer()
+        }
+    }
+
+    private var noSearchMatchView: some View {
+        VStack(spacing: 8) {
+            Spacer()
+            Text("No matches")
+                .font(Theme.serifBold(16))
+                .foregroundStyle(gold)
+            Text("No samples match “\(vm.searchText)”")
                 .font(Theme.serif(12))
                 .foregroundStyle(Theme.textTertiary)
                 .multilineTextAlignment(.center)
