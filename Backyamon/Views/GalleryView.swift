@@ -331,6 +331,15 @@ final class GalleryViewModel: ObservableObject {
             case .music: return "MUSIC"
             }
         }
+
+        var assetType: AssetType? {
+            switch self {
+            case .all:   return nil
+            case .piece: return .piece
+            case .sfx:   return .sfx
+            case .music: return .music
+            }
+        }
     }
 
     @Published var assets: [Asset] = []
@@ -339,6 +348,7 @@ final class GalleryViewModel: ObservableObject {
     @Published var connected: Bool = false
     @Published var errorMessage: String?
     @Published var filter: Filter = .all
+    @Published var searchText: String = ""
     @Published var previewingId: String?
 
     let client: SocketClient
@@ -349,12 +359,7 @@ final class GalleryViewModel: ObservableObject {
     }
 
     var filteredAssets: [Asset] {
-        switch filter {
-        case .all: return assets
-        case .piece: return assets.filter { $0.type == .piece }
-        case .sfx: return assets.filter { $0.type == .sfx }
-        case .music: return assets.filter { $0.type == .music }
-        }
+        filterAssets(assets, type: filter.assetType, search: searchText)
     }
 
     func isEquipped(_ asset: Asset) -> Bool {
