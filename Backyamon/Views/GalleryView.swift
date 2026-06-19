@@ -307,9 +307,22 @@ struct GalleryView: View {
             }
             .accessibilityLabel(vm.previewingId == asset.id ? "Stop preview" : "Preview sound")
         case .music:
-            Image(systemName: "music.note")
-                .font(.system(size: 18, weight: .bold))
-                .foregroundStyle(red)
+            if asset.url != nil {
+                Button {
+                    vm.togglePreview(asset)
+                } label: {
+                    Image(systemName: vm.previewingId == asset.id ? "stop.fill" : "play.fill")
+                        .font(.system(size: 18, weight: .bold))
+                        .foregroundStyle(red)
+                        .frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
+                }
+                .accessibilityLabel(vm.previewingId == asset.id ? "Stop preview" : "Preview music")
+            } else {
+                Image(systemName: "music.note")
+                    .font(.system(size: 18, weight: .bold))
+                    .foregroundStyle(red)
+            }
         }
     }
 
