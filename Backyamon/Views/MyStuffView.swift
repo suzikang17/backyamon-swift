@@ -313,6 +313,19 @@ struct MyStuffView: View {
                 }
                 .accessibilityLabel(equipped ? "Unequip \(asset.title)" : "Equip \(asset.title)")
 
+                if (asset.type == .sfx || asset.type == .music), asset.status == .private {
+                    Button {
+                        Task { await vm.publish(asset) }
+                    } label: {
+                        Text("PUBLISH")
+                            .font(Theme.serif(12))
+                            .foregroundStyle(Theme.gold)
+                            .frame(minWidth: 44, minHeight: 44)
+                            .contentShape(Rectangle())
+                    }
+                    .accessibilityLabel("Publish to community gallery")
+                }
+
                 Button {
                     pendingDelete = asset
                 } label: {
@@ -495,6 +508,29 @@ final class MyStuffViewModel: ObservableObject {
                 await AssetManager.shared.unequipAsset(asset, socket: client)
             }
         } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    func publish(_ asset: Asset) async {
+        guard asset.status == .private else { return }
+        guard let idx = assets.firstIndex(where: { $0.id == asset.id }) else { return }
+        let original = assets[idx]
+        // Optimistic flip — Asset.status is `let`, so rebuild the element.
+        assets[idx] = Asset(id: original.id, creatorId: original.creatorId, type: original.type,
+                            title: original.title, status: .published, metadata: original.metadata,
+                            r2Key: original.r2Key, url: original.url,
+                            createdAt: original.createdAt, updatedAt: original.updatedAt)
+        do {
+            try await client.publishAsset(assetId: asset.id)
+            await reload()  // confirm from the server
+            // Soft-guard: if the server did not actually flip it (e.g. ownership mismatch).
+            if let now = assets.first(where: { $0.id == asset.id }), now.status != .published {
+                errorMessage = "Publish didn't take effect."
+            }
+        } catch {
+            // Revert the optimistic change and surface the failure.
+            if let i = assets.firstIndex(where: { $0.id == asset.id }) { assets[i] = original }
             errorMessage = error.localizedDescription
         }
     }
