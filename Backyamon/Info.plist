@@ -27,6 +27,8 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Record your own sounds and samples to use in the game.</string>
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIColorName</key>
