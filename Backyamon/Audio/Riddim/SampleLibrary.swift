@@ -29,11 +29,31 @@ final class SampleLibrary {
         }
     }
 
-    func buffer(for id: InstrumentID) -> AVAudioPCMBuffer? { buffers[id] }
-    func rootMidiNote(for id: InstrumentID) -> Int? { rootNotes[id] }
+    private var overrideBuffers: [InstrumentID: AVAudioPCMBuffer] = [:]
+    private var overrideRoots: [InstrumentID: Int?] = [:]
+
+    /// Replace a voice at runtime. `rootMidiNote == nil` marks a drum (no repitch).
+    func setOverride(buffer: AVAudioPCMBuffer, rootMidiNote: Int?, for id: InstrumentID) {
+        overrideBuffers[id] = buffer
+        overrideRoots[id] = rootMidiNote
+    }
+
+    /// Remove a voice override, restoring the bundled default.
+    func clearOverride(for id: InstrumentID) {
+        overrideBuffers[id] = nil
+        overrideRoots[id] = nil
+    }
+
+    func buffer(for id: InstrumentID) -> AVAudioPCMBuffer? {
+        overrideBuffers[id] ?? buffers[id]
+    }
+    func rootMidiNote(for id: InstrumentID) -> Int? {
+        if let override = overrideRoots[id] { return override }  // membership = overridden (value may be nil)
+        return rootNotes[id]
+    }
 
     /// Read a WAV, downmixing to mono and converting to the engine format.
-    private static func loadMono(url: URL, format: AVAudioFormat) throws -> AVAudioPCMBuffer {
+    internal static func loadMono(url: URL, format: AVAudioFormat) throws -> AVAudioPCMBuffer {
         let file = try AVAudioFile(forReading: url)
         let inBuf = AVAudioPCMBuffer(pcmFormat: file.processingFormat,
                                      frameCapacity: AVAudioFrameCount(file.length))!

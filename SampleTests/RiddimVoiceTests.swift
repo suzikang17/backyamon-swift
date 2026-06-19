@@ -1,7 +1,42 @@
 import XCTest
+import AVFoundation
 @testable import Backyamon
 
 final class RiddimVoiceTests: XCTestCase {
+    private func makeBuffer(frames: Int = 8, value: Float = 0.5) -> AVAudioPCMBuffer {
+        let fmt = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)!
+        let buf = AVAudioPCMBuffer(pcmFormat: fmt, frameCapacity: AVAudioFrameCount(frames))!
+        buf.frameLength = AVAudioFrameCount(frames)
+        let p = buf.floatChannelData![0]
+        for i in 0..<frames { p[i] = value }
+        return buf
+    }
+
+    func test_setOverridePitchedReturnsBufferAndRoot() throws {
+        let lib = try SampleLibrary()
+        let buf = makeBuffer(value: 0.25)
+        lib.setOverride(buffer: buf, rootMidiNote: 40, for: .bass)
+        XCTAssertEqual(lib.buffer(for: .bass)?.floatChannelData![0][0], 0.25)
+        XCTAssertEqual(lib.rootMidiNote(for: .bass), 40)
+    }
+
+    func test_setOverrideDrumHasNilRoot() throws {
+        let lib = try SampleLibrary()
+        let buf = makeBuffer(value: 0.9)
+        lib.setOverride(buffer: buf, rootMidiNote: nil, for: .kick)
+        XCTAssertEqual(lib.buffer(for: .kick)?.floatChannelData![0][0], 0.9)
+        XCTAssertNil(lib.rootMidiNote(for: .kick))   // overridden, but no repitch
+    }
+
+    func test_clearOverrideRestoresDefault() throws {
+        let lib = try SampleLibrary()
+        let defaultRoot = lib.rootMidiNote(for: .bass)
+        lib.setOverride(buffer: makeBuffer(value: 0.1), rootMidiNote: 40, for: .bass)
+        XCTAssertEqual(lib.rootMidiNote(for: .bass), 40)
+        lib.clearOverride(for: .bass)
+        XCTAssertEqual(lib.rootMidiNote(for: .bass), defaultRoot)  // back to bundled 33
+    }
+
     func test_riddimVoiceKindMapsToSfx() {
         let kind = SampleKind.riddimVoice(voice: .bass, rootMidiNote: 33)
         XCTAssertEqual(kind.assetType, .sfx)
