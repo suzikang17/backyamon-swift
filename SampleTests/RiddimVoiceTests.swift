@@ -64,6 +64,12 @@ final class RiddimVoiceTests: XCTestCase {
         XCTAssertNil(meta.root_midi_note)
     }
 
+    func test_engineExposesLibraryForOverride() throws {
+        let engine = try RiddimEngine()
+        engine.sampleLibrary.setOverride(buffer: makeBuffer(value: 0.42), rootMidiNote: nil, for: .kick)
+        XCTAssertEqual(engine.sampleLibrary.buffer(for: .kick)?.floatChannelData![0][0], 0.42)
+    }
+
     func test_riddimVoiceForSlotInverseMapping() {
         XCTAssertEqual(riddimVoice(forSlot: "riddim-kick"), .kick)
         XCTAssertEqual(riddimVoice(forSlot: "riddim-bass"), .bass)

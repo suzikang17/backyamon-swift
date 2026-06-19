@@ -12,6 +12,10 @@ final class RiddimEngine {
     private(set) var pattern: RiddimPattern
     private(set) var progression: [Chord]
 
+    /// Read access to the engine's sample library so callers can install
+    /// per-voice overrides before rendering.
+    var sampleLibrary: SampleLibrary { library }
+
     init() throws {
         self.library = try SampleLibrary()
         self.format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)!
