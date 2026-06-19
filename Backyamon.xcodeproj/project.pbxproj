@@ -10,6 +10,7 @@
 		142402CE3BB1A16113BEA3B5 /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44384CCC0031879036E339F0 /* HUDView.swift */; };
 		169F344BCD6933B2CEA76EA3 /* KingTubby.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F5841397C8FAF2F8CCB92D /* KingTubby.swift */; };
 		1B1CF9C4DFEB01AD9AE71FBA /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72C98B7E626055C27F75A0 /* State.swift */; };
+		207A8BB2F8FE4568DD9782F8 /* CreateSampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D813FE58AFC8CC7778ECDBF5 /* CreateSampleView.swift */; };
 		263E00DB42831CAC970082C5 /* LobbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4E0097D45615D4A50672CA /* LobbyView.swift */; };
 		2779F7A3B4B78E9285C928A6 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE32063FA60F297D4351D12 /* HapticManager.swift */; };
 		3463CC9AD2FF45B7AE68FE6C /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FE39DCDB5A47244432CB0A /* GameOverView.swift */; };
@@ -17,9 +18,12 @@
 		3DD3FA2EE356EDE6CD079657 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8501154D20B54457B58A11 /* GameController.swift */; };
 		41375628143F416DF915010D /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454415EE7E76B414FE2ACFBF /* SoundManager.swift */; };
 		459C012DCDE775D0913564EC /* DifficultyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A082810F7D964E5E0E9C6 /* DifficultyView.swift */; };
+		46D1A85125BA9390B73496D6 /* AudioRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1D14906FC92817FB62EB39 /* AudioRecorderTests.swift */; };
 		47B20685BC3EFDF050145A9C /* Moves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C968A8E72F685B5C915E622 /* Moves.swift */; };
 		504496E06111C47406D6FF0F /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = C5445E8BABFCD320FA832A46 /* SocketIO */; };
 		594E8BCCED6C88FD8B4D37AA /* BeachBum.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF416707908D2BD46ABDF1F /* BeachBum.swift */; };
+		5E405E23CCF846BDC664C849 /* AssetUploaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13243713FE68D21D52967FE /* AssetUploaderTests.swift */; };
+		601DF0D2E72E94170EE4187D /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FFF02F5B5DA4E0F053E6A8 /* AudioRecorder.swift */; };
 		635122BAD925778E7F2BD847 /* BackyamonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4153ADB05B7F431EAC0B898 /* BackyamonApp.swift */; };
 		701912FB6D0EBBCD348DB318 /* AssetModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36EC87C4B09558871A72FE6 /* AssetModels.swift */; };
 		7C1230BA61484B187DE1651B /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D8CDDDEF1806A1A8EA0020 /* BoardView.swift */; };
@@ -30,11 +34,14 @@
 		963CEB77869BDF203B707E36 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496E2D90FA1447D13CEDF2AD /* Theme.swift */; };
 		98354F06B66D37705462EFA4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F851CC4C9F454AC7C81F7DC /* Constants.swift */; };
 		99A9B7BD6AA21B727BB73B7A /* Dice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA1A21A17CABFE23C539F25 /* Dice.swift */; };
+		9D42F91FE960DE1BFAD00129 /* SampleUploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09C3D0D968FCD177A974427 /* SampleUploadTests.swift */; };
 		A19A14404F28B83FEA91C912 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D4A6DC232C34F97AFACDAC /* GameView.swift */; };
 		A302D41E51416343AA178C67 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786E23408C6DAA557A2A464A /* ProfileView.swift */; };
 		A6B62DF9840122E7FB87D9F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 828507FFB059300EE87F0A12 /* Assets.xcassets */; };
+		AA0D17799A39A74641D180BE /* SampleUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3213CE90AA3059100AD5427 /* SampleUpload.swift */; };
 		C7B6DCFE18C2324E622AA27C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B3B593B5DB997D32B0C3BB /* HomeView.swift */; };
 		CB87968F3B7CD194EF013DA6 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8637A66695F543D530C26D28 /* ProfileViewModel.swift */; };
+		CF3CE7DF810CF6722ECC31FD /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5439BB768359118F0A1C78AB /* SmokeTests.swift */; };
 		D23DE17915CAB8B72CD53D69 /* OnlineGameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30582C4729E8E21AC8F0E83D /* OnlineGameController.swift */; };
 		D6E8AB5813498D5985D89FFD /* Winner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1271D746311550C66273D717 /* Winner.swift */; };
 		DA91C39C2A4F366E5D1EEFB8 /* PlayerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A03F1E52E38B550B4597111 /* PlayerModels.swift */; };
@@ -44,10 +51,22 @@
 		EE6EDF345526CB28E760E4C6 /* Selector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144A6D6C8757EBBAACBBB3D3 /* Selector.swift */; };
 		EF4A36C96ED6C65D804BDD3C /* TurnGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F63C95912D2F9F240EFC16B /* TurnGenerator.swift */; };
 		F29E2EDBA0491E2DF09AE70F /* MusicEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873CD643593AD559421001D /* MusicEngine.swift */; };
+		FA64CCD1A7373A2E30C3BFBF /* AssetUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057AA6B898491EA38149A3C5 /* AssetUploader.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E4C4E5E1C65E4646AF93E5F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3980859220A2A8543C7CDFB7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9517078929500964803388B6;
+			remoteInfo = Backyamon;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		01D8CDDDEF1806A1A8EA0020 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
+		057AA6B898491EA38149A3C5 /* AssetUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetUploader.swift; sourceTree = "<group>"; };
 		0873CD643593AD559421001D /* MusicEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicEngine.swift; sourceTree = "<group>"; };
 		1271D746311550C66273D717 /* Winner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Winner.swift; sourceTree = "<group>"; };
 		144A6D6C8757EBBAACBBB3D3 /* Selector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selector.swift; sourceTree = "<group>"; };
@@ -60,7 +79,9 @@
 		454415EE7E76B414FE2ACFBF /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		496E2D90FA1447D13CEDF2AD /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		4A03F1E52E38B550B4597111 /* PlayerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModels.swift; sourceTree = "<group>"; };
+		5439BB768359118F0A1C78AB /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 		5C4E0097D45615D4A50672CA /* LobbyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyView.swift; sourceTree = "<group>"; };
+		6B1D14906FC92817FB62EB39 /* AudioRecorderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderTests.swift; sourceTree = "<group>"; };
 		6B8501154D20B54457B58A11 /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 		75DEB2C404A69F07CDE18923 /* BearingOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearingOff.swift; sourceTree = "<group>"; };
 		76F5841397C8FAF2F8CCB92D /* KingTubby.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingTubby.swift; sourceTree = "<group>"; };
@@ -74,17 +95,23 @@
 		A36EC87C4B09558871A72FE6 /* AssetModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetModels.swift; sourceTree = "<group>"; };
 		A413F75A11747CE5D9041119 /* GameControlling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameControlling.swift; sourceTree = "<group>"; };
 		A7B3B593B5DB997D32B0C3BB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		B09C3D0D968FCD177A974427 /* SampleUploadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleUploadTests.swift; sourceTree = "<group>"; };
+		B13243713FE68D21D52967FE /* AssetUploaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetUploaderTests.swift; sourceTree = "<group>"; };
 		B47418F68CEF81062BB8CF9E /* MyStuffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStuffView.swift; sourceTree = "<group>"; };
 		BCF416707908D2BD46ABDF1F /* BeachBum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeachBum.swift; sourceTree = "<group>"; };
+		C472B70C7E601F352144C6C6 /* SampleTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9FE39DCDB5A47244432CB0A /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 		CDE32063FA60F297D4351D12 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		D5F473EA1E920288ABA111A8 /* ControlBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBarView.swift; sourceTree = "<group>"; };
 		D6D4A6DC232C34F97AFACDAC /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		D813FE58AFC8CC7778ECDBF5 /* CreateSampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSampleView.swift; sourceTree = "<group>"; };
 		E089392DB782B733DD188FD2 /* Backyamon.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Backyamon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4153ADB05B7F431EAC0B898 /* BackyamonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackyamonApp.swift; sourceTree = "<group>"; };
 		E56A082810F7D964E5E0E9C6 /* DifficultyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyView.swift; sourceTree = "<group>"; };
 		E7F3DFD8BC6BC4307ADF842E /* GalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryView.swift; sourceTree = "<group>"; };
 		ED5B31B6884585906F6344CA /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+		F3213CE90AA3059100AD5427 /* SampleUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleUpload.swift; sourceTree = "<group>"; };
+		F6FFF02F5B5DA4E0F053E6A8 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +149,7 @@
 				CDE32063FA60F297D4351D12 /* HapticManager.swift */,
 				0873CD643593AD559421001D /* MusicEngine.swift */,
 				454415EE7E76B414FE2ACFBF /* SoundManager.swift */,
+				FCBB5160BC2D25985300090C /* Capture */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -129,7 +157,9 @@
 		44D2D09F2F97C49EE244D763 /* Online */ = {
 			isa = PBXGroup;
 			children = (
+				057AA6B898491EA38149A3C5 /* AssetUploader.swift */,
 				30582C4729E8E21AC8F0E83D /* OnlineGameController.swift */,
+				F3213CE90AA3059100AD5427 /* SampleUpload.swift */,
 				926FD389B9D2A1FA854D68BD /* SocketClient.swift */,
 			);
 			path = Online;
@@ -140,6 +170,7 @@
 			children = (
 				01D8CDDDEF1806A1A8EA0020 /* BoardView.swift */,
 				D5F473EA1E920288ABA111A8 /* ControlBarView.swift */,
+				D813FE58AFC8CC7778ECDBF5 /* CreateSampleView.swift */,
 				E56A082810F7D964E5E0E9C6 /* DifficultyView.swift */,
 				E7F3DFD8BC6BC4307ADF842E /* GalleryView.swift */,
 				C9FE39DCDB5A47244432CB0A /* GameOverView.swift */,
@@ -168,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				0EF3DADF5B39F1E17FB13251 /* Backyamon */,
+				CE2246D5D1E97095FAD72F02 /* SampleTests */,
 				D0B60C48A68D2141F584BEE6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -197,12 +229,32 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		CE2246D5D1E97095FAD72F02 /* SampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				B13243713FE68D21D52967FE /* AssetUploaderTests.swift */,
+				6B1D14906FC92817FB62EB39 /* AudioRecorderTests.swift */,
+				B09C3D0D968FCD177A974427 /* SampleUploadTests.swift */,
+				5439BB768359118F0A1C78AB /* SmokeTests.swift */,
+			);
+			path = SampleTests;
+			sourceTree = "<group>";
+		};
 		D0B60C48A68D2141F584BEE6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				E089392DB782B733DD188FD2 /* Backyamon.app */,
+				C472B70C7E601F352144C6C6 /* SampleTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		FCBB5160BC2D25985300090C /* Capture */ = {
+			isa = PBXGroup;
+			children = (
+				F6FFF02F5B5DA4E0F053E6A8 /* AudioRecorder.swift */,
+			);
+			path = Capture;
 			sourceTree = "<group>";
 		};
 		FFFC5EF1CE8555E476451876 /* AI */ = {
@@ -218,6 +270,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		59FD5BD1EB958B8ED1187CD3 /* SampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 14B20B47EE818A427A4E64A8 /* Build configuration list for PBXNativeTarget "SampleTests" */;
+			buildPhases = (
+				C4A5613E9372AE2C907E713C /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5B32986EE447E80B86B702E8 /* PBXTargetDependency */,
+			);
+			name = SampleTests;
+			packageProductDependencies = (
+			);
+			productName = SampleTests;
+			productReference = C472B70C7E601F352144C6C6 /* SampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		9517078929500964803388B6 /* Backyamon */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EFA839D3C9368EB34727572C /* Build configuration list for PBXNativeTarget "Backyamon" */;
@@ -265,6 +335,7 @@
 			projectRoot = "";
 			targets = (
 				9517078929500964803388B6 /* Backyamon */,
+				59FD5BD1EB958B8ED1187CD3 /* SampleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -287,12 +358,15 @@
 			files = (
 				919628C5538CEFF2F30CABCE /* AssetManager.swift in Sources */,
 				701912FB6D0EBBCD348DB318 /* AssetModels.swift in Sources */,
+				FA64CCD1A7373A2E30C3BFBF /* AssetUploader.swift in Sources */,
+				601DF0D2E72E94170EE4187D /* AudioRecorder.swift in Sources */,
 				635122BAD925778E7F2BD847 /* BackyamonApp.swift in Sources */,
 				594E8BCCED6C88FD8B4D37AA /* BeachBum.swift in Sources */,
 				DB79699BF05C8896A31E0761 /* BearingOff.swift in Sources */,
 				7C1230BA61484B187DE1651B /* BoardView.swift in Sources */,
 				98354F06B66D37705462EFA4 /* Constants.swift in Sources */,
 				8E4CDA54B7AD19656B205F9B /* ControlBarView.swift in Sources */,
+				207A8BB2F8FE4568DD9782F8 /* CreateSampleView.swift in Sources */,
 				99A9B7BD6AA21B727BB73B7A /* Dice.swift in Sources */,
 				459C012DCDE775D0913564EC /* DifficultyView.swift in Sources */,
 				861B436C9BF58EC18A81DDBB /* GalleryView.swift in Sources */,
@@ -312,6 +386,7 @@
 				DA91C39C2A4F366E5D1EEFB8 /* PlayerModels.swift in Sources */,
 				A302D41E51416343AA178C67 /* ProfileView.swift in Sources */,
 				CB87968F3B7CD194EF013DA6 /* ProfileViewModel.swift in Sources */,
+				AA0D17799A39A74641D180BE /* SampleUpload.swift in Sources */,
 				EE6EDF345526CB28E760E4C6 /* Selector.swift in Sources */,
 				816F8ED04213B482319ACA89 /* SocketClient.swift in Sources */,
 				41375628143F416DF915010D /* SoundManager.swift in Sources */,
@@ -323,7 +398,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C4A5613E9372AE2C907E713C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E405E23CCF846BDC664C849 /* AssetUploaderTests.swift in Sources */,
+				46D1A85125BA9390B73496D6 /* AudioRecorderTests.swift in Sources */,
+				9D42F91FE960DE1BFAD00129 /* SampleUploadTests.swift in Sources */,
+				CF3CE7DF810CF6722ECC31FD /* SmokeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5B32986EE447E80B86B702E8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9517078929500964803388B6 /* Backyamon */;
+			targetProxy = E4C4E5E1C65E4646AF93E5F8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		10F10B3F688E0851EE4CF412 /* Debug */ = {
@@ -406,6 +500,23 @@
 			};
 			name = Release;
 		};
+		295900A3B891B26D7F523E60 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.backyamon.SampleTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Backyamon.app/Backyamon";
+			};
+			name = Debug;
+		};
 		30CB5F37DFD254D2EA10CAFB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -422,6 +533,23 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
+		};
+		41BDB65459F0CFDE267EB2BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.backyamon.SampleTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Backyamon.app/Backyamon";
+			};
+			name = Release;
 		};
 		B9134D3F75C800C4BE2FF5F9 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -482,6 +610,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		14B20B47EE818A427A4E64A8 /* Build configuration list for PBXNativeTarget "SampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				295900A3B891B26D7F523E60 /* Debug */,
+				41BDB65459F0CFDE267EB2BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		34E62F3153F908282A4E6B11 /* Build configuration list for PBXProject "Backyamon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

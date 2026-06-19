@@ -39,6 +39,17 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "59FD5BD1EB958B8ED1187CD3"
+               BuildableName = "SampleTests.xctest"
+               BlueprintName = "SampleTests"
+               ReferencedContainer = "container:Backyamon.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <CommandLineArguments>
       </CommandLineArguments>

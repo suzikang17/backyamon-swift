@@ -21,3 +21,6 @@ Package.resolved
 
 # OMC state
 .omc/
+
+# Superpowers brainstorm artifacts
+.superpowers/

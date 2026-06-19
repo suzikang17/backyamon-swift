@@ -1,0 +1,57 @@
+import Foundation
+
+/// What a recorded/imported sample becomes when uploaded. Maps to the server's
+/// existing `sfx` / `music` asset types (a dedicated `sample` type is future work).
+enum SampleKind: Equatable {
+    case soundEffect(slot: String)   // one-shot bound to a GameSound slot string
+    case music                       // loop / track
+
+    var assetType: AssetType {
+        switch self {
+        case .soundEffect: return .sfx
+        case .music:       return .music
+        }
+    }
+}
+
+/// Build the JSON metadata string the server stores for a sample asset.
+/// Shapes match `SfxMetadata` / `MusicMetadata` in AssetModels.swift.
+func sampleMetadataJSON(kind: SampleKind, durationMs: Int, fileSize: Int) -> String {
+    let dict: [String: Any]
+    switch kind {
+    case .soundEffect(let slot):
+        dict = ["slot": slot, "duration_ms": durationMs, "file_size": fileSize]
+    case .music:
+        dict = ["duration_ms": durationMs, "file_size": fileSize]
+    }
+    let data = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data("{}".utf8)
+    return String(data: data, encoding: .utf8) ?? "{}"
+}
+
+/// Payload dict for the server `create-asset` event (needsUpload always true here).
+func createAssetPayload(type: AssetType, title: String, metadata: String,
+                        contentType: String, fileSize: Int) -> [String: Any] {
+    return [
+        "type": type.rawValue,
+        "title": title,
+        "metadata": metadata,
+        "needsUpload": true,
+        "contentType": contentType,
+        "fileSize": fileSize,
+    ]
+}
+
+/// Parse the `create-asset` ack: `{id, uploadUrl}` on success or `{error}`.
+func parseCreateAssetAck(_ dict: [String: Any]) throws -> (id: String, uploadUrl: String?) {
+    if let err = dict["error"] as? String { throw SocketClientError.server(err) }
+    guard let id = dict["id"] as? String else { throw SocketClientError.decoding("create-asset") }
+    return (id, dict["uploadUrl"] as? String)
+}
+
+/// Build the presigned-R2 PUT request (body set by the caller / URLSession upload).
+func makeUploadRequest(url: URL, contentType: String) -> URLRequest {
+    var req = URLRequest(url: url)
+    req.httpMethod = "PUT"
+    req.setValue(contentType, forHTTPHeaderField: "Content-Type")
+    return req
+}

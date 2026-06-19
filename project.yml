@@ -24,7 +24,8 @@ targets:
     dependencies:
       - package: SocketIO
     scheme:
-      testTargets: []
+      testTargets:
+        - SampleTests
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.backyamon.app
@@ -49,3 +50,16 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
         UIRequiresFullScreen: true
+        NSMicrophoneUsageDescription: "Record your own sounds and samples to use in the game."
+
+  SampleTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: SampleTests
+    dependencies:
+      - target: Backyamon
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.backyamon.SampleTests
+        GENERATE_INFOPLIST_FILE: YES
