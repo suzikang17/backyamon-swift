@@ -133,6 +133,21 @@ final class RiddimVoiceTests: XCTestCase {
     }
 
     @MainActor
+    func test_prefsDecodesEmptyDataReturnsNil() {
+        // Fully corrupt/empty blob must not crash — decodePrefs returns nil.
+        XCTAssertNil(AssetManager.decodePrefs(Data()))
+    }
+
+    @MainActor
+    func test_prefsDecodesMinimalBlobMissingDictKeys() throws {
+        // A blob with no `sfx` or `riddim` keys must default both to empty maps.
+        let minimal = #"{"pieceSet":null,"music":null}"#
+        let prefs = try XCTUnwrap(AssetManager.decodePrefs(Data(minimal.utf8)))
+        XCTAssertEqual(prefs.sfx, [:])
+        XCTAssertEqual(prefs.riddim, [:])
+    }
+
+    @MainActor
     func test_prefsDecodesPreSP3BlobWithEmptyRiddim() throws {
         // A persisted blob from before SP3 (no `riddim` key).
         let legacy = #"{"pieceSet":"p1","music":"m1","sfx":{"dice-roll":"a1"}}"#

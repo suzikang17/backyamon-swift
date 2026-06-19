@@ -184,17 +184,11 @@ final class AssetManager: ObservableObject {
     }
 
     /// Convenience overload — equip by asset ID. Looks the asset up via
-    /// `listMyAssets()` and `listGallery()`. Falls back to unequip if the
-    /// asset is not found.
+    /// `listMyAssets()` and `listGallery()`. Does nothing if the asset is
+    /// not found.
     func equipAsset(assetId: String, socket: SocketClient) async {
         if let asset = await findAsset(byId: assetId, socket: socket) {
             await equipAsset(asset, socket: socket)
-        }
-    }
-
-    func unequipAsset(assetId: String, socket: SocketClient) async {
-        if let asset = await findAsset(byId: assetId, socket: socket) {
-            await unequipAsset(asset, socket: socket)
         }
     }
 

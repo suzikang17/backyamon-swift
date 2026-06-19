@@ -51,6 +51,15 @@ final class SP2GalleryTests: XCTestCase {
         XCTAssertTrue(filterAssets(rows, type: nil, search: "zzz").isEmpty)
     }
 
+    func test_filterAssets_trimsLeadingTrailingWhitespace() {
+        // filterAssets calls trimmingCharacters(in: .whitespacesAndNewlines) before matching,
+        // so "  kick  " must match a title containing "kick".
+        let rows = [sfx("1", title: "Kick Drum", slot: "piece-move"),
+                    sfx("2", title: "Snare", slot: "dice-roll")]
+        let result = filterAssets(rows, type: nil, search: "  kick  ")
+        XCTAssertEqual(result.map(\.id), ["1"])
+    }
+
     @MainActor
     func test_equippedSfxId_forSlotReflectsEquip() async {
         let mgr = AssetManager.shared
