@@ -103,6 +103,14 @@ func gameSoundForSlot(_ slot: String) -> GameSound? {
     }
 }
 
+/// Map a `riddim-<voice>` slot string back to its `InstrumentID`. Non-riddim or
+/// unknown slots return nil.
+func riddimVoice(forSlot slot: String) -> InstrumentID? {
+    let prefix = "riddim-"
+    guard slot.hasPrefix(prefix) else { return nil }
+    return InstrumentID(rawValue: String(slot.dropFirst(prefix.count)))
+}
+
 /// Format a duration in milliseconds as `m:ss`.
 func formatAssetDuration(_ ms: Int) -> String {
     let totalSeconds = (ms + 500) / 1000

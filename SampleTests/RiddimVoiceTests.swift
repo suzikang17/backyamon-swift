@@ -28,4 +28,12 @@ final class RiddimVoiceTests: XCTestCase {
         XCTAssertEqual(meta.slot, "riddim-kick")
         XCTAssertNil(meta.root_midi_note)
     }
+
+    func test_riddimVoiceForSlotInverseMapping() {
+        XCTAssertEqual(riddimVoice(forSlot: "riddim-kick"), .kick)
+        XCTAssertEqual(riddimVoice(forSlot: "riddim-bass"), .bass)
+        XCTAssertEqual(riddimVoice(forSlot: "riddim-melodica"), .melodica)
+        XCTAssertNil(riddimVoice(forSlot: "riddim-unknown"))
+        XCTAssertNil(riddimVoice(forSlot: "dice-roll"))
+    }
 }
