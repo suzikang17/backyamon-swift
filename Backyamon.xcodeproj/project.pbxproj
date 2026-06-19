@@ -24,6 +24,7 @@
 		594E8BCCED6C88FD8B4D37AA /* BeachBum.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF416707908D2BD46ABDF1F /* BeachBum.swift */; };
 		5E405E23CCF846BDC664C849 /* AssetUploaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13243713FE68D21D52967FE /* AssetUploaderTests.swift */; };
 		601DF0D2E72E94170EE4187D /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FFF02F5B5DA4E0F053E6A8 /* AudioRecorder.swift */; };
+		633D77FB3DB82B589179D0EF /* SP2GalleryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CDA2AD59F7C7571A0A0FB3 /* SP2GalleryTests.swift */; };
 		635122BAD925778E7F2BD847 /* BackyamonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4153ADB05B7F431EAC0B898 /* BackyamonApp.swift */; };
 		701912FB6D0EBBCD348DB318 /* AssetModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36EC87C4B09558871A72FE6 /* AssetModels.swift */; };
 		7C1230BA61484B187DE1651B /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D8CDDDEF1806A1A8EA0020 /* BoardView.swift */; };
@@ -98,6 +99,7 @@
 		B09C3D0D968FCD177A974427 /* SampleUploadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleUploadTests.swift; sourceTree = "<group>"; };
 		B13243713FE68D21D52967FE /* AssetUploaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetUploaderTests.swift; sourceTree = "<group>"; };
 		B47418F68CEF81062BB8CF9E /* MyStuffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStuffView.swift; sourceTree = "<group>"; };
+		B8CDA2AD59F7C7571A0A0FB3 /* SP2GalleryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SP2GalleryTests.swift; sourceTree = "<group>"; };
 		BCF416707908D2BD46ABDF1F /* BeachBum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeachBum.swift; sourceTree = "<group>"; };
 		C472B70C7E601F352144C6C6 /* SampleTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9FE39DCDB5A47244432CB0A /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				6B1D14906FC92817FB62EB39 /* AudioRecorderTests.swift */,
 				B09C3D0D968FCD177A974427 /* SampleUploadTests.swift */,
 				5439BB768359118F0A1C78AB /* SmokeTests.swift */,
+				B8CDA2AD59F7C7571A0A0FB3 /* SP2GalleryTests.swift */,
 			);
 			path = SampleTests;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 			files = (
 				5E405E23CCF846BDC664C849 /* AssetUploaderTests.swift in Sources */,
 				46D1A85125BA9390B73496D6 /* AudioRecorderTests.swift in Sources */,
+				633D77FB3DB82B589179D0EF /* SP2GalleryTests.swift in Sources */,
 				9D42F91FE960DE1BFAD00129 /* SampleUploadTests.swift in Sources */,
 				CF3CE7DF810CF6722ECC31FD /* SmokeTests.swift in Sources */,
 			);
