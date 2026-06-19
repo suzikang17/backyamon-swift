@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -39,6 +39,7 @@
 		633D77FB3DB82B589179D0EF /* SP2GalleryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CDA2AD59F7C7571A0A0FB3 /* SP2GalleryTests.swift */; };
 		635122BAD925778E7F2BD847 /* BackyamonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4153ADB05B7F431EAC0B898 /* BackyamonApp.swift */; };
 		701912FB6D0EBBCD348DB318 /* AssetModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36EC87C4B09558871A72FE6 /* AssetModels.swift */; };
+		7086DB494E7D7DB864BFA264 /* RiddimPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3849CF03E0A50749884C3E /* RiddimPlayView.swift */; };
 		75CC8B0579460EF91853CC1E /* Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAE6A7287C5592CFF9CD90A /* Presets.swift */; };
 		7C1230BA61484B187DE1651B /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D8CDDDEF1806A1A8EA0020 /* BoardView.swift */; };
 		816F8ED04213B482319ACA89 /* SocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926FD389B9D2A1FA854D68BD /* SocketClient.swift */; };
@@ -130,6 +131,7 @@
 		6C06767FD5FBF5AF89329450 /* RiddimEngineRenderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiddimEngineRenderTests.swift; sourceTree = "<group>"; };
 		6C22646E1D2E3FA442F596C1 /* bass.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bass.wav; sourceTree = "<group>"; };
 		6C556A8B1B433C991476DD05 /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
+		6D3849CF03E0A50749884C3E /* RiddimPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiddimPlayView.swift; sourceTree = "<group>"; };
 		7549AFE2DF4EECE9C7C0A78C /* RiddimEngineHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiddimEngineHolder.swift; sourceTree = "<group>"; };
 		75DEB2C404A69F07CDE18923 /* BearingOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearingOff.swift; sourceTree = "<group>"; };
 		76F5841397C8FAF2F8CCB92D /* KingTubby.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingTubby.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 				B47418F68CEF81062BB8CF9E /* MyStuffView.swift */,
 				786E23408C6DAA557A2A464A /* ProfileView.swift */,
 				8637A66695F543D530C26D28 /* ProfileViewModel.swift */,
+				6D3849CF03E0A50749884C3E /* RiddimPlayView.swift */,
 				496E2D90FA1447D13CEDF2AD /* Theme.swift */,
 			);
 			path = Views;
@@ -393,8 +396,6 @@
 				5B32986EE447E80B86B702E8 /* PBXTargetDependency */,
 			);
 			name = SampleTests;
-			packageProductDependencies = (
-			);
 			productName = SampleTests;
 			productReference = C472B70C7E601F352144C6C6 /* SampleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -431,8 +432,6 @@
 				F7449A06CA226709FCBE317F /* PBXTargetDependency */,
 			);
 			name = RiddimTests;
-			packageProductDependencies = (
-			);
 			productName = RiddimTests;
 			productReference = E29DC5DFABF1BDACE0F13630 /* RiddimTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -449,6 +448,7 @@
 				};
 			};
 			buildConfigurationList = 34E62F3153F908282A4E6B11 /* Build configuration list for PBXProject "Backyamon" */;
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -456,12 +456,9 @@
 				en,
 			);
 			mainGroup = 9A0A04C85B64EC40459E48FA;
-			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				782B980DDC4CC3D7DD0B715E /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
 			);
-			preferredProjectObjectVersion = 77;
-			productRefGroup = D0B60C48A68D2141F584BEE6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -534,6 +531,7 @@
 				D1AB67939AA8CBD7F4CA70F1 /* RiddimEngine.swift in Sources */,
 				D1870F5365AA1EEAE68A506C /* RiddimEngineHolder.swift in Sources */,
 				C7C73C0C1A2BCC1CA288D288 /* RiddimPattern.swift in Sources */,
+				7086DB494E7D7DB864BFA264 /* RiddimPlayView.swift in Sources */,
 				286D3AD389081FA73F00FCCC /* RiddimVoiceLoader.swift in Sources */,
 				31F4BAD6C20AD7903F8D9BBF /* SampleLibrary.swift in Sources */,
 				AA0D17799A39A74641D180BE /* SampleUpload.swift in Sources */,
