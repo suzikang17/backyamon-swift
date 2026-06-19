@@ -59,6 +59,7 @@
 		CA28D527B66CB4B00C50C3E0 /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C556A8B1B433C991476DD05 /* SmokeTests.swift */; };
 		CB87968F3B7CD194EF013DA6 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8637A66695F543D530C26D28 /* ProfileViewModel.swift */; };
 		CF3CE7DF810CF6722ECC31FD /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5439BB768359118F0A1C78AB /* SmokeTests.swift */; };
+		D1870F5365AA1EEAE68A506C /* RiddimEngineHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7549AFE2DF4EECE9C7C0A78C /* RiddimEngineHolder.swift */; };
 		D1AB67939AA8CBD7F4CA70F1 /* RiddimEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914FFCD693DA23542597565D /* RiddimEngine.swift */; };
 		D23DE17915CAB8B72CD53D69 /* OnlineGameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30582C4729E8E21AC8F0E83D /* OnlineGameController.swift */; };
 		D2779345F612FD65AE1EC027 /* ResamplingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D45495D9A4B3CCFF8BAF619 /* ResamplingTests.swift */; };
@@ -125,6 +126,7 @@
 		6C06767FD5FBF5AF89329450 /* RiddimEngineRenderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiddimEngineRenderTests.swift; sourceTree = "<group>"; };
 		6C22646E1D2E3FA442F596C1 /* bass.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bass.wav; sourceTree = "<group>"; };
 		6C556A8B1B433C991476DD05 /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
+		7549AFE2DF4EECE9C7C0A78C /* RiddimEngineHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiddimEngineHolder.swift; sourceTree = "<group>"; };
 		75DEB2C404A69F07CDE18923 /* BearingOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearingOff.swift; sourceTree = "<group>"; };
 		76F5841397C8FAF2F8CCB92D /* KingTubby.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingTubby.swift; sourceTree = "<group>"; };
 		786E23408C6DAA557A2A464A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 				4CAE6A7287C5592CFF9CD90A /* Presets.swift */,
 				CD7AFFF5110A9C069A90F9B3 /* Resampling.swift */,
 				914FFCD693DA23542597565D /* RiddimEngine.swift */,
+				7549AFE2DF4EECE9C7C0A78C /* RiddimEngineHolder.swift */,
 				50737E9A6DBC874E63D2ED6F /* RiddimPattern.swift */,
 				AE619681BDC7E83520181AD5 /* SampleLibrary.swift */,
 				B55E0C3380CE28A9C0991DDF /* Samples */,
@@ -522,6 +525,7 @@
 				CB87968F3B7CD194EF013DA6 /* ProfileViewModel.swift in Sources */,
 				F068A1FB8E110349F667BE99 /* Resampling.swift in Sources */,
 				D1AB67939AA8CBD7F4CA70F1 /* RiddimEngine.swift in Sources */,
+				D1870F5365AA1EEAE68A506C /* RiddimEngineHolder.swift in Sources */,
 				C7C73C0C1A2BCC1CA288D288 /* RiddimPattern.swift in Sources */,
 				31F4BAD6C20AD7903F8D9BBF /* SampleLibrary.swift in Sources */,
 				AA0D17799A39A74641D180BE /* SampleUpload.swift in Sources */,

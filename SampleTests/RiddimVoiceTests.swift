@@ -77,4 +77,19 @@ final class RiddimVoiceTests: XCTestCase {
         XCTAssertNil(riddimVoice(forSlot: "riddim-unknown"))
         XCTAssertNil(riddimVoice(forSlot: "dice-roll"))
     }
+
+    @MainActor
+    func test_holderVendsLibraryAndOverridesPersist() {
+        let holder = RiddimEngineHolder.shared
+        guard let lib = holder.sampleLibrary else {
+            // Engine init failed in this host (no bundled WAVs) — holder must
+            // not crash; it exposes a disabled (nil) library.
+            XCTAssertFalse(holder.isAvailable)
+            return
+        }
+        lib.setOverride(buffer: makeBuffer(value: 0.33), rootMidiNote: nil, for: .snare)
+        XCTAssertEqual(holder.sampleLibrary?.buffer(for: .snare)?.floatChannelData![0][0], 0.33)
+        XCTAssertTrue(holder.isAvailable)
+        lib.clearOverride(for: .snare)
+    }
 }
