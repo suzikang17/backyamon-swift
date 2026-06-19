@@ -147,4 +147,27 @@ final class RiddimVoiceTests: XCTestCase {
         XCTAssertNil(mgr.equippedRiddimIds["bass"])
         XCTAssertFalse(mgr.isEquipped(asset))
     }
+
+    @MainActor
+    func test_riddimOverrideParamsFromAsset() {
+        let mgr = AssetManager.shared
+        let meta = #"{"slot":"riddim-bass","duration_ms":800,"file_size":10,"root_midi_note":40}"#
+        let asset = Asset(id: "rv2", creatorId: "c", type: .sfx, title: "Bass",
+                          status: .private, metadata: meta, r2Key: "k", url: "https://x/y.m4a",
+                          createdAt: 0, updatedAt: 0)
+        let params = mgr.riddimOverrideParams(for: asset)
+        XCTAssertEqual(params?.voice, .bass)
+        XCTAssertEqual(params?.rootMidiNote, 40)
+        XCTAssertEqual(params?.url.absoluteString, "https://x/y.m4a")
+    }
+
+    @MainActor
+    func test_riddimOverrideParamsNilForNonRiddim() {
+        let mgr = AssetManager.shared
+        let meta = #"{"slot":"dice-roll","duration_ms":500,"file_size":3}"#
+        let asset = Asset(id: "s1", creatorId: "c", type: .sfx, title: "Hit",
+                          status: .private, metadata: meta, r2Key: "k", url: "https://x/h.m4a",
+                          createdAt: 0, updatedAt: 0)
+        XCTAssertNil(mgr.riddimOverrideParams(for: asset))
+    }
 }

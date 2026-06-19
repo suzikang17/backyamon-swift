@@ -203,7 +203,8 @@ final class AssetManager: ObservableObject {
     /// equipped.
     func loadEquippedAssets(socket: SocketClient) async {
         // Bail early if nothing is equipped — no point hitting the server.
-        guard prefs.pieceSet != nil || prefs.music != nil || !prefs.sfx.isEmpty else {
+        guard prefs.pieceSet != nil || prefs.music != nil
+              || !prefs.sfx.isEmpty || !prefs.riddim.isEmpty else {
             equippedPieceSvg = nil
             equippedPieceRedSvg = nil
             return
@@ -255,6 +256,19 @@ final class AssetManager: ObservableObject {
             }
         }
 
+        // Riddim voices — resolve each and install as a library override.
+        if !prefs.riddim.isEmpty, let library = RiddimEngineHolder.shared.sampleLibrary {
+            let loader = RiddimVoiceLoader.live(library: library)
+            for (_, assetId) in prefs.riddim {
+                var asset = index[assetId]
+                if asset == nil { asset = await findInGallery(id: assetId, socket: socket) }
+                guard let asset, let params = riddimOverrideParams(for: asset) else { continue }
+                try? await loader.setVoice(url: params.url,
+                                           rootMidiNote: params.rootMidiNote,
+                                           for: params.voice)
+            }
+        }
+
         // Music
         if let musicId = prefs.music {
             var asset = index[musicId]
@@ -275,6 +289,18 @@ final class AssetManager: ObservableObject {
     }
 
     // MARK: - Helpers
+
+    /// Extract the (voice, root, url) needed to install a riddim override from a
+    /// resolved asset. Nil if the asset is not a riddim-slot sfx with a url.
+    func riddimOverrideParams(for asset: Asset)
+        -> (voice: InstrumentID, rootMidiNote: Int?, url: URL)? {
+        guard asset.type == .sfx,
+              let meta = asset.decodeSfxMetadata(),
+              meta.slot.hasPrefix("riddim-"),
+              let voice = riddimVoice(forSlot: meta.slot),
+              let urlStr = asset.url, let url = URL(string: urlStr) else { return nil }
+        return (voice, meta.root_midi_note, url)
+    }
 
     private func findAsset(byId id: String, socket: SocketClient) async -> Asset? {
         if let mine = try? await socket.listMyAssets(),
