@@ -58,10 +58,41 @@ struct GalleryView: View {
                     }
                 }
             }
+
+            if let toast = vm.toastMessage {
+                VStack {
+                    Spacer()
+                    Text(toast)
+                        .font(Theme.serifBold(13))
+                        .foregroundStyle(Theme.cream)
+                        .padding(.horizontal, 18)
+                        .padding(.vertical, 12)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.black.opacity(0.85))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(gold.opacity(0.4), lineWidth: 1)
+                                )
+                        )
+                        .padding(.bottom, 40)
+                        .accessibilityLabel(toast)
+                }
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+                .allowsHitTesting(false)
+            }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .animation(.easeInOut(duration: 0.25), value: vm.toastMessage)
         .task {
             await vm.start()
+        }
+        .onChange(of: vm.toastMessage) { _, newValue in
+            guard newValue != nil else { return }
+            Task {
+                try? await Task.sleep(nanoseconds: 2_000_000_000)
+                vm.toastMessage = nil
+            }
         }
         .onDisappear {
             vm.teardown()
@@ -256,9 +287,9 @@ struct GalleryView: View {
             Spacer()
 
             Button {
-                Task { await vm.toggleEquip(asset) }
+                Task { await vm.use(asset) }
             } label: {
-                Text(equipped ? "UNEQUIP" : "EQUIP")
+                Text(equipped ? "USING" : "USE")
                     .font(Theme.serifBold(10))
                     .tracking(2)
                     .foregroundStyle(equipped ? bg : gold)
@@ -397,6 +428,7 @@ final class GalleryViewModel: ObservableObject {
     @Published var filter: Filter = .all
     @Published var searchText: String = ""
     @Published var previewingId: String?
+    @Published var toastMessage: String?
 
     let client: SocketClient
     private var previewPlayer: AVAudioPlayer?
@@ -444,6 +476,27 @@ final class GalleryViewModel: ObservableObject {
     func toggleEquip(_ asset: Asset) async {
         await AssetManager.shared.toggleEquip(asset, socket: client)
         objectWillChange.send()
+    }
+
+    func use(_ asset: Asset) async {
+        let wasEquipped = isEquipped(asset)
+        // Detect a prior occupant of this SFX slot before equipping.
+        var replacedSlot: String?
+        if !wasEquipped, asset.type == .sfx,
+           let slot = asset.decodeSfxMetadata()?.slot,
+           let prior = AssetManager.shared.equippedSfxId(forSlot: slot),
+           prior != asset.id {
+            replacedSlot = slot
+        }
+        await AssetManager.shared.toggleEquip(asset, socket: client)
+        objectWillChange.send()
+        if wasEquipped {
+            toastMessage = "Removed from your game"
+        } else if let slot = replacedSlot {
+            toastMessage = "Replaced your \(slot) sound"
+        } else {
+            toastMessage = "Added to your game"
+        }
     }
 
     func togglePreview(_ asset: Asset) {
