@@ -12,6 +12,7 @@
 		169F344BCD6933B2CEA76EA3 /* KingTubby.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F5841397C8FAF2F8CCB92D /* KingTubby.swift */; };
 		17999AB0254F26339550F203 /* skank.wav in Resources */ = {isa = PBXBuildFile; fileRef = 564725F9CF5B18AAF2D9F66C /* skank.wav */; };
 		1B1CF9C4DFEB01AD9AE71FBA /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72C98B7E626055C27F75A0 /* State.swift */; };
+		2067FD47FDC1ED6058B05969 /* AssignVoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD44C3626A4258912CB926B /* AssignVoiceView.swift */; };
 		207A8BB2F8FE4568DD9782F8 /* CreateSampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D813FE58AFC8CC7778ECDBF5 /* CreateSampleView.swift */; };
 		263E00DB42831CAC970082C5 /* LobbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4E0097D45615D4A50672CA /* LobbyView.swift */; };
 		26FDAF03F5BB56E291BDABCF /* hat.wav in Resources */ = {isa = PBXBuildFile; fileRef = 06E3915EDE55CDB2CE6440B3 /* hat.wav */; };
@@ -117,6 +118,7 @@
 		454415EE7E76B414FE2ACFBF /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		496E2D90FA1447D13CEDF2AD /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		4A03F1E52E38B550B4597111 /* PlayerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModels.swift; sourceTree = "<group>"; };
+		4BD44C3626A4258912CB926B /* AssignVoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignVoiceView.swift; sourceTree = "<group>"; };
 		4CAE6A7287C5592CFF9CD90A /* Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presets.swift; sourceTree = "<group>"; };
 		50737E9A6DBC874E63D2ED6F /* RiddimPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiddimPattern.swift; sourceTree = "<group>"; };
 		5439BB768359118F0A1C78AB /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 		53DACAF6D639112858EC309F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4BD44C3626A4258912CB926B /* AssignVoiceView.swift */,
 				01D8CDDDEF1806A1A8EA0020 /* BoardView.swift */,
 				D5F473EA1E920288ABA111A8 /* ControlBarView.swift */,
 				D813FE58AFC8CC7778ECDBF5 /* CreateSampleView.swift */,
@@ -497,6 +500,7 @@
 				919628C5538CEFF2F30CABCE /* AssetManager.swift in Sources */,
 				701912FB6D0EBBCD348DB318 /* AssetModels.swift in Sources */,
 				FA64CCD1A7373A2E30C3BFBF /* AssetUploader.swift in Sources */,
+				2067FD47FDC1ED6058B05969 /* AssignVoiceView.swift in Sources */,
 				601DF0D2E72E94170EE4187D /* AudioRecorder.swift in Sources */,
 				635122BAD925778E7F2BD847 /* BackyamonApp.swift in Sources */,
 				594E8BCCED6C88FD8B4D37AA /* BeachBum.swift in Sources */,

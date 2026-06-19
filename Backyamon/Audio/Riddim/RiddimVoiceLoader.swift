@@ -45,6 +45,15 @@ final class RiddimVoiceLoader {
         library.clearOverride(for: id)
     }
 
+    /// Default repitch root for a pitched voice; nil for drums.
+    static func defaultRoot(for id: InstrumentID) -> Int? {
+        switch id {
+        case .bass: return 33
+        case .organ, .skank, .melodica: return 57
+        default: return nil
+        }
+    }
+
     private static func cacheURL(for url: URL) throws -> URL {
         let dir = try FileManager.default.url(for: .cachesDirectory, in: .userDomainMask,
                                               appropriateFor: nil, create: true)
