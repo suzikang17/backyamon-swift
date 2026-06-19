@@ -21,28 +21,17 @@ struct GameView: View {
             Theme.bg
                 .ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                HUDView(game: game, leftLabel: "YOU", rightLabel: "CPU")
-
-                Spacer(minLength: 8)
-
-                GeometryReader { geo in
-                    BoardView(
-                        state: game.state,
-                        legalMoves: game.legalMoves,
-                        selectedFrom: $selectedFrom,
-                        onMove: { move in
-                            game.applyPlayerMove(move)
-                            selectedFrom = nil
-                        }
-                    )
-                    .frame(width: geo.size.width, height: geo.size.height)
-                }
-
-                Spacer(minLength: 8)
-
-                ControlBarView(game: game)
-            }
+            GameBoardScaffold(
+                game: game,
+                leftLabel: "YOU",
+                rightLabel: "CPU",
+                selectedFrom: $selectedFrom,
+                onMove: { move in
+                    game.applyPlayerMove(move)
+                    selectedFrom = nil
+                },
+                onQuit: { showQuitConfirm = true }
+            )
 
             if game.aiDoubleOffered && game.state.winner == nil {
                 DoubleOfferOverlay(
@@ -70,12 +59,8 @@ struct GameView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-        .toolbarBackground(.hidden, for: .navigationBar)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                QuitGameButton { showQuitConfirm = true }
-            }
-        }
+        .toolbar(.hidden, for: .navigationBar)
+        .statusBarHidden(true)
         .confirmationDialog("Leave this game?",
                             isPresented: $showQuitConfirm,
                             titleVisibility: .visible) {
@@ -85,28 +70,61 @@ struct GameView: View {
             Text("Your current game will be lost.")
         }
         .onAppear {
+            AppOrientation.lock(.landscape)
             game.newGame(difficulty: difficulty, matchLength: matchLength)
+        }
+        .onDisappear {
+            AppOrientation.lock(.portrait)
         }
     }
 }
 
-/// Compact themed quit affordance for game screens — the nav bar background
-/// is hidden, so this is the only chrome over the felt.
-struct QuitGameButton: View {
-    let action: () -> Void
+/// Shared game layout for both AI and online matches: the board fills the whole
+/// screen with the scoreboard floated across the top, and a single thin bottom
+/// bar of small controls.
+struct GameBoardScaffold<Game: GameControlling>: View {
+    @ObservedObject var game: Game
+    let leftLabel: String
+    let rightLabel: String
+    @Binding var selectedFrom: MoveFrom?
+    let onMove: (Move) -> Void
+    let onQuit: () -> Void
+    /// Optional strip shown under the HUD (e.g. opponent-disconnected notice).
+    var banner: AnyView? = nil
 
     var body: some View {
-        Button(action: action) {
-            Image(systemName: "xmark")
-                .font(.system(size: 14, weight: .semibold))
-                .foregroundStyle(Theme.gold)
-                .frame(width: 34, height: 34)
-                .background(Circle().fill(Color.black.opacity(0.35)))
-                .overlay(Circle().stroke(Theme.gold.opacity(0.3), lineWidth: 1))
-                .frame(width: 44, height: 44)
-                .contentShape(Rectangle())
+        HStack(spacing: 0) {
+            LeftSliverBar(game: game, leftLabel: leftLabel, rightLabel: rightLabel, onQuit: onQuit)
+
+            ZStack(alignment: .top) {
+                GeometryReader { geo in
+                    BoardView(
+                        state: game.state,
+                        legalMoves: game.legalMoves,
+                        selectedFrom: $selectedFrom,
+                        onMove: onMove
+                    )
+                    .frame(width: geo.size.width, height: geo.size.height)
+                }
+
+                VStack(spacing: 0) {
+                    BoardHUDOverlay(game: game)
+                    if let banner {
+                        banner
+                    }
+                }
+
+                if game.state.phase == .rolling && game.isHumanTurn {
+                    RollDiceOverlay(game: game)
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            // Landscape gives ~no top safe-area inset, so the board, the floating
+            // scoreboard, and the roll overlay all need a margin or they clip the
+            // top/bottom screen edges.
+            .padding(.top, 20)
+            .padding(.bottom, 8)
         }
-        .accessibilityLabel("Leave game")
     }
 }
 
@@ -127,10 +145,17 @@ struct OnlineGameView: View {
             Theme.bg
                 .ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                HUDView(game: game, leftLabel: "YOU", rightLabel: game.opponentName.uppercased())
-
-                if game.isOpponentDisconnected {
+            GameBoardScaffold(
+                game: game,
+                leftLabel: "YOU",
+                rightLabel: game.opponentName.uppercased(),
+                selectedFrom: $selectedFrom,
+                onMove: { move in
+                    game.applyPlayerMove(move)
+                    selectedFrom = nil
+                },
+                onQuit: { showQuitConfirm = true },
+                banner: game.isOpponentDisconnected ? AnyView(
                     HStack {
                         Image(systemName: "exclamationmark.triangle.fill")
                             .foregroundStyle(Theme.gold)
@@ -141,27 +166,8 @@ struct OnlineGameView: View {
                     .padding(.vertical, 6)
                     .frame(maxWidth: .infinity)
                     .background(Color.black.opacity(0.4))
-                }
-
-                Spacer(minLength: 8)
-
-                GeometryReader { geo in
-                    BoardView(
-                        state: game.state,
-                        legalMoves: game.legalMoves,
-                        selectedFrom: $selectedFrom,
-                        onMove: { move in
-                            game.applyPlayerMove(move)
-                            selectedFrom = nil
-                        }
-                    )
-                    .frame(width: geo.size.width, height: geo.size.height)
-                }
-
-                Spacer(minLength: 8)
-
-                ControlBarView(game: game)
-            }
+                ) : nil
+            )
 
             if game.aiDoubleOffered && game.state.winner == nil {
                 DoubleOfferOverlay(
@@ -181,12 +187,8 @@ struct OnlineGameView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-        .toolbarBackground(.hidden, for: .navigationBar)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                QuitGameButton { showQuitConfirm = true }
-            }
-        }
+        .toolbar(.hidden, for: .navigationBar)
+        .statusBarHidden(true)
         .confirmationDialog("Leave this match?",
                             isPresented: $showQuitConfirm,
                             titleVisibility: .visible) {
@@ -195,7 +197,11 @@ struct OnlineGameView: View {
         } message: {
             Text("Leaving forfeits the match to your opponent.")
         }
+        .onAppear {
+            AppOrientation.lock(.landscape)
+        }
         .onDisappear {
+            AppOrientation.lock(.portrait)
             game.leave()
         }
     }

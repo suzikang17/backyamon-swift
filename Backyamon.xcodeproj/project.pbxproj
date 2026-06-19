@@ -7,29 +7,41 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01D50EED2613D9AD88EF3035 /* melodica.wav in Resources */ = {isa = PBXBuildFile; fileRef = 15DB065A931A355B0FFC0B67 /* melodica.wav */; };
 		142402CE3BB1A16113BEA3B5 /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44384CCC0031879036E339F0 /* HUDView.swift */; };
 		169F344BCD6933B2CEA76EA3 /* KingTubby.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F5841397C8FAF2F8CCB92D /* KingTubby.swift */; };
+		17999AB0254F26339550F203 /* skank.wav in Resources */ = {isa = PBXBuildFile; fileRef = 564725F9CF5B18AAF2D9F66C /* skank.wav */; };
 		1B1CF9C4DFEB01AD9AE71FBA /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72C98B7E626055C27F75A0 /* State.swift */; };
 		207A8BB2F8FE4568DD9782F8 /* CreateSampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D813FE58AFC8CC7778ECDBF5 /* CreateSampleView.swift */; };
 		263E00DB42831CAC970082C5 /* LobbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4E0097D45615D4A50672CA /* LobbyView.swift */; };
+		26FDAF03F5BB56E291BDABCF /* hat.wav in Resources */ = {isa = PBXBuildFile; fileRef = 06E3915EDE55CDB2CE6440B3 /* hat.wav */; };
 		2779F7A3B4B78E9285C928A6 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE32063FA60F297D4351D12 /* HapticManager.swift */; };
+		30FDF83761F4BB6B50AAF980 /* ChordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E723B751498D17E3A8DB56 /* ChordTests.swift */; };
+		31F4BAD6C20AD7903F8D9BBF /* SampleLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE619681BDC7E83520181AD5 /* SampleLibrary.swift */; };
 		3463CC9AD2FF45B7AE68FE6C /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FE39DCDB5A47244432CB0A /* GameOverView.swift */; };
 		366B7671E723D3F972C6467C /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B31B6884585906F6344CA /* Types.swift */; };
+		36D8E3738BDA41637E378F5E /* organ.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9F659AF1424584EE180AD3E5 /* organ.wav */; };
+		3807355504E2F2D26AFD6774 /* kick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 69BBEE800F8C36BBA9696B51 /* kick.wav */; };
 		3DD3FA2EE356EDE6CD079657 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8501154D20B54457B58A11 /* GameController.swift */; };
+		3F50B11B11507C66BF792643 /* Chord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B56C4902E10CD516F029C59 /* Chord.swift */; };
 		41375628143F416DF915010D /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454415EE7E76B414FE2ACFBF /* SoundManager.swift */; };
 		459C012DCDE775D0913564EC /* DifficultyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A082810F7D964E5E0E9C6 /* DifficultyView.swift */; };
+		468F4A0B314B473341A91033 /* SampleLibraryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E7B4C42F3B66CA0DC6808E /* SampleLibraryTests.swift */; };
 		46D1A85125BA9390B73496D6 /* AudioRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1D14906FC92817FB62EB39 /* AudioRecorderTests.swift */; };
 		47B20685BC3EFDF050145A9C /* Moves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C968A8E72F685B5C915E622 /* Moves.swift */; };
 		504496E06111C47406D6FF0F /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = C5445E8BABFCD320FA832A46 /* SocketIO */; };
+		56C733FE2C20A0FC4602D7BC /* RiddimEngineRenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C06767FD5FBF5AF89329450 /* RiddimEngineRenderTests.swift */; };
 		594E8BCCED6C88FD8B4D37AA /* BeachBum.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF416707908D2BD46ABDF1F /* BeachBum.swift */; };
 		5E405E23CCF846BDC664C849 /* AssetUploaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13243713FE68D21D52967FE /* AssetUploaderTests.swift */; };
 		601DF0D2E72E94170EE4187D /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FFF02F5B5DA4E0F053E6A8 /* AudioRecorder.swift */; };
 		633D77FB3DB82B589179D0EF /* SP2GalleryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CDA2AD59F7C7571A0A0FB3 /* SP2GalleryTests.swift */; };
 		635122BAD925778E7F2BD847 /* BackyamonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4153ADB05B7F431EAC0B898 /* BackyamonApp.swift */; };
 		701912FB6D0EBBCD348DB318 /* AssetModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36EC87C4B09558871A72FE6 /* AssetModels.swift */; };
+		75CC8B0579460EF91853CC1E /* Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAE6A7287C5592CFF9CD90A /* Presets.swift */; };
 		7C1230BA61484B187DE1651B /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D8CDDDEF1806A1A8EA0020 /* BoardView.swift */; };
 		816F8ED04213B482319ACA89 /* SocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926FD389B9D2A1FA854D68BD /* SocketClient.swift */; };
 		861B436C9BF58EC18A81DDBB /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F3DFD8BC6BC4307ADF842E /* GalleryView.swift */; };
+		8D9DF8F3B7EDF3475BE1EEBB /* shaker.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3F09FB594A19FA63F60A674 /* shaker.wav */; };
 		8E4CDA54B7AD19656B205F9B /* ControlBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F473EA1E920288ABA111A8 /* ControlBarView.swift */; };
 		919628C5538CEFF2F30CABCE /* AssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853EF27094406FB77DD170DF /* AssetManager.swift */; };
 		963CEB77869BDF203B707E36 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496E2D90FA1447D13CEDF2AD /* Theme.swift */; };
@@ -38,24 +50,40 @@
 		9D42F91FE960DE1BFAD00129 /* SampleUploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09C3D0D968FCD177A974427 /* SampleUploadTests.swift */; };
 		A19A14404F28B83FEA91C912 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D4A6DC232C34F97AFACDAC /* GameView.swift */; };
 		A302D41E51416343AA178C67 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786E23408C6DAA557A2A464A /* ProfileView.swift */; };
+		A4ACE206205667D0CC7C4D92 /* perc.wav in Resources */ = {isa = PBXBuildFile; fileRef = 28E87EFECAB2B697A33C8ACD /* perc.wav */; };
 		A6B62DF9840122E7FB87D9F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 828507FFB059300EE87F0A12 /* Assets.xcassets */; };
 		AA0D17799A39A74641D180BE /* SampleUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3213CE90AA3059100AD5427 /* SampleUpload.swift */; };
+		ADD1591EC96DF0163BFB1D6D /* bass.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6C22646E1D2E3FA442F596C1 /* bass.wav */; };
 		C7B6DCFE18C2324E622AA27C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B3B593B5DB997D32B0C3BB /* HomeView.swift */; };
+		C7C73C0C1A2BCC1CA288D288 /* RiddimPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50737E9A6DBC874E63D2ED6F /* RiddimPattern.swift */; };
+		CA28D527B66CB4B00C50C3E0 /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C556A8B1B433C991476DD05 /* SmokeTests.swift */; };
 		CB87968F3B7CD194EF013DA6 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8637A66695F543D530C26D28 /* ProfileViewModel.swift */; };
 		CF3CE7DF810CF6722ECC31FD /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5439BB768359118F0A1C78AB /* SmokeTests.swift */; };
+		D1AB67939AA8CBD7F4CA70F1 /* RiddimEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914FFCD693DA23542597565D /* RiddimEngine.swift */; };
 		D23DE17915CAB8B72CD53D69 /* OnlineGameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30582C4729E8E21AC8F0E83D /* OnlineGameController.swift */; };
+		D2779345F612FD65AE1EC027 /* ResamplingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D45495D9A4B3CCFF8BAF619 /* ResamplingTests.swift */; };
 		D6E8AB5813498D5985D89FFD /* Winner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1271D746311550C66273D717 /* Winner.swift */; };
+		D8433B222E6E02D18250DEAC /* snare.wav in Resources */ = {isa = PBXBuildFile; fileRef = 971AA1569C1990BFBB6D8755 /* snare.wav */; };
 		DA91C39C2A4F366E5D1EEFB8 /* PlayerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A03F1E52E38B550B4597111 /* PlayerModels.swift */; };
 		DB79699BF05C8896A31E0761 /* BearingOff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DEB2C404A69F07CDE18923 /* BearingOff.swift */; };
 		E8A6A4552DDCA68B7E1161C7 /* MyStuffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47418F68CEF81062BB8CF9E /* MyStuffView.swift */; };
 		EAB42D9C597DD4473176B35C /* GameControlling.swift in Sources */ = {isa = PBXBuildFile; fileRef = A413F75A11747CE5D9041119 /* GameControlling.swift */; };
 		EE6EDF345526CB28E760E4C6 /* Selector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144A6D6C8757EBBAACBBB3D3 /* Selector.swift */; };
+		EEDAF1E9D08F1D2B0A5B879C /* RiddimPatternTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CCEEB68234E9A0FFECCA42 /* RiddimPatternTests.swift */; };
 		EF4A36C96ED6C65D804BDD3C /* TurnGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F63C95912D2F9F240EFC16B /* TurnGenerator.swift */; };
+		F068A1FB8E110349F667BE99 /* Resampling.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7AFFF5110A9C069A90F9B3 /* Resampling.swift */; };
 		F29E2EDBA0491E2DF09AE70F /* MusicEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873CD643593AD559421001D /* MusicEngine.swift */; };
 		FA64CCD1A7373A2E30C3BFBF /* AssetUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057AA6B898491EA38149A3C5 /* AssetUploader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		30626BE2A4FE96CAE3A6AE4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3980859220A2A8543C7CDFB7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9517078929500964803388B6;
+			remoteInfo = Backyamon;
+		};
 		E4C4E5E1C65E4646AF93E5F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3980859220A2A8543C7CDFB7 /* Project object */;
@@ -68,9 +96,14 @@
 /* Begin PBXFileReference section */
 		01D8CDDDEF1806A1A8EA0020 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		057AA6B898491EA38149A3C5 /* AssetUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetUploader.swift; sourceTree = "<group>"; };
+		06E3915EDE55CDB2CE6440B3 /* hat.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hat.wav; sourceTree = "<group>"; };
 		0873CD643593AD559421001D /* MusicEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicEngine.swift; sourceTree = "<group>"; };
 		1271D746311550C66273D717 /* Winner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Winner.swift; sourceTree = "<group>"; };
 		144A6D6C8757EBBAACBBB3D3 /* Selector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selector.swift; sourceTree = "<group>"; };
+		15DB065A931A355B0FFC0B67 /* melodica.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = melodica.wav; sourceTree = "<group>"; };
+		1D45495D9A4B3CCFF8BAF619 /* ResamplingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResamplingTests.swift; sourceTree = "<group>"; };
+		28E87EFECAB2B697A33C8ACD /* perc.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = perc.wav; sourceTree = "<group>"; };
+		2B56C4902E10CD516F029C59 /* Chord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chord.swift; sourceTree = "<group>"; };
 		2DA1A21A17CABFE23C539F25 /* Dice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dice.swift; sourceTree = "<group>"; };
 		30582C4729E8E21AC8F0E83D /* OnlineGameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineGameController.swift; sourceTree = "<group>"; };
 		3A16C9FF517CE3BCFDCAF6F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -80,22 +113,36 @@
 		454415EE7E76B414FE2ACFBF /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		496E2D90FA1447D13CEDF2AD /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		4A03F1E52E38B550B4597111 /* PlayerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModels.swift; sourceTree = "<group>"; };
+		4CAE6A7287C5592CFF9CD90A /* Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presets.swift; sourceTree = "<group>"; };
+		50737E9A6DBC874E63D2ED6F /* RiddimPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiddimPattern.swift; sourceTree = "<group>"; };
 		5439BB768359118F0A1C78AB /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
+		564725F9CF5B18AAF2D9F66C /* skank.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = skank.wav; sourceTree = "<group>"; };
 		5C4E0097D45615D4A50672CA /* LobbyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyView.swift; sourceTree = "<group>"; };
+		69BBEE800F8C36BBA9696B51 /* kick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = kick.wav; sourceTree = "<group>"; };
 		6B1D14906FC92817FB62EB39 /* AudioRecorderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderTests.swift; sourceTree = "<group>"; };
 		6B8501154D20B54457B58A11 /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
+		6C06767FD5FBF5AF89329450 /* RiddimEngineRenderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiddimEngineRenderTests.swift; sourceTree = "<group>"; };
+		6C22646E1D2E3FA442F596C1 /* bass.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bass.wav; sourceTree = "<group>"; };
+		6C556A8B1B433C991476DD05 /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 		75DEB2C404A69F07CDE18923 /* BearingOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearingOff.swift; sourceTree = "<group>"; };
 		76F5841397C8FAF2F8CCB92D /* KingTubby.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingTubby.swift; sourceTree = "<group>"; };
 		786E23408C6DAA557A2A464A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		828507FFB059300EE87F0A12 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		853EF27094406FB77DD170DF /* AssetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetManager.swift; sourceTree = "<group>"; };
 		8637A66695F543D530C26D28 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		87E7B4C42F3B66CA0DC6808E /* SampleLibraryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleLibraryTests.swift; sourceTree = "<group>"; };
 		8F63C95912D2F9F240EFC16B /* TurnGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnGenerator.swift; sourceTree = "<group>"; };
+		914FFCD693DA23542597565D /* RiddimEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiddimEngine.swift; sourceTree = "<group>"; };
 		926FD389B9D2A1FA854D68BD /* SocketClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketClient.swift; sourceTree = "<group>"; };
+		94E723B751498D17E3A8DB56 /* ChordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChordTests.swift; sourceTree = "<group>"; };
+		971AA1569C1990BFBB6D8755 /* snare.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = snare.wav; sourceTree = "<group>"; };
 		9C968A8E72F685B5C915E622 /* Moves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moves.swift; sourceTree = "<group>"; };
+		9F659AF1424584EE180AD3E5 /* organ.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = organ.wav; sourceTree = "<group>"; };
 		A36EC87C4B09558871A72FE6 /* AssetModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetModels.swift; sourceTree = "<group>"; };
 		A413F75A11747CE5D9041119 /* GameControlling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameControlling.swift; sourceTree = "<group>"; };
 		A7B3B593B5DB997D32B0C3BB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		A7CCEEB68234E9A0FFECCA42 /* RiddimPatternTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiddimPatternTests.swift; sourceTree = "<group>"; };
+		AE619681BDC7E83520181AD5 /* SampleLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleLibrary.swift; sourceTree = "<group>"; };
 		B09C3D0D968FCD177A974427 /* SampleUploadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleUploadTests.swift; sourceTree = "<group>"; };
 		B13243713FE68D21D52967FE /* AssetUploaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetUploaderTests.swift; sourceTree = "<group>"; };
 		B47418F68CEF81062BB8CF9E /* MyStuffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStuffView.swift; sourceTree = "<group>"; };
@@ -103,11 +150,14 @@
 		BCF416707908D2BD46ABDF1F /* BeachBum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeachBum.swift; sourceTree = "<group>"; };
 		C472B70C7E601F352144C6C6 /* SampleTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9FE39DCDB5A47244432CB0A /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
+		CD7AFFF5110A9C069A90F9B3 /* Resampling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resampling.swift; sourceTree = "<group>"; };
 		CDE32063FA60F297D4351D12 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		D5F473EA1E920288ABA111A8 /* ControlBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBarView.swift; sourceTree = "<group>"; };
 		D6D4A6DC232C34F97AFACDAC /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		D813FE58AFC8CC7778ECDBF5 /* CreateSampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSampleView.swift; sourceTree = "<group>"; };
 		E089392DB782B733DD188FD2 /* Backyamon.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Backyamon.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E29DC5DFABF1BDACE0F13630 /* RiddimTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = RiddimTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3F09FB594A19FA63F60A674 /* shaker.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shaker.wav; sourceTree = "<group>"; };
 		E4153ADB05B7F431EAC0B898 /* BackyamonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackyamonApp.swift; sourceTree = "<group>"; };
 		E56A082810F7D964E5E0E9C6 /* DifficultyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyView.swift; sourceTree = "<group>"; };
 		E7F3DFD8BC6BC4307ADF842E /* GalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryView.swift; sourceTree = "<group>"; };
@@ -152,8 +202,22 @@
 				0873CD643593AD559421001D /* MusicEngine.swift */,
 				454415EE7E76B414FE2ACFBF /* SoundManager.swift */,
 				FCBB5160BC2D25985300090C /* Capture */,
+				93419CBE6B8B7E3D0F84ACEE /* Riddim */,
 			);
 			path = Audio;
+			sourceTree = "<group>";
+		};
+		2013D9211C9998DD36E46EB1 /* RiddimTests */ = {
+			isa = PBXGroup;
+			children = (
+				94E723B751498D17E3A8DB56 /* ChordTests.swift */,
+				1D45495D9A4B3CCFF8BAF619 /* ResamplingTests.swift */,
+				6C06767FD5FBF5AF89329450 /* RiddimEngineRenderTests.swift */,
+				A7CCEEB68234E9A0FFECCA42 /* RiddimPatternTests.swift */,
+				87E7B4C42F3B66CA0DC6808E /* SampleLibraryTests.swift */,
+				6C556A8B1B433C991476DD05 /* SmokeTests.swift */,
+			);
+			path = RiddimTests;
 			sourceTree = "<group>";
 		};
 		44D2D09F2F97C49EE244D763 /* Online */ = {
@@ -197,10 +261,25 @@
 			path = Game;
 			sourceTree = "<group>";
 		};
+		93419CBE6B8B7E3D0F84ACEE /* Riddim */ = {
+			isa = PBXGroup;
+			children = (
+				2B56C4902E10CD516F029C59 /* Chord.swift */,
+				4CAE6A7287C5592CFF9CD90A /* Presets.swift */,
+				CD7AFFF5110A9C069A90F9B3 /* Resampling.swift */,
+				914FFCD693DA23542597565D /* RiddimEngine.swift */,
+				50737E9A6DBC874E63D2ED6F /* RiddimPattern.swift */,
+				AE619681BDC7E83520181AD5 /* SampleLibrary.swift */,
+				B55E0C3380CE28A9C0991DDF /* Samples */,
+			);
+			path = Riddim;
+			sourceTree = "<group>";
+		};
 		9A0A04C85B64EC40459E48FA = {
 			isa = PBXGroup;
 			children = (
 				0EF3DADF5B39F1E17FB13251 /* Backyamon */,
+				2013D9211C9998DD36E46EB1 /* RiddimTests */,
 				CE2246D5D1E97095FAD72F02 /* SampleTests */,
 				D0B60C48A68D2141F584BEE6 /* Products */,
 			);
@@ -220,6 +299,22 @@
 				FFFC5EF1CE8555E476451876 /* AI */,
 			);
 			path = Engine;
+			sourceTree = "<group>";
+		};
+		B55E0C3380CE28A9C0991DDF /* Samples */ = {
+			isa = PBXGroup;
+			children = (
+				6C22646E1D2E3FA442F596C1 /* bass.wav */,
+				06E3915EDE55CDB2CE6440B3 /* hat.wav */,
+				69BBEE800F8C36BBA9696B51 /* kick.wav */,
+				15DB065A931A355B0FFC0B67 /* melodica.wav */,
+				9F659AF1424584EE180AD3E5 /* organ.wav */,
+				28E87EFECAB2B697A33C8ACD /* perc.wav */,
+				E3F09FB594A19FA63F60A674 /* shaker.wav */,
+				564725F9CF5B18AAF2D9F66C /* skank.wav */,
+				971AA1569C1990BFBB6D8755 /* snare.wav */,
+			);
+			path = Samples;
 			sourceTree = "<group>";
 		};
 		C50BB65F3DE136EA2775162F /* Models */ = {
@@ -247,6 +342,7 @@
 			isa = PBXGroup;
 			children = (
 				E089392DB782B733DD188FD2 /* Backyamon.app */,
+				E29DC5DFABF1BDACE0F13630 /* RiddimTests.xctest */,
 				C472B70C7E601F352144C6C6 /* SampleTests.xctest */,
 			);
 			name = Products;
@@ -311,6 +407,24 @@
 			productReference = E089392DB782B733DD188FD2 /* Backyamon.app */;
 			productType = "com.apple.product-type.application";
 		};
+		E13D23117DC39C0DE270FFF0 /* RiddimTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1C979EE0CA9DC90E733D87F1 /* Build configuration list for PBXNativeTarget "RiddimTests" */;
+			buildPhases = (
+				676884577C87C9690FD034AA /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F7449A06CA226709FCBE317F /* PBXTargetDependency */,
+			);
+			name = RiddimTests;
+			packageProductDependencies = (
+			);
+			productName = RiddimTests;
+			productReference = E29DC5DFABF1BDACE0F13630 /* RiddimTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -319,9 +433,10 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = 34E62F3153F908282A4E6B11 /* Build configuration list for PBXProject "Backyamon" */;
-			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -334,10 +449,12 @@
 				782B980DDC4CC3D7DD0B715E /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
+			productRefGroup = D0B60C48A68D2141F584BEE6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				9517078929500964803388B6 /* Backyamon */,
+				E13D23117DC39C0DE270FFF0 /* RiddimTests */,
 				59FD5BD1EB958B8ED1187CD3 /* SampleTests */,
 			);
 		};
@@ -349,6 +466,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6B62DF9840122E7FB87D9F2 /* Assets.xcassets in Resources */,
+				ADD1591EC96DF0163BFB1D6D /* bass.wav in Resources */,
+				26FDAF03F5BB56E291BDABCF /* hat.wav in Resources */,
+				3807355504E2F2D26AFD6774 /* kick.wav in Resources */,
+				01D50EED2613D9AD88EF3035 /* melodica.wav in Resources */,
+				36D8E3738BDA41637E378F5E /* organ.wav in Resources */,
+				A4ACE206205667D0CC7C4D92 /* perc.wav in Resources */,
+				8D9DF8F3B7EDF3475BE1EEBB /* shaker.wav in Resources */,
+				17999AB0254F26339550F203 /* skank.wav in Resources */,
+				D8433B222E6E02D18250DEAC /* snare.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,6 +493,7 @@
 				594E8BCCED6C88FD8B4D37AA /* BeachBum.swift in Sources */,
 				DB79699BF05C8896A31E0761 /* BearingOff.swift in Sources */,
 				7C1230BA61484B187DE1651B /* BoardView.swift in Sources */,
+				3F50B11B11507C66BF792643 /* Chord.swift in Sources */,
 				98354F06B66D37705462EFA4 /* Constants.swift in Sources */,
 				8E4CDA54B7AD19656B205F9B /* ControlBarView.swift in Sources */,
 				207A8BB2F8FE4568DD9782F8 /* CreateSampleView.swift in Sources */,
@@ -387,8 +514,13 @@
 				E8A6A4552DDCA68B7E1161C7 /* MyStuffView.swift in Sources */,
 				D23DE17915CAB8B72CD53D69 /* OnlineGameController.swift in Sources */,
 				DA91C39C2A4F366E5D1EEFB8 /* PlayerModels.swift in Sources */,
+				75CC8B0579460EF91853CC1E /* Presets.swift in Sources */,
 				A302D41E51416343AA178C67 /* ProfileView.swift in Sources */,
 				CB87968F3B7CD194EF013DA6 /* ProfileViewModel.swift in Sources */,
+				F068A1FB8E110349F667BE99 /* Resampling.swift in Sources */,
+				D1AB67939AA8CBD7F4CA70F1 /* RiddimEngine.swift in Sources */,
+				C7C73C0C1A2BCC1CA288D288 /* RiddimPattern.swift in Sources */,
+				31F4BAD6C20AD7903F8D9BBF /* SampleLibrary.swift in Sources */,
 				AA0D17799A39A74641D180BE /* SampleUpload.swift in Sources */,
 				EE6EDF345526CB28E760E4C6 /* Selector.swift in Sources */,
 				816F8ED04213B482319ACA89 /* SocketClient.swift in Sources */,
@@ -398,6 +530,19 @@
 				EF4A36C96ED6C65D804BDD3C /* TurnGenerator.swift in Sources */,
 				366B7671E723D3F972C6467C /* Types.swift in Sources */,
 				D6E8AB5813498D5985D89FFD /* Winner.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		676884577C87C9690FD034AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30FDF83761F4BB6B50AAF980 /* ChordTests.swift in Sources */,
+				D2779345F612FD65AE1EC027 /* ResamplingTests.swift in Sources */,
+				56C733FE2C20A0FC4602D7BC /* RiddimEngineRenderTests.swift in Sources */,
+				EEDAF1E9D08F1D2B0A5B879C /* RiddimPatternTests.swift in Sources */,
+				468F4A0B314B473341A91033 /* SampleLibraryTests.swift in Sources */,
+				CA28D527B66CB4B00C50C3E0 /* SmokeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,9 +566,31 @@
 			target = 9517078929500964803388B6 /* Backyamon */;
 			targetProxy = E4C4E5E1C65E4646AF93E5F8 /* PBXContainerItemProxy */;
 		};
+		F7449A06CA226709FCBE317F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9517078929500964803388B6 /* Backyamon */;
+			targetProxy = 30626BE2A4FE96CAE3A6AE4B /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		05DAA7417672D581E9B729E1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.backyamon.RiddimTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Backyamon.app/Backyamon";
+			};
+			name = Release;
+		};
 		10F10B3F688E0851EE4CF412 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -611,6 +778,23 @@
 			};
 			name = Release;
 		};
+		D19330EDEED34F320F9873CC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.backyamon.RiddimTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Backyamon.app/Backyamon";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -619,6 +803,15 @@
 			buildConfigurations = (
 				295900A3B891B26D7F523E60 /* Debug */,
 				41BDB65459F0CFDE267EB2BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		1C979EE0CA9DC90E733D87F1 /* Build configuration list for PBXNativeTarget "RiddimTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D19330EDEED34F320F9873CC /* Debug */,
+				05DAA7417672D581E9B729E1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

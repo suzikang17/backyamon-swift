@@ -26,6 +26,7 @@ targets:
     scheme:
       testTargets:
         - SampleTests
+        - RiddimTests
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.backyamon.app
@@ -62,4 +63,16 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.backyamon.SampleTests
+        GENERATE_INFOPLIST_FILE: YES
+
+  RiddimTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: RiddimTests
+    dependencies:
+      - target: Backyamon
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.backyamon.RiddimTests
         GENERATE_INFOPLIST_FILE: YES

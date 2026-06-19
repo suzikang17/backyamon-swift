@@ -50,6 +50,17 @@
                ReferencedContainer = "container:Backyamon.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E13D23117DC39C0DE270FFF0"
+               BuildableName = "RiddimTests.xctest"
+               BlueprintName = "RiddimTests"
+               ReferencedContainer = "container:Backyamon.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <CommandLineArguments>
       </CommandLineArguments>

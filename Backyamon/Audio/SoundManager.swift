@@ -149,6 +149,21 @@ final class SoundManager: ObservableObject {
         }
     }
 
+    /// Load a *local* audio file (e.g. a freshly-rendered riddim) for looped
+    /// playback. Unlike `loadCustomMusic(url:)` this does no network download.
+    func loadCustomMusic(fileURL: URL) {
+        do {
+            let player = try AVAudioPlayer(contentsOf: fileURL)
+            player.numberOfLoops = -1
+            player.volume = 0.4
+            player.prepareToPlay()
+            self.musicPlayer?.stop()
+            self.musicPlayer = player
+        } catch {
+            // Ignore — procedural music remains available.
+        }
+    }
+
     /// Clear any custom SFX bound to `slot`.
     func clearCustomSFX(slot: GameSound) {
         customSFXBuffers[slot] = nil

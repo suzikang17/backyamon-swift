@@ -1,11 +1,10 @@
 import SwiftUI
 
-struct HUDView<Game: GameControlling>: View {
+/// Scoreboard + dice + message, floated across the top of the board as a
+/// translucent strip (it reads as part of the felt rather than stealing
+/// vertical space from the board the way a solid top bar would).
+struct BoardHUDOverlay<Game: GameControlling>: View {
     @ObservedObject var game: Game
-    /// Labels for the two scoreboards. Defaults to "YOU"/"CPU" for AI play;
-    /// online mode passes "YOU"/opponent display name.
-    var leftLabel: String = "YOU"
-    var rightLabel: String = "CPU"
 
     var body: some View {
         VStack(spacing: 4) {
@@ -22,52 +21,33 @@ struct HUDView<Game: GameControlling>: View {
                             .foregroundStyle(Theme.gold)
                     }
                 }
-                .padding(.top, 2)
             }
-
-            HStack(alignment: .center, spacing: 0) {
-                PlayerScore(
-                    label: leftLabel,
-                    score: game.state.matchScore[game.humanPlayer] ?? 0,
-                    color: game.humanPlayer == .gold
-                        ? Theme.gold
-                        : Theme.red,
-                    isActive: game.state.currentPlayer == game.humanPlayer
-                )
-                .frame(maxWidth: .infinity)
-
-                VStack(spacing: 6) {
-                    HStack(spacing: 8) {
-                        if let dice = game.state.dice {
-                            DieView(value: dice.values.0,
-                                    used: !dice.remaining.contains(dice.values.0))
-                            DieView(value: dice.values.1,
-                                    used: !dice.remaining.contains(dice.values.1))
-                        }
-                        DoublingCubeView(cube: game.state.doublingCube)
-                    }
-                    Text(game.message)
-                        .font(Theme.serif(13))
-                        .foregroundStyle(Theme.textSecondary)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2)
+            HStack(spacing: 8) {
+                if let dice = game.state.dice {
+                    DieView(value: dice.values.0,
+                            used: !dice.remaining.contains(dice.values.0))
+                    DieView(value: dice.values.1,
+                            used: !dice.remaining.contains(dice.values.1))
                 }
-                .frame(maxWidth: .infinity)
-
-                PlayerScore(
-                    label: rightLabel,
-                    score: game.state.matchScore[opponent(of: game.humanPlayer)] ?? 0,
-                    color: opponent(of: game.humanPlayer) == .gold
-                        ? Theme.gold
-                        : Theme.red,
-                    isActive: game.state.currentPlayer != game.humanPlayer
-                )
-                .frame(maxWidth: .infinity)
+                DoublingCubeView(cube: game.state.doublingCube)
             }
+            Text(game.message)
+                .font(Theme.serif(13))
+                .foregroundStyle(Theme.textSecondary)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
-        .background(Color.black.opacity(0.3))
+        .padding(.horizontal, 14)
+        .padding(.top, 6)
+        .padding(.bottom, 10)
+        .frame(maxWidth: .infinity)
+        .background(
+            LinearGradient(
+                colors: [Color.black.opacity(0.5), Color.black.opacity(0.0)],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        )
     }
 }
 
@@ -207,5 +187,141 @@ struct DoublingCubeView: View {
         .scaleEffect(cube.offered ? 1.1 : 1.0)
         .animation(.easeInOut(duration: 0.25), value: cube.offered)
         .accessibilityLabel("Doubling cube at \(cube.value)")
+    }
+}
+
+// MARK: - Roll overlay
+
+/// Light overlay shown over the board when it's the local player's turn to
+/// roll. Two large dice sit over a dimmed board; swiping up (or tapping)
+/// tumbles them and performs the roll.
+struct RollDiceOverlay<Game: GameControlling>: View {
+    @ObservedObject var game: Game
+
+    @State private var faces: (Int, Int) = (1, 1)
+    @State private var tumbling = false
+    @State private var dragY: CGFloat = 0
+    @State private var hintBob = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        ZStack {
+            Color.black.opacity(0.28)
+
+            VStack(spacing: 18) {
+                HStack(spacing: 18) {
+                    DieFace(value: faces.0)
+                    DieFace(value: faces.1)
+                }
+                .offset(y: dragY)
+                .shadow(color: .black.opacity(0.45), radius: 10, y: 5)
+
+                if !tumbling {
+                    VStack(spacing: 6) {
+                        Image(systemName: "chevron.up")
+                            .font(.system(size: 20, weight: .bold))
+                            .foregroundStyle(Theme.gold)
+                            .offset(y: hintBob ? -5 : 3)
+                        Text("Swipe up to roll")
+                            .font(Theme.serifItalic(14))
+                            .foregroundStyle(Theme.textSecondary)
+                    }
+                    .opacity(Double(max(0, 1 + dragY / 70)))
+                }
+            }
+        }
+        .contentShape(Rectangle())
+        .gesture(
+            DragGesture(minimumDistance: 5)
+                .onChanged { value in
+                    guard !tumbling else { return }
+                    dragY = min(0, value.translation.height)
+                }
+                .onEnded { value in
+                    guard !tumbling else { return }
+                    if value.translation.height < -40 {
+                        roll()
+                    } else {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) { dragY = 0 }
+                    }
+                }
+        )
+        .onTapGesture {
+            if !tumbling { roll() }
+        }
+        .accessibilityElement()
+        .accessibilityAddTraits(.isButton)
+        .accessibilityLabel("Roll dice")
+        .accessibilityHint("Swipe up or double tap to roll")
+        .accessibilityAction { if !tumbling { roll() } }
+        .onAppear {
+            if let dice = game.state.dice { faces = dice.values }
+            guard !reduceMotion else { return }
+            withAnimation(.easeInOut(duration: 0.85).repeatForever(autoreverses: true)) {
+                hintBob = true
+            }
+        }
+    }
+
+    private func roll() {
+        guard !tumbling else { return }
+        guard !reduceMotion else {
+            game.performRoll()
+            return
+        }
+        tumbling = true
+        HapticManager.shared.tap()
+        withAnimation(.spring(response: 0.28, dampingFraction: 0.6)) { dragY = -36 }
+        Task { @MainActor in
+            for _ in 0..<9 {
+                faces = (Int.random(in: 1...6), Int.random(in: 1...6))
+                try? await Task.sleep(nanoseconds: 55_000_000)
+            }
+            game.performRoll()
+            if let dice = game.state.dice { faces = dice.values }
+        }
+    }
+}
+
+/// A single large die face with a quick 3D tumble whenever its value changes.
+private struct DieFace: View {
+    let value: Int
+    var size: CGFloat = 62
+
+    @State private var rotation: Double = 0
+
+    private let pips: [Int: [(Double, Double)]] = [
+        1: [(0.5, 0.5)],
+        2: [(0.28, 0.28), (0.72, 0.72)],
+        3: [(0.28, 0.28), (0.5, 0.5), (0.72, 0.72)],
+        4: [(0.28, 0.28), (0.72, 0.28), (0.28, 0.72), (0.72, 0.72)],
+        5: [(0.28, 0.28), (0.72, 0.28), (0.5, 0.5), (0.28, 0.72), (0.72, 0.72)],
+        6: [(0.28, 0.22), (0.72, 0.22), (0.28, 0.5), (0.72, 0.5), (0.28, 0.78), (0.72, 0.78)]
+    ]
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: size * 0.2)
+                .fill(LinearGradient(colors: [Color(red: 1.0, green: 0.98, blue: 0.92),
+                                              Color(red: 0.86, green: 0.82, blue: 0.74)],
+                                     startPoint: .top, endPoint: .bottom))
+                .frame(width: size, height: size)
+                .overlay(
+                    RoundedRectangle(cornerRadius: size * 0.2)
+                        .stroke(Color(red: 0.55, green: 0.50, blue: 0.40), lineWidth: 1)
+                )
+
+            ForEach(Array((pips[value] ?? []).enumerated()), id: \.0) { _, pip in
+                Circle()
+                    .fill(Color(red: 0.10, green: 0.08, blue: 0.06))
+                    .frame(width: size * 0.16, height: size * 0.16)
+                    .offset(x: (pip.0 - 0.5) * size * 0.72,
+                            y: (pip.1 - 0.5) * size * 0.72)
+            }
+        }
+        .rotation3DEffect(.degrees(rotation), axis: (x: 1, y: 1, z: 0))
+        .onChange(of: value) { _, _ in
+            withAnimation(.easeOut(duration: 0.12)) { rotation += 200 }
+        }
     }
 }
