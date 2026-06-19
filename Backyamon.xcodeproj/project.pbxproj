@@ -62,6 +62,7 @@
 		D1AB67939AA8CBD7F4CA70F1 /* RiddimEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914FFCD693DA23542597565D /* RiddimEngine.swift */; };
 		D23DE17915CAB8B72CD53D69 /* OnlineGameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30582C4729E8E21AC8F0E83D /* OnlineGameController.swift */; };
 		D2779345F612FD65AE1EC027 /* ResamplingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D45495D9A4B3CCFF8BAF619 /* ResamplingTests.swift */; };
+		D574AC5F46F2929D241E1094 /* RiddimVoiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8897218C5DC59D69CEFC9F6 /* RiddimVoiceTests.swift */; };
 		D6E8AB5813498D5985D89FFD /* Winner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1271D746311550C66273D717 /* Winner.swift */; };
 		D8433B222E6E02D18250DEAC /* snare.wav in Resources */ = {isa = PBXBuildFile; fileRef = 971AA1569C1990BFBB6D8755 /* snare.wav */; };
 		DA91C39C2A4F366E5D1EEFB8 /* PlayerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A03F1E52E38B550B4597111 /* PlayerModels.swift */; };
@@ -161,6 +162,7 @@
 		E4153ADB05B7F431EAC0B898 /* BackyamonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackyamonApp.swift; sourceTree = "<group>"; };
 		E56A082810F7D964E5E0E9C6 /* DifficultyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyView.swift; sourceTree = "<group>"; };
 		E7F3DFD8BC6BC4307ADF842E /* GalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryView.swift; sourceTree = "<group>"; };
+		E8897218C5DC59D69CEFC9F6 /* RiddimVoiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiddimVoiceTests.swift; sourceTree = "<group>"; };
 		ED5B31B6884585906F6344CA /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		F3213CE90AA3059100AD5427 /* SampleUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleUpload.swift; sourceTree = "<group>"; };
 		F6FFF02F5B5DA4E0F053E6A8 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 			children = (
 				B13243713FE68D21D52967FE /* AssetUploaderTests.swift */,
 				6B1D14906FC92817FB62EB39 /* AudioRecorderTests.swift */,
+				E8897218C5DC59D69CEFC9F6 /* RiddimVoiceTests.swift */,
 				B09C3D0D968FCD177A974427 /* SampleUploadTests.swift */,
 				5439BB768359118F0A1C78AB /* SmokeTests.swift */,
 				B8CDA2AD59F7C7571A0A0FB3 /* SP2GalleryTests.swift */,
@@ -552,6 +555,7 @@
 			files = (
 				5E405E23CCF846BDC664C849 /* AssetUploaderTests.swift in Sources */,
 				46D1A85125BA9390B73496D6 /* AudioRecorderTests.swift in Sources */,
+				D574AC5F46F2929D241E1094 /* RiddimVoiceTests.swift in Sources */,
 				633D77FB3DB82B589179D0EF /* SP2GalleryTests.swift in Sources */,
 				9D42F91FE960DE1BFAD00129 /* SampleUploadTests.swift in Sources */,
 				CF3CE7DF810CF6722ECC31FD /* SmokeTests.swift in Sources */,

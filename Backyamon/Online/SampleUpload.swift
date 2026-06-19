@@ -5,11 +5,13 @@ import Foundation
 enum SampleKind: Equatable {
     case soundEffect(slot: String)   // one-shot bound to a GameSound slot string
     case music                       // loop / track
+    case riddimVoice(voice: InstrumentID, rootMidiNote: Int?)  // replaces a Riddim engine voice
 
     var assetType: AssetType {
         switch self {
         case .soundEffect: return .sfx
         case .music:       return .music
+        case .riddimVoice: return .sfx
         }
     }
 }
@@ -32,12 +34,15 @@ func filterAssets(_ assets: [Asset], type: AssetType?, search: String) -> [Asset
 /// Build the JSON metadata string the server stores for a sample asset.
 /// Shapes match `SfxMetadata` / `MusicMetadata` in AssetModels.swift.
 func sampleMetadataJSON(kind: SampleKind, durationMs: Int, fileSize: Int) -> String {
-    let dict: [String: Any]
+    var dict: [String: Any]
     switch kind {
     case .soundEffect(let slot):
         dict = ["slot": slot, "duration_ms": durationMs, "file_size": fileSize]
     case .music:
         dict = ["duration_ms": durationMs, "file_size": fileSize]
+    case .riddimVoice(let voice, let rootMidiNote):
+        dict = ["slot": "riddim-\(voice.rawValue)", "duration_ms": durationMs, "file_size": fileSize]
+        if let rootMidiNote { dict["root_midi_note"] = rootMidiNote }
     }
     let data = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data("{}".utf8)
     return String(data: data, encoding: .utf8) ?? "{}"
