@@ -11,6 +11,8 @@ struct MyStuffView: View {
     @State private var pendingDelete: Asset?
     @State private var showGallery = false
     @State private var showCreate = false
+    @State private var showAssignVoice = false
+    @State private var showRiddimPlay = false
 
     private let bg = Theme.bg
     private let gold = Theme.gold
@@ -64,8 +66,16 @@ struct MyStuffView: View {
         .navigationDestination(isPresented: $showGallery) {
             GalleryView()
         }
+        .navigationDestination(isPresented: $showRiddimPlay) {
+            RiddimPlayView()
+        }
         .sheet(isPresented: $showCreate) {
             CreateSampleView(socket: vm.client) {
+                Task { await vm.reload() }
+            }
+        }
+        .sheet(isPresented: $showAssignVoice) {
+            AssignVoiceView(socket: vm.client) {
                 Task { await vm.reload() }
             }
         }
@@ -113,13 +123,21 @@ struct MyStuffView: View {
         .padding(.top, 16)
         .padding(.bottom, 12)
         .overlay(alignment: .topTrailing) {
-            Button { showCreate = true } label: {
-                Image(systemName: "plus.circle.fill")
-                    .font(.system(size: 22))
-                    .foregroundStyle(Theme.gold)
-                    .padding(.trailing, 16)
+            HStack(spacing: 14) {
+                Button { showAssignVoice = true } label: {
+                    Image(systemName: "waveform.circle.fill")
+                        .font(.system(size: 22))
+                        .foregroundStyle(Theme.gold)
+                }
+                .accessibilityLabel("Use as instrument voice")
+                Button { showCreate = true } label: {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.system(size: 22))
+                        .foregroundStyle(Theme.gold)
+                }
+                .accessibilityLabel("Create sample")
             }
-            .accessibilityLabel("Create sample")
+            .padding(.trailing, 16)
         }
     }
 
@@ -231,20 +249,38 @@ struct MyStuffView: View {
     }
 
     private var galleryFooter: some View {
-        Button {
-            showGallery = true
-        } label: {
-            HStack(spacing: 6) {
-                Image(systemName: "person.3.fill")
-                    .font(.system(size: 12, weight: .semibold))
-                Text("BROWSE GALLERY")
-                    .font(Theme.serifBold(12))
-                    .tracking(3)
+        HStack(spacing: 0) {
+            Button {
+                showGallery = true
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "person.3.fill")
+                        .font(.system(size: 12, weight: .semibold))
+                    Text("BROWSE GALLERY")
+                        .font(Theme.serifBold(12))
+                        .tracking(3)
+                }
+                .foregroundStyle(gold)
+                .padding(.vertical, 10)
+                .frame(maxWidth: .infinity)
+                .background(Color.white.opacity(0.05))
             }
-            .foregroundStyle(gold)
-            .padding(.vertical, 10)
-            .frame(maxWidth: .infinity)
-            .background(Color.white.opacity(0.05))
+            Button {
+                showRiddimPlay = true
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "music.note.list")
+                        .font(.system(size: 12, weight: .semibold))
+                    Text("RIDDIM")
+                        .font(Theme.serifBold(12))
+                        .tracking(3)
+                }
+                .foregroundStyle(gold)
+                .padding(.vertical, 10)
+                .frame(maxWidth: .infinity)
+                .background(Color.white.opacity(0.05))
+            }
+            .accessibilityLabel("Generate and play riddim")
         }
     }
 
@@ -389,9 +425,15 @@ struct MyStuffView: View {
             EmptyView()
         case .sfx:
             if let meta = asset.decodeSfxMetadata() {
-                Text("\(meta.slot) · \(formatAssetDuration(meta.duration_ms))")
-                    .font(Theme.serif(10))
-                    .foregroundStyle(Theme.textTertiary)
+                if let voice = riddimVoice(forSlot: meta.slot) {
+                    Text("riddim · \(voice.rawValue) · \(formatAssetDuration(meta.duration_ms))")
+                        .font(Theme.serif(10))
+                        .foregroundStyle(Theme.textTertiary)
+                } else {
+                    Text("\(meta.slot) · \(formatAssetDuration(meta.duration_ms))")
+                        .font(Theme.serif(10))
+                        .foregroundStyle(Theme.textTertiary)
+                }
             }
         case .music:
             if let meta = asset.decodeMusicMetadata() {
