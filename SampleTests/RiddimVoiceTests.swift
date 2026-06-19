@@ -170,4 +170,35 @@ final class RiddimVoiceTests: XCTestCase {
                           createdAt: 0, updatedAt: 0)
         XCTAssertNil(mgr.riddimOverrideParams(for: asset))
     }
+
+    func test_uploadSampleUsesProvidedContentType() async throws {
+        let tmp = FileManager.default.temporaryDirectory.appendingPathComponent("imp.wav")
+        try Data([1,2,3]).write(to: tmp)
+        var createdContentType: String?
+        var putContentType: String?
+        let uploader = AssetUploader(
+            createAsset: { _, _, _, ct, _ in createdContentType = ct; return ("id", "https://u/put") },
+            putData: { _, _, ct in putContentType = ct }
+        )
+        _ = try await uploader.uploadSample(
+            fileURL: tmp, title: "Imp",
+            kind: .riddimVoice(voice: .bass, rootMidiNote: 33),
+            durationMs: 700, contentType: "audio/wav")
+        XCTAssertEqual(createdContentType, "audio/wav")
+        XCTAssertEqual(putContentType, "audio/wav")
+    }
+
+    func test_uploadSampleDefaultsToMp4() async throws {
+        let tmp = FileManager.default.temporaryDirectory.appendingPathComponent("rec.m4a")
+        try Data([4,5]).write(to: tmp)
+        var ct: String?
+        let uploader = AssetUploader(
+            createAsset: { _, _, _, c, _ in ct = c; return ("id", nil) },
+            putData: { _, _, _ in }
+        )
+        _ = try await uploader.uploadSample(
+            fileURL: tmp, title: "Rec",
+            kind: .riddimVoice(voice: .kick, rootMidiNote: nil), durationMs: 300)
+        XCTAssertEqual(ct, "audio/mp4")
+    }
 }

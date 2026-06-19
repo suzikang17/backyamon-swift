@@ -11,12 +11,13 @@ struct AssetUploader {
     static let contentType = "audio/mp4"
 
     /// Returns the new asset id. Throws on create or upload failure.
-    func uploadSample(fileURL: URL, title: String, kind: SampleKind, durationMs: Int) async throws -> String {
+    func uploadSample(fileURL: URL, title: String, kind: SampleKind,
+                      durationMs: Int, contentType: String = AssetUploader.contentType) async throws -> String {
         let data = try Data(contentsOf: fileURL)
         let metadata = sampleMetadataJSON(kind: kind, durationMs: durationMs, fileSize: data.count)
-        let (id, uploadUrl) = try await createAsset(kind.assetType, title, metadata, Self.contentType, data.count)
+        let (id, uploadUrl) = try await createAsset(kind.assetType, title, metadata, contentType, data.count)
         if let uploadUrl, let url = URL(string: uploadUrl) {
-            try await putData(data, url, Self.contentType)
+            try await putData(data, url, contentType)
         }
         return id
     }
