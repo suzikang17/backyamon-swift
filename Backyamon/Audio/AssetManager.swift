@@ -23,6 +23,7 @@ final class AssetManager: ObservableObject {
     @Published private(set) var equippedPieceId: String?
     @Published private(set) var equippedMusicId: String?
     @Published private(set) var equippedSFXIds: [String: String] = [:]
+    @Published private(set) var equippedRiddimIds: [String: String] = [:]
 
     private init() {
         loadPreferences()
@@ -30,13 +31,32 @@ final class AssetManager: ObservableObject {
 
     // MARK: - Preference storage
 
-    private struct Prefs: Codable {
+    struct Prefs: Codable {
         var pieceSet: String?
         var music: String?
         var sfx: [String: String] = [:]
+        var riddim: [String: String] = [:]
+
+        init() {}
+
+        // Custom decoding so persisted blobs from before a key existed
+        // (e.g. pre-SP3 blobs with no `riddim`) still decode, defaulting
+        // missing dictionaries to empty.
+        init(from decoder: Decoder) throws {
+            let c = try decoder.container(keyedBy: CodingKeys.self)
+            pieceSet = try c.decodeIfPresent(String.self, forKey: .pieceSet)
+            music = try c.decodeIfPresent(String.self, forKey: .music)
+            sfx = try c.decodeIfPresent([String: String].self, forKey: .sfx) ?? [:]
+            riddim = try c.decodeIfPresent([String: String].self, forKey: .riddim) ?? [:]
+        }
     }
 
     private static let prefsKey = "backyamon_asset_prefs_v1"
+
+    /// Test seam: decode a persisted Prefs blob (tolerant of missing keys).
+    static func decodePrefs(_ data: Data) -> Prefs? {
+        try? JSONDecoder().decode(Prefs.self, from: data)
+    }
 
     private var prefs: Prefs = Prefs() {
         didSet { savePreferences() }
@@ -51,6 +71,7 @@ final class AssetManager: ObservableObject {
         equippedPieceId = decoded.pieceSet
         equippedMusicId = decoded.music
         equippedSFXIds = decoded.sfx
+        equippedRiddimIds = decoded.riddim
     }
 
     private func savePreferences() {

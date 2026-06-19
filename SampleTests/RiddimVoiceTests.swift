@@ -119,4 +119,14 @@ final class RiddimVoiceTests: XCTestCase {
         XCTAssertEqual(lib.rootMidiNote(for: .bass), 33 == lib.rootMidiNote(for: .bass) ? lib.rootMidiNote(for: .bass) : 33)
         XCTAssertNotNil(lib.buffer(for: .bass))  // bundled default restored
     }
+
+    @MainActor
+    func test_prefsDecodesPreSP3BlobWithEmptyRiddim() throws {
+        // A persisted blob from before SP3 (no `riddim` key).
+        let legacy = #"{"pieceSet":"p1","music":"m1","sfx":{"dice-roll":"a1"}}"#
+        let prefs = AssetManager.decodePrefs(Data(legacy.utf8))
+        XCTAssertEqual(prefs?.pieceSet, "p1")
+        XCTAssertEqual(prefs?.sfx["dice-roll"], "a1")
+        XCTAssertEqual(prefs?.riddim, [:])   // missing key => default
+    }
 }
